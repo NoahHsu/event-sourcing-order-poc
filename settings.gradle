@@ -1,0 +1,6 @@
+rootProject.name = 'event-sourcing-order-poc'
+
+include 'common'
+include 'command-side'
+include 'query-side'
+
