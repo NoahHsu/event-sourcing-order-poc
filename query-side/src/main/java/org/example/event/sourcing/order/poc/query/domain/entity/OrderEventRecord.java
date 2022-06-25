@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.event.sourcing.order.poc.common.model.event.OrderEventName;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -27,11 +28,11 @@ public class OrderEventRecord {
 
     private String orderId;
 
-    private String fromStatus;
+    private OrderStatus fromStatus;
 
-    private String toStatus;
+    private OrderStatus toStatus;
 
-    private String event;
+    private OrderEventName eventName;
 
     @CreatedDate
     private Instant createdDate;

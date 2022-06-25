@@ -15,15 +15,17 @@ shipment
   - create shipment
 
 - payment created 
-  - shipment created
+- shipment created
   - prepare order
 
-- shipment in logistic 
-  - update order
+- shipment send out
+  - logistic order
 
 - shipment pickup 
+  - finish shipment
   - finish payment
 
-- payment setteled     
+- payment settled 
+- shipment finished
   - finish order
     

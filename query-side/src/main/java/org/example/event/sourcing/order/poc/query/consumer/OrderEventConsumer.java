@@ -22,7 +22,7 @@ public class OrderEventConsumer {
     @Autowired
     private OrderEventRecordHandler orderEventRecordHandler;
 
-    @KafkaListener(topics = ORDER_TOPIC, groupId = ORDER_STATUS_ID+"#{ T(java.util.UUID).randomUUID().toString() }")
+    @KafkaListener(topics = ORDER_TOPIC, groupId = ORDER_STATUS_GROUP_ID_PREFIX +"#{ T(java.util.UUID).randomUUID().toString() }")
     public void OrderEventListener(OrderEvent orderEvent, Acknowledgment ack) {
         log.info("status handler receive data = {}", orderEvent);
         try {
@@ -33,7 +33,7 @@ public class OrderEventConsumer {
         }
     }
 
-    @KafkaListener(topics = ORDER_TOPIC, groupId = ORDER_LOG_ID+"#{ T(java.util.UUID).randomUUID().toString() }")
+    @KafkaListener(topics = ORDER_TOPIC, groupId = ORDER_LOG_GROUP_ID_PREFIX +"#{ T(java.util.UUID).randomUUID().toString() }")
     public void OrderEventRecordListener(OrderEvent orderEvent, Acknowledgment ack) {
         log.info("log handler receive data = {}", orderEvent);
         try {

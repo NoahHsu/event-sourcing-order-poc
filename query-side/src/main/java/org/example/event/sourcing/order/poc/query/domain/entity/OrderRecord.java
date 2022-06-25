@@ -27,7 +27,7 @@ public class OrderRecord {
     @Id
     private String orderId;
 
-    private String status;
+    private OrderStatus status;
 
     @CreatedDate
     private Instant createdDate;
