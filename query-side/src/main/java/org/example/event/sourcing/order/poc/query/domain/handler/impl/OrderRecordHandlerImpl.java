@@ -3,7 +3,7 @@ package org.example.event.sourcing.order.poc.query.domain.handler.impl;
 import lombok.extern.slf4j.Slf4j;
 import org.example.event.sourcing.order.poc.common.model.event.OrderEvent;
 import org.example.event.sourcing.order.poc.query.domain.entity.OrderRecord;
-import org.example.event.sourcing.order.poc.query.domain.handler.OrderEventHandler;
+import org.example.event.sourcing.order.poc.query.domain.handler.OrderRecordHandler;
 import org.example.event.sourcing.order.poc.query.domain.repo.OrderEventRepository;
 import org.example.event.sourcing.order.poc.query.domain.repo.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import java.util.concurrent.CompletableFuture;
 
 @Service
 @Slf4j
-public class OrderEventHandlerImpl implements OrderEventHandler {
+public class OrderRecordHandlerImpl implements OrderRecordHandler {
 
     @Autowired
     private OrderRepository orderRepository;

@@ -2,6 +2,7 @@ package org.example.event.sourcing.order.poc.query.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.event.sourcing.order.poc.common.model.Order;
+import org.example.event.sourcing.order.poc.query.domain.entity.OrderEventRecord;
 import org.example.event.sourcing.order.poc.query.domain.entity.OrderRecord;
 import org.example.event.sourcing.order.poc.query.service.OrderReadService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,20 @@ public class OrderController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<OrderRecord> getOrder() {
+    public List<OrderRecord> getOrders() {
         return orderReadService.getOrder();
+    }
+
+    @GetMapping("/{orderId}")
+    @ResponseStatus(HttpStatus.OK)
+    public OrderRecord getOrder(@PathVariable String orderId) {
+        return orderReadService.getOrder(orderId);
+    }
+
+    @GetMapping("/{orderId}/log")
+    @ResponseStatus(HttpStatus.OK)
+    public List<OrderEventRecord> getOrderLog(@PathVariable String orderId) {
+        return orderReadService.getOrderLog(orderId);
     }
 
 }

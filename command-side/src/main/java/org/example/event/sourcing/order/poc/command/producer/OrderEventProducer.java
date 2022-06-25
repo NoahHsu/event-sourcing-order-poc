@@ -22,7 +22,6 @@ public class OrderEventProducer {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-
     public Boolean create(OrderEvent order) {
         log.info("Attempting to log {} to topic {}.", order, ORDER_TOPIC);
         Boolean result = kafkaTemplate.executeInTransaction(operations -> {

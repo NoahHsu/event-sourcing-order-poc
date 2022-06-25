@@ -16,24 +16,20 @@ spring:
     hibernate:
       ddl-auto: create
   application:
-    name: command-side
+    name: query-side
   kafka:
     bootstrapServers: localhost:9092
     consumer:
-      keyDeserializer: org.apache.kafka.common.serialization.StringDeserializer
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-      autoOffsetReset: earliest
-      enableAutoCommit: false
-      isolationLevel: read_committed
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      max-poll-records: 1
+      isolation-level: read_committed
       properties:
         spring:
           json:
             trusted:
               packages: org.example.event.sourcing.order.poc.common.model.event
     listener:
-      ackMode: MANUAL
-    producer:
-      bootstrapServers: localhost:9092
-      keySerializer: org.apache.kafka.common.serialization.StringSerializer
-      value-Serializer: org.springframework.kafka.support.serializer.JsonSerializer
-      transaction-id-prefix: poc-es
+      ack-mode: manual-immediate

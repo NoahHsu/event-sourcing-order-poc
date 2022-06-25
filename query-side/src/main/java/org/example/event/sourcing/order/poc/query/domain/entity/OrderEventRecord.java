@@ -5,15 +5,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "ORDER_EVENT_RECORD")
+@EntityListeners(AuditingEntityListener.class)
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,7 +22,8 @@ import java.time.LocalDateTime;
 public class OrderEventRecord {
 
     @Id
-    private String logId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long logId;
 
     private String orderId;
 
