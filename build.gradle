@@ -8,7 +8,7 @@ subprojects {
 
     group = 'org.example'
     version = '0.0.1-SNAPSHOT'
-    sourceCompatibility = '16'
+    sourceCompatibility = '17'
 
     apply plugin: 'java'
     apply plugin: 'io.spring.dependency-management'
@@ -28,6 +28,10 @@ subprojects {
         implementation 'org.springdoc:springdoc-openapi-ui:1.5.9'
         testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
         testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+        runtimeOnly 'com.h2database:h2'
+
+        compileOnly 'org.projectlombok:lombok:1.18.20'
+        annotationProcessor 'org.projectlombok:lombok:1.18.20'
     }
     test {
         useJUnitPlatform()
