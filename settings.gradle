@@ -3,4 +3,6 @@ rootProject.name = 'event-sourcing-order-poc'
 include 'common'
 include 'command-side-order'
 include 'query-side-order'
+include 'command-side-payment'
+//include 'query-side-payment'
 
