@@ -1,6 +1,8 @@
 package org.example.event.sourcing.order.poc.common.model.event;
 
-public record OrderEvent(String id, OrderEventName eventName) {
+import java.time.Instant;
+
+public record OrderEvent(String id, OrderEventName eventName, Instant createdDate, Instant updatedDate) {
 
     public static final String ORDER_TOPIC = "ORDER";
 

@@ -9,23 +9,5 @@ order
 payment
 shipment
 
-# Event & Command
-- order created
-  - create payment 
-  - create shipment
-
-- payment created 
-- shipment created
-  - prepare order
-
-- shipment send out
-  - logistic order
-
-- shipment pickup 
-  - finish shipment
-  - finish payment
-
-- payment settled 
-- shipment finished
-  - finish order
+![event storm result](./doc-image/event_storming_result.jpg)
     
