@@ -1,8 +1,7 @@
 package org.example.event.sourcing.order.poc.command.payment.producer;
 
+import lombok.extern.slf4j.Slf4j;
 import org.example.event.sourcing.order.poc.common.model.event.PaymentEvent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
@@ -11,9 +10,8 @@ import org.springframework.stereotype.Component;
 import static org.example.event.sourcing.order.poc.common.model.event.PaymentEvent.PAYMENT_TOPIC;
 
 @Component
+@Slf4j
 public class PaymentEventProducer {
-
-    private static final Logger log = LoggerFactory.getLogger(PaymentEventProducer.class);
 
     private final KafkaTemplate<String, PaymentEvent> kafkaTemplate;
 
@@ -45,6 +43,5 @@ public class PaymentEventProducer {
     private void onFailure(final Throwable t) {
         log.warn("Unable to write Order to topic {}.", PAYMENT_TOPIC, t);
     }
-
 
 }

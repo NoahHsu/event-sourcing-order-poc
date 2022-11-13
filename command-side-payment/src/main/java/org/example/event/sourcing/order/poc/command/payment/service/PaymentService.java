@@ -44,6 +44,7 @@ public class PaymentService {
     private PaymentEvent getPaymentEvent(Payment payment, PaymentEventName event) {
         return PaymentEvent.builder()
                 .id(payment.id())
+                .paymentMethod(payment.paymentMethod())
                 .eventName(event)
                 .createdDate(Instant.now())
                 .updatedDate(Instant.now())
@@ -63,7 +64,6 @@ public class PaymentService {
     }
 
     private Boolean isValid(Payment payment) {
-        randomFail();
         String failContainWord = "fail";
         return !StringUtils.containsIgnoreCase(
                 payment.paymentMethod(), failContainWord);
@@ -94,7 +94,7 @@ public class PaymentService {
     public Payment settlePayment(Payment payment) {
         randomFail();
         Boolean isSuccess = paymentEventProducer.create(
-                getPaymentEvent(payment, CANCELLED));
+                getPaymentEvent(payment, SETTLED));
         if (isSuccess) {
             return payment;
         } else {
