@@ -1,3 +1,4 @@
+name: event-sourcing
 version: "3"
 services:
   zookeeper:
