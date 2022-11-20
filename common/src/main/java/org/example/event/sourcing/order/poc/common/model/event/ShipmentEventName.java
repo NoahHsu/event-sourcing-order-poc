@@ -6,7 +6,7 @@ public enum ShipmentEventName {
     PREPARING,
     PROCESSED,
     ARRIVED_DC,
-    DEPATURED_DC,
+    DEPARTED_DC,
 
     DELIVERING,
     RECEIVED

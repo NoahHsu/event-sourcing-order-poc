@@ -1,5 +1,6 @@
 package org.example.event.sourcing.order.poc.query.order.domain.handler.impl;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.event.sourcing.order.poc.common.model.event.OrderEvent;
 import org.example.event.sourcing.order.poc.query.order.domain.entity.OrderRecord;
@@ -7,22 +8,21 @@ import org.example.event.sourcing.order.poc.query.order.domain.entity.OrderStatu
 import org.example.event.sourcing.order.poc.query.order.domain.handler.OrderRecordHandler;
 import org.example.event.sourcing.order.poc.query.order.domain.repo.OrderEventRepository;
 import org.example.event.sourcing.order.poc.query.order.domain.repo.OrderRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
 
-import static org.example.event.sourcing.order.poc.query.order.domain.entity.OrderStatus.*;
+import static org.example.event.sourcing.order.poc.query.order.domain.entity.OrderStatus.CREATED;
+import static org.example.event.sourcing.order.poc.query.order.domain.entity.OrderStatus.FINISHED;
 
 @Service
+@RequiredArgsConstructor
 @Slf4j
 public class OrderRecordHandlerImpl implements OrderRecordHandler {
 
-    @Autowired
-    private OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
 
-    @Autowired
-    private OrderEventRepository orderEventRepository;
+    private final OrderEventRepository orderEventRepository;
 
     @Override
     public CompletableFuture<Void> onEvent(OrderEvent event) {
@@ -34,7 +34,7 @@ public class OrderRecordHandlerImpl implements OrderRecordHandler {
                 case COMPLETED:
                     completeOrder(event);
                 default:
-                    throw new RuntimeException("unsurpported event name");
+                    throw new RuntimeException("unsupported event name");
             }
         });
     }
@@ -58,13 +58,10 @@ public class OrderRecordHandlerImpl implements OrderRecordHandler {
     }
 
     private OrderStatus statusMachineMap(OrderRecord orderRecord, OrderEvent event) {
-        switch (event.eventName()) {
-            case CREATED:
-                return CREATED;
-            case COMPLETED:
-                return FINISHED;
-            default:
-                throw new RuntimeException("unsurpported event name");
-        }
+        return switch (event.eventName()) {
+            case CREATED -> CREATED;
+            case COMPLETED -> FINISHED;
+            default -> throw new RuntimeException("unsupported event name");
+        };
     }
 }

@@ -16,7 +16,7 @@ spring:
     hibernate:
       ddl-auto: create
   application:
-    name: query-side
+    name: query-side-payment
   kafka:
     bootstrapServers: localhost:9092
     consumer:

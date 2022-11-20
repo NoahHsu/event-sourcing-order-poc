@@ -1,11 +1,10 @@
 package org.example.event.sourcing.order.poc.query.order.consumer;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.event.sourcing.order.poc.common.model.event.OrderEvent;
 import org.example.event.sourcing.order.poc.query.order.domain.handler.OrderEventRecordHandler;
 import org.example.event.sourcing.order.poc.query.order.domain.handler.OrderRecordHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Service;
@@ -13,14 +12,13 @@ import org.springframework.stereotype.Service;
 import static org.example.event.sourcing.order.poc.common.model.event.OrderEvent.*;
 
 @Service
+@RequiredArgsConstructor
+@Slf4j
 public class OrderEventConsumer {
-    private static final Logger log = LoggerFactory.getLogger(OrderEventConsumer.class);
 
-    @Autowired
-    private OrderRecordHandler orderRecordHandler;
+    private final OrderRecordHandler orderRecordHandler;
 
-    @Autowired
-    private OrderEventRecordHandler orderEventRecordHandler;
+    private final OrderEventRecordHandler orderEventRecordHandler;
 
     @KafkaListener(topics = ORDER_TOPIC, groupId = ORDER_STATUS_GROUP_ID_PREFIX +"#{ T(java.util.UUID).randomUUID().toString() }")
     public void OrderEventListener(OrderEvent orderEvent, Acknowledgment ack) {

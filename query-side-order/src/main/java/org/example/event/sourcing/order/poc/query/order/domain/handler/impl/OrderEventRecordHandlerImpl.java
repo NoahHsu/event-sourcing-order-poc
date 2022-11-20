@@ -1,22 +1,22 @@
 package org.example.event.sourcing.order.poc.query.order.domain.handler.impl;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.event.sourcing.order.poc.common.model.event.OrderEvent;
 import org.example.event.sourcing.order.poc.query.order.domain.entity.OrderEventRecord;
+import org.example.event.sourcing.order.poc.query.order.domain.entity.OrderStatus;
 import org.example.event.sourcing.order.poc.query.order.domain.handler.OrderEventRecordHandler;
 import org.example.event.sourcing.order.poc.query.order.domain.repo.OrderEventRepository;
-import org.example.event.sourcing.order.poc.query.order.domain.entity.OrderStatus;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
 
 @Service
+@RequiredArgsConstructor
 @Slf4j
 public class OrderEventRecordHandlerImpl implements OrderEventRecordHandler {
 
-    @Autowired
-    private OrderEventRepository orderEventRepository;
+    private final OrderEventRepository orderEventRepository;
 
     @Override
     public CompletableFuture<Void> onEvent(OrderEvent event) {
@@ -28,7 +28,7 @@ public class OrderEventRecordHandlerImpl implements OrderEventRecordHandler {
                 case COMPLETED:
                     prepareOrder(event);
                 default:
-                    throw new RuntimeException("unsurpported event name");
+                    throw new RuntimeException("unsupported event name");
             }
         });
     }

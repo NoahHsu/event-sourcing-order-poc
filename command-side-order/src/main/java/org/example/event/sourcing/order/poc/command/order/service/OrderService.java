@@ -1,10 +1,10 @@
 package org.example.event.sourcing.order.poc.command.order.service;
 
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomUtils;
 import org.example.event.sourcing.order.poc.command.order.producer.OrderEventProducer;
 import org.example.event.sourcing.order.poc.common.model.Order;
 import org.example.event.sourcing.order.poc.common.model.event.OrderEvent;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -13,14 +13,10 @@ import static org.example.event.sourcing.order.poc.common.model.event.OrderEvent
 import static org.example.event.sourcing.order.poc.common.model.event.OrderEventName.CREATED;
 
 @Service
+@RequiredArgsConstructor
 public class OrderService {
 
     private final OrderEventProducer orderEventProducer;
-
-    @Autowired
-    public OrderService(OrderEventProducer orderEventProducer) {
-        this.orderEventProducer = orderEventProducer;
-    }
 
     public Order createOrder(Order order) {
         randomFail();

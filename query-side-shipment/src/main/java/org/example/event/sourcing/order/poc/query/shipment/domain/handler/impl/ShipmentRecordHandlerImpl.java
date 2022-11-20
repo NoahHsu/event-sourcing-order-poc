@@ -3,10 +3,7 @@ package org.example.event.sourcing.order.poc.query.shipment.domain.handler.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.event.sourcing.order.poc.common.model.event.ShipmentEvent;
-import org.example.event.sourcing.order.poc.common.model.event.ShipmentEventName;
-import org.example.event.sourcing.order.poc.common.model.event.ShipmentEvent;
 import org.example.event.sourcing.order.poc.query.shipment.domain.entity.ShipmentRecord;
-import org.example.event.sourcing.order.poc.query.shipment.domain.handler.ShipmentRecordHandler;
 import org.example.event.sourcing.order.poc.query.shipment.domain.repo.ShipmentRepository;
 import org.example.event.sourcing.order.poc.query.shipment.domain.handler.ShipmentRecordHandler;
 import org.springframework.stereotype.Component;
@@ -32,7 +29,7 @@ public class ShipmentRecordHandlerImpl implements ShipmentRecordHandler {
                 case PROCESSED:
                 case ARRIVED_DC:
                 case DELIVERING:
-                case DEPATURED_DC:
+                case DEPARTED_DC:
                     updateShipment(event);
                 default:
                     throw new RuntimeException("unsupported event");

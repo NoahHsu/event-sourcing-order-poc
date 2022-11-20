@@ -1,28 +1,23 @@
 package org.example.event.sourcing.order.poc.command.payment.service;
 
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.example.event.sourcing.order.poc.command.payment.producer.PaymentEventProducer;
 import org.example.event.sourcing.order.poc.common.model.Payment;
 import org.example.event.sourcing.order.poc.common.model.event.PaymentEvent;
 import org.example.event.sourcing.order.poc.common.model.event.PaymentEventName;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 
 import static org.example.event.sourcing.order.poc.common.model.event.PaymentEventName.*;
 
-
 @Service
+@RequiredArgsConstructor
 public class PaymentService {
 
     private final PaymentEventProducer paymentEventProducer;
-
-    @Autowired
-    public PaymentService(PaymentEventProducer paymentEventProducer) {
-        this.paymentEventProducer = paymentEventProducer;
-    }
 
     public Payment createPayment(Payment payment) {
         randomFail();

@@ -18,14 +18,13 @@ public class ShipmentEventProducer {
 
     public Boolean create(ShipmentEvent shipmentEvent) {
         log.info("Attempting to log {} to topic {}.", shipmentEvent, SHIPMENT_TOPIC);
-        Boolean result = kafkaTemplate.executeInTransaction(operations -> {
+        return kafkaTemplate.executeInTransaction(operations -> {
             final String key = shipmentEvent.id();
             operations
                     .send(SHIPMENT_TOPIC, key, shipmentEvent)
                     .addCallback(this::onSuccess, this::onFailure);
             return true;
         });
-        return result;
     }
 
     private void onSuccess(final SendResult<String, ShipmentEvent> result) {

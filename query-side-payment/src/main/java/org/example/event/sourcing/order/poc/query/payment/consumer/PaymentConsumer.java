@@ -2,16 +2,12 @@ package org.example.event.sourcing.order.poc.query.payment.consumer;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.event.sourcing.order.poc.common.model.event.OrderEvent;
 import org.example.event.sourcing.order.poc.common.model.event.PaymentEvent;
 import org.example.event.sourcing.order.poc.query.payment.domain.handler.PaymentRecordHandler;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
-import static org.example.event.sourcing.order.poc.common.model.event.OrderEvent.ORDER_STATUS_GROUP_ID_PREFIX;
-import static org.example.event.sourcing.order.poc.common.model.event.OrderEvent.ORDER_TOPIC;
 import static org.example.event.sourcing.order.poc.common.model.event.PaymentEvent.PAYMENT_STATUS_GROUP_ID_PREFIX;
 import static org.example.event.sourcing.order.poc.common.model.event.PaymentEvent.PAYMENT_TOPIC;
 

@@ -2,7 +2,6 @@ package org.example.event.sourcing.order.poc.query.payment.domain.handler.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.event.sourcing.order.poc.common.model.Payment;
 import org.example.event.sourcing.order.poc.common.model.event.PaymentEvent;
 import org.example.event.sourcing.order.poc.common.model.event.PaymentEventName;
 import org.example.event.sourcing.order.poc.query.payment.domain.entity.PaymentRecord;
@@ -40,7 +39,7 @@ public class PaymentRecordHandlerImpl implements PaymentRecordHandler {
     }
 
     private void createPayment(PaymentEvent event) {
-        log.info("Create payment id = {}.");
+        log.info("Create payment id = {}.", event.id());
         PaymentRecord entity = PaymentRecord.builder()
                 .paymentId(event.id())
                 .paymentMethod(event.paymentMethod())
@@ -49,7 +48,7 @@ public class PaymentRecordHandlerImpl implements PaymentRecordHandler {
                 .updatedDate(event.updatedDate())
                 .build();
         paymentRepository.save(entity);
-        log.info("saved payment = {}");
+        log.info("save payment success");
     }
 
     private void updatePayment(PaymentEvent event) {
