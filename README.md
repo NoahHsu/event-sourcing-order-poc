@@ -1,31 +1,18 @@
 # End Point
-| server       | swagger url                                                                       |
-|--------------|-----------------------------------------------------------------------------------|
-| Command side | http://localhost:8081/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config |
-| Query side   | http://localhost:8082/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config |
+| server          | swagger url                                                                       |
+|-----------------|-----------------------------------------------------------------------------------|
+| Order Command   | http://localhost:8081/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config |
+| Order Query     | http://localhost:8082/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config |
+| Payment Command | http://localhost:8083/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config |
+| Payment Query   | http://localhost:8084/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config |
+| Shipment Command | http://localhost:8085/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config |
+| Shipment Query  | http://localhost:8086/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config |
+
 
 # Aggregate
 order
 payment
 shipment
 
-# Event & Command
-- order created
-  - create payment 
-  - create shipment
-
-- payment created 
-- shipment created
-  - prepare order
-
-- shipment send out
-  - logistic order
-
-- shipment pickup 
-  - finish shipment
-  - finish payment
-
-- payment settled 
-- shipment finished
-  - finish order
+![event storm result](./doc-image/event_storming_result.jpg)
     

@@ -1,6 +1,10 @@
 rootProject.name = 'event-sourcing-order-poc'
 
 include 'common'
-include 'command-side'
-include 'query-side'
+include 'command-side-order'
+include 'query-side-order'
+include 'command-side-payment'
+include 'query-side-payment'
+include 'command-side-shipment'
+include 'query-side-shipment'
 
