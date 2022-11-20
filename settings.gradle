@@ -6,5 +6,5 @@ include 'query-side-order'
 include 'command-side-payment'
 include 'query-side-payment'
 include 'command-side-shipment'
-//include 'query-side-shihpment'
+include 'query-side-shipment'
 

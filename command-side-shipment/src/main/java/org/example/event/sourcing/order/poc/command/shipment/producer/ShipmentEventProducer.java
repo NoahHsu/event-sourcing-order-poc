@@ -7,7 +7,6 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Component;
 
-import static org.example.event.sourcing.order.poc.common.model.event.PaymentEvent.PAYMENT_TOPIC;
 import static org.example.event.sourcing.order.poc.common.model.event.ShipmentEvent.SHIPMENT_TOPIC;
 
 @Component
@@ -22,7 +21,7 @@ public class ShipmentEventProducer {
         Boolean result = kafkaTemplate.executeInTransaction(operations -> {
             final String key = shipmentEvent.id();
             operations
-                    .send(PAYMENT_TOPIC, key, shipmentEvent)
+                    .send(SHIPMENT_TOPIC, key, shipmentEvent)
                     .addCallback(this::onSuccess, this::onFailure);
             return true;
         });

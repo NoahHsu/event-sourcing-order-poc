@@ -21,7 +21,7 @@ public class ShipmentService {
     public Shipment createShipment(Shipment shipment) {
         randomFail();
         boolean isSuccess = shipmentEventProducer.create(
-                getShipmentEvent(shipment.id(), CREATED));
+                getShipmentEvent(shipment.id(), shipment.shipmentMethod(), CREATED));
         if (isSuccess) {
             return shipment;
         } else {
@@ -33,6 +33,16 @@ public class ShipmentService {
         if (RandomUtils.nextBoolean()) {
             throw new RuntimeException("random fail");
         }
+    }
+
+    private ShipmentEvent getShipmentEvent(String id, String shipmentMethod, ShipmentEventName event) {
+        return ShipmentEvent.builder()
+                .id(id)
+                .shipmentMethod(shipmentMethod)
+                .eventName(event)
+                .createdDate(Instant.now())
+                .updatedDate(Instant.now())
+                .build();
     }
 
     private ShipmentEvent getShipmentEvent(String shipmentId, ShipmentEventName event) {

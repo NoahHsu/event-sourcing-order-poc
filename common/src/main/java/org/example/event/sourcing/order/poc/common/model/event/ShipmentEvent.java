@@ -4,7 +4,7 @@ import lombok.Builder;
 
 import java.time.Instant;
 
-public record ShipmentEvent(String id, ShipmentEventName eventName, Instant createdDate, Instant updatedDate) {
+public record ShipmentEvent(String id, String shipmentMethod, ShipmentEventName eventName, Instant createdDate, Instant updatedDate) {
 
     public static final String SHIPMENT_TOPIC = "SHIPMENT";
 
