@@ -8,6 +8,8 @@ public record PaymentEvent(String id, PaymentEventName eventName, String payment
 
     public static final String PAYMENT_TOPIC = "PAYMENT";
 
+    public static final String PAYMENT_EVENT_HANDLER_GROUP_ID = "PAYMENT-HANDLER";
+
     public static final String PAYMENT_STATUS_GROUP_ID_PREFIX = "PAYMENT-STATUS-";
 
     @Builder
