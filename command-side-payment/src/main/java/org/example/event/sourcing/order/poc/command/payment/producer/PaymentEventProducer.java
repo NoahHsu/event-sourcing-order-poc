@@ -22,7 +22,8 @@ public class PaymentEventProducer {
             final String key = paymentEvent.id();
             operations
                     .send(PAYMENT_TOPIC, key, paymentEvent)
-                    .addCallback(this::onSuccess, this::onFailure);
+                    .thenAccept(this::onSuccess)
+                    .exceptionally(this::onFailure);
             return true;
         });
     }
@@ -35,8 +36,9 @@ public class PaymentEventProducer {
                 result.getRecordMetadata().timestamp());
     }
 
-    private void onFailure(final Throwable t) {
+    private Void onFailure(final Throwable t) {
         log.warn("Unable to write Payment to topic {}.", PAYMENT_TOPIC, t);
+        return null;
     }
 
 }
