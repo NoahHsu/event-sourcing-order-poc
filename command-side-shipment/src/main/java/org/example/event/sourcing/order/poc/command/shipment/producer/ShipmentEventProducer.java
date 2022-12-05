@@ -22,7 +22,8 @@ public class ShipmentEventProducer {
             final String key = shipmentEvent.id();
             operations
                     .send(SHIPMENT_TOPIC, key, shipmentEvent)
-                    .addCallback(this::onSuccess, this::onFailure);
+                    .thenAccept(this::onSuccess)
+                    .exceptionally(this::onFailure);
             return true;
         });
     }
@@ -35,8 +36,9 @@ public class ShipmentEventProducer {
                 result.getRecordMetadata().timestamp());
     }
 
-    private void onFailure(final Throwable t) {
+    private Void onFailure(final Throwable t) {
         log.warn("Unable to write Order to topic {}.", SHIPMENT_TOPIC, t);
+        return null;
     }
 
 }
