@@ -17,10 +17,10 @@
   - consume events from Kafka to build data view
   - return query request
 - Event-Handler
-  - consume event from Kafka to send command request to Command-side
+  - consume events from Kafka to send command request to Command-side
 
 ## How to run application
-prepare dependency services by docker-compose
+####prepare dependency services by docker-compose
 ```shell
 # start dependency container services
 make kafka-up
@@ -29,10 +29,14 @@ make kafka-pause
 # stop dependency container services
 make kafka-down
 ```
+#### run applications 
 // TODO add service docker compose
-for now just run each project by `IDE run` or ```./../gradlew bootRun```
 
-## End Point
+for now just run each project bt either following way
+- run by IDE  
+- ```./../gradlew bootRun```
+
+## Endpoint
 
 | server           | swagger url                                 |
 |------------------|---------------------------------------------|
