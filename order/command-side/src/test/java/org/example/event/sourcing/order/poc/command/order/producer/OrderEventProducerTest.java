@@ -69,7 +69,7 @@ class OrderEventProducerTest {
 	}
 
 	@AfterAll
-	void tearDown() {
+	static void tearDown() {
 		inMemoryAppender.stop();
 		((Logger) LoggerFactory.getLogger(OrderEventProducer.class)).detachAppender(inMemoryAppender);
 
