@@ -36,7 +36,7 @@ make kafka-down
 #### run applications 
 // TODO add service docker compose
 
-for now just run each project bt either following way
+for now just run each project by either following way
 - run by IDE  
 - ```./../../gradlew bootRun```
 
