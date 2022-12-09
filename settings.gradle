@@ -1,9 +1,6 @@
 rootProject.name = 'event-sourcing-order-poc'
 
 include 'common'
-include 'command-side-shipment'
-include 'event-handler-shipment'
-include 'query-side-shipment'
 
 include 'order'
 include 'order:command-side'
@@ -20,4 +17,12 @@ include 'payment:event-handler'
 findProject(':payment:event-handler')?.name = 'event-handler'
 include 'payment:query-side'
 findProject(':payment:query-side')?.name = 'query-side'
+
+include 'shipment'
+include 'shipment:command-side'
+findProject(':shipment:command-side')?.name = 'command-side'
+include 'shipment:event-handler'
+findProject(':shipment:event-handler')?.name = 'event-handler'
+include 'shipment:query-side'
+findProject(':shipment:query-side')?.name = 'query-side'
 
