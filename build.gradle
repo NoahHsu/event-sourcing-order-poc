@@ -1,6 +1,7 @@
 plugins {
     id 'org.springframework.boot' version "${springBootVersion}" apply false
-    id 'io.spring.dependency-management' version "${springDependencyVersion}"
+    id 'io.spring.dependency-management' version "${springDependencyVersion}" apply false
+    id 'com.google.cloud.tools.jib' version "${jibVersion}" apply false
     id 'java'
 }
 
