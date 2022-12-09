@@ -34,7 +34,7 @@ make kafka-down
 
 for now just run each project bt either following way
 - run by IDE  
-- ```./../gradlew bootRun```
+- ```./../../gradlew bootRun```
 
 ## Endpoint
 
