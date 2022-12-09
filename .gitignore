@@ -11,6 +11,10 @@ out/
 *.ipr
 .editorconfig
 
+### Eclipse ###
+.classpath
+bin/
+
 ### OSX Env ###
 .DS_Store
 
