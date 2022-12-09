@@ -20,12 +20,16 @@
   - consume events from Kafka to send command request to Command-side
 
 ## How to run application
-####prepare dependency services by docker-compose
+#### prepare dependency services by docker-compose
 ```shell
 # start dependency container services
 make kafka-up
 # pause dependency container services
 make kafka-pause
+# unpause dependency container services
+make kafka-resume
+  # or
+make kafka-unpause
 # stop dependency container services
 make kafka-down
 ```
