@@ -7,7 +7,7 @@ plugins {
 subprojects {
 
     group = 'org.example'
-    version = '0.0.1-SNAPSHOT'
+    version = '0.0.1-Dockerfile'
     sourceCompatibility = '17'
 
     apply plugin: 'java'
