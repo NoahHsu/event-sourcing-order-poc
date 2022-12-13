@@ -15,7 +15,6 @@ import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.TopicPartition;
 import org.assertj.core.api.BDDAssertions;
 import org.example.event.sourcing.order.poc.common.model.event.OrderEvent;
-import org.example.event.sourcing.order.poc.common.test.InMemoryAppender;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,10 +27,12 @@ import org.springframework.kafka.support.SendResult;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.LoggerContext;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.core.read.ListAppender;
 
 class OrderEventProducerTest {
 
-	private static InMemoryAppender inMemoryAppender;
+	private static ListAppender<ILoggingEvent> listAppender;
 
 	@SuppressWarnings("unchecked")
 	private KafkaTemplate<String, OrderEvent> kafkaTemplate = mock(KafkaTemplate.class);
@@ -48,10 +49,10 @@ class OrderEventProducerTest {
 
 	@BeforeAll
 	static void setupLogger() {
-		inMemoryAppender = new InMemoryAppender();
-		inMemoryAppender.setContext((LoggerContext) LoggerFactory.getILoggerFactory());
-		((Logger) LoggerFactory.getLogger(OrderEventProducer.class)).addAppender(inMemoryAppender);
-		inMemoryAppender.start();
+		listAppender = new ListAppender<>();
+		listAppender.setContext((LoggerContext) LoggerFactory.getILoggerFactory());
+		((Logger) LoggerFactory.getLogger(OrderEventProducer.class)).addAppender(listAppender);
+		listAppender.start();
 	}
 
 	@BeforeEach
@@ -65,13 +66,13 @@ class OrderEventProducerTest {
 			callback.doInOperations(kafkaTemplate);
 			return true;
 		});
-		inMemoryAppender.reset();
+		listAppender.list.clear();
 	}
 
 	@AfterAll
 	static void tearDown() {
-		inMemoryAppender.stop();
-		((Logger) LoggerFactory.getLogger(OrderEventProducer.class)).detachAppender(inMemoryAppender);
+		listAppender.stop();
+		((Logger) LoggerFactory.getLogger(OrderEventProducer.class)).detachAppender(listAppender);
 
 	}
 
@@ -100,8 +101,10 @@ class OrderEventProducerTest {
 		orderEventProducer.create(order);
 
 		// verify that sendResult is logged
-		BDDAssertions.then(inMemoryAppender.contains("topic-partition " + topic + "-" + partition, Level.INFO))
-				.isTrue();
+		BDDAssertions.then(listAppender.list).filteredOn(log -> Level.INFO == log.getLevel())
+				.extracting(ILoggingEvent::getFormattedMessage)
+				.anyMatch(s -> s.contains("topic-partition " + topic + "-" + partition));
+
 	}
 
 	@Test
@@ -112,7 +115,9 @@ class OrderEventProducerTest {
 		orderEventProducer.create(order);
 
 		// verify that send failure is logged
-		BDDAssertions.then(inMemoryAppender.contains("Unable to write Order to topic", Level.WARN)).isTrue();
+		BDDAssertions.then(listAppender.list).filteredOn(log -> Level.WARN == log.getLevel())
+				.extracting(ILoggingEvent::getFormattedMessage)
+				.anyMatch(s -> s.contains("Unable to write Order to topic"));
 	}
 
 }
