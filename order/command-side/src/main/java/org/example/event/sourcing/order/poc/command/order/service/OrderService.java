@@ -19,7 +19,6 @@ public class OrderService {
     private final OrderEventProducer orderEventProducer;
 
     public Order createOrder(Order order) {
-        randomFail();
         boolean isSuccess = orderEventProducer.create(new OrderEvent(order.id(), CREATED, Instant.now(), Instant.now()));
         if (isSuccess) {
             return order;
@@ -29,18 +28,11 @@ public class OrderService {
     }
 
     public String completeOrder(String id) {
-        randomFail();
         boolean isSuccess = orderEventProducer.create(new OrderEvent(id, COMPLETED, Instant.now(), Instant.now()));
         if (isSuccess) {
             return "OK";
         } else {
             throw new RuntimeException("complete event fail");
-        }
-    }
-
-    private void randomFail() {
-        if (RandomUtils.nextBoolean()) {
-            throw new RuntimeException("random fail");
         }
     }
 

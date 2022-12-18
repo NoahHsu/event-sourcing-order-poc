@@ -20,7 +20,6 @@ public class PaymentService {
     private final PaymentEventProducer paymentEventProducer;
 
     public Payment createPayment(Payment payment) {
-        randomFail();
         boolean isSuccess = paymentEventProducer.create(
                 getPaymentEvent(payment, CREATED));
         if (isSuccess) {
@@ -30,11 +29,6 @@ public class PaymentService {
         }
     }
 
-    private void randomFail() {
-        if (RandomUtils.nextBoolean()) {
-            throw new RuntimeException("random fail");
-        }
-    }
 
     private PaymentEvent getPaymentEvent(Payment payment, PaymentEventName event) {
         return PaymentEvent.builder()
@@ -47,7 +41,6 @@ public class PaymentService {
     }
 
     public Payment validatePayment(Payment payment) {
-        randomFail();
         PaymentEventName event = isValid(payment) ? VALIDATED : INVALID;
         boolean isSuccess = paymentEventProducer.create(
                 getPaymentEvent(payment, event));
@@ -65,7 +58,6 @@ public class PaymentService {
     }
 
     public Payment confirmPayment(Payment payment) {
-        randomFail();
         boolean isSuccess = paymentEventProducer.create(
                 getPaymentEvent(payment, AUTHORIZED));
         if (isSuccess) {
@@ -76,7 +68,6 @@ public class PaymentService {
     }
 
     public Payment cancelPayment(Payment payment) {
-        randomFail();
         boolean isSuccess = paymentEventProducer.create(
                 getPaymentEvent(payment, CANCELLED));
         if (isSuccess) {
@@ -87,7 +78,6 @@ public class PaymentService {
     }
 
     public Payment settlePayment(Payment payment) {
-        randomFail();
         boolean isSuccess = paymentEventProducer.create(
                 getPaymentEvent(payment, SETTLED));
         if (isSuccess) {
