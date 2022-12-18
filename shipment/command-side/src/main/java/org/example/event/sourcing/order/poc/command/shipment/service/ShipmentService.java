@@ -19,19 +19,12 @@ public class ShipmentService {
     private final ShipmentEventProducer shipmentEventProducer;
 
     public Shipment createShipment(Shipment shipment) {
-        randomFail();
         boolean isSuccess = shipmentEventProducer.create(
                 getShipmentEvent(shipment.id(), shipment.shipmentMethod(), CREATED));
         if (isSuccess) {
             return shipment;
         } else {
             throw new RuntimeException("create shipment event fail");
-        }
-    }
-
-    private void randomFail() {
-        if (RandomUtils.nextBoolean()) {
-            throw new RuntimeException("random fail");
         }
     }
 
@@ -46,7 +39,6 @@ public class ShipmentService {
     }
 
     public boolean prepareShipment(String shipmentId) {
-        randomFail();
         boolean isSuccess = shipmentEventProducer.create(
                 getShipmentEvent(shipmentId, null, PREPARING));
         if (isSuccess) {
@@ -57,7 +49,6 @@ public class ShipmentService {
     }
 
     public boolean sellerSendShipment(String shipmentId) {
-        randomFail();
         boolean isSuccess = shipmentEventProducer.create(
                 getShipmentEvent(shipmentId, null, PROCESSED));
         if (isSuccess) {
@@ -68,7 +59,6 @@ public class ShipmentService {
     }
 
     public boolean dcReceiveShipment(String shipmentId) {
-        randomFail();
         boolean isSuccess = shipmentEventProducer.create(
                 getShipmentEvent(shipmentId, null, ARRIVED_DC));
         if (isSuccess) {
@@ -79,7 +69,6 @@ public class ShipmentService {
     }
 
     public boolean dcSendShipment(String shipmentId) {
-        randomFail();
         boolean isSuccess = shipmentEventProducer.create(
                 getShipmentEvent(shipmentId, null, DEPARTED_DC));
         if (isSuccess) {
@@ -90,7 +79,6 @@ public class ShipmentService {
     }
 
     public boolean deliverShipment(String shipmentId) {
-        randomFail();
         boolean isSuccess = shipmentEventProducer.create(
                 getShipmentEvent(shipmentId, null, DELIVERING));
         if (isSuccess) {
@@ -101,7 +89,6 @@ public class ShipmentService {
     }
 
     public boolean buyerReceiveShipment(String shipmentId) {
-        randomFail();
         boolean isSuccess = shipmentEventProducer.create(
                 getShipmentEvent(shipmentId, null, RECEIVED));
         if (isSuccess) {
