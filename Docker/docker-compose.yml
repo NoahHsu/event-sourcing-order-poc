@@ -1,13 +1,13 @@
 version: "3"
 services:
   zookeeper:
-    image: 'bitnami/zookeeper:latest'
+    image: 'bitnami/zookeeper:${ZOOKEEPER_TAG:-latest}'
     ports:
       - '2181:2181'
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
   kafka:
-    image: 'bitnami/kafka:latest'
+    image: 'bitnami/kafka:${KAFKA_TAG:-latest}'
     ports:
       - '9092:9092'
     environment:
@@ -16,6 +16,96 @@ services:
       - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://127.0.0.1:9092
       - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
       - ALLOW_PLAINTEXT_LISTENER=yes
-      - LOG_RETENTION_HOURS= 26280
+      - LOG_RETENTION_HOURS=26280
     depends_on:
       - zookeeper
+  order-command:
+    image: 'noahhsu/espoc/order/command-side:${APP_TAG:-0.0.1-SNAPSHOT}'
+    ports:
+      - '8081:8081'
+    depends_on:
+      - kafka
+    profiles:
+      - all
+      - order
+      - command
+  order-handler:
+    image: 'noahhsu/espoc/order/event-handler:${APP_TAG:-0.0.1-SNAPSHOT}'
+    ports:
+      - '8082:8082'
+    depends_on:
+      - kafka
+    profiles:
+      - all
+      - order
+      - handler
+  order-query:
+    image: 'noahhsu/espoc/order/query-side:${APP_TAG:-0.0.1-SNAPSHOT}'
+    ports:
+      - '8083:8083'
+    depends_on:
+      - kafka
+    profiles:
+      - all
+      - order
+      - query
+  payment-command:
+    image: 'noahhsu/espoc/payment/command-side:${APP_TAG:-0.0.1-SNAPSHOT}'
+    ports:
+      - '8084:8084'
+    depends_on:
+      - kafka
+    profiles:
+      - all
+      - payment
+      - command
+  payment-handler:
+    image: 'noahhsu/espoc/payment/event-handler:${APP_TAG:-0.0.1-SNAPSHOT}'
+    ports:
+      - '8085:8085'
+    depends_on:
+      - kafka
+    profiles:
+      - all
+      - payment
+      - handler
+  payment-query:
+    image: 'noahhsu/espoc/payment/query-side:${APP_TAG:-0.0.1-SNAPSHOT}'
+    ports:
+      - '8086:8086'
+    depends_on:
+      - kafka
+    profiles:
+      - all
+      - payment
+      - query
+  shipment-command:
+    image: 'noahhsu/espoc/shipment/command-side:${APP_TAG:-0.0.1-SNAPSHOT}'
+    ports:
+      - '8087:8087'
+    depends_on:
+      - kafka
+    profiles:
+      - all
+      - shipment
+      - command
+  shipment-handler:
+    image: 'noahhsu/espoc/shipment/event-handler:${APP_TAG:-0.0.1-SNAPSHOT}'
+    ports:
+      - '8088:8088'
+    depends_on:
+      - kafka
+    profiles:
+      - all
+      - shipment
+      - handler
+  shipment-query:
+    image: 'noahhsu/espoc/shipment/query-side:${APP_TAG:-0.0.1-SNAPSHOT}'
+    ports:
+      - '8089:8089'
+    depends_on:
+      - kafka
+    profiles:
+      - all
+      - shipment
+      - query
