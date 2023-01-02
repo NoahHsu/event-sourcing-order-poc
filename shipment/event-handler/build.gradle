@@ -2,6 +2,7 @@ plugins {
     id 'com.google.cloud.tools.jib'
 }
 jib.to.image = "noahhsu/espoc/shipment/${project.name}:${version}"
+jib.to.tags = ["latest"]
 
 dependencies {
     implementation project(":common")

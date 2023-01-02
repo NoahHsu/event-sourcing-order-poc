@@ -1,26 +1,7 @@
 version: "3"
 services:
-  zookeeper:
-    image: 'bitnami/zookeeper:${ZOOKEEPER_TAG:-latest}'
-    ports:
-      - '2181:2181'
-    environment:
-      - ALLOW_ANONYMOUS_LOGIN=yes
-  kafka:
-    image: 'bitnami/kafka:${KAFKA_TAG:-latest}'
-    ports:
-      - '9092:9092'
-    environment:
-      - KAFKA_BROKER_ID=1
-      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092
-      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://127.0.0.1:9092
-      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
-      - ALLOW_PLAINTEXT_LISTENER=yes
-      - LOG_RETENTION_HOURS=26280
-    depends_on:
-      - zookeeper
   order-command:
-    image: 'noahhsu/espoc/order/command-side:${APP_TAG:-0.0.1-SNAPSHOT}'
+    image: 'noahhsu/espoc/order/command-side:${APP_TAG:-latest}'
     ports:
       - '8081:8081'
     depends_on:
@@ -29,8 +10,10 @@ services:
       - all
       - order
       - command
+    networks:
+      - espoc
   order-handler:
-    image: 'noahhsu/espoc/order/event-handler:${APP_TAG:-0.0.1-SNAPSHOT}'
+    image: 'noahhsu/espoc/order/event-handler:${APP_TAG:-latest}'
     ports:
       - '8082:8082'
     depends_on:
@@ -39,8 +22,10 @@ services:
       - all
       - order
       - handler
+    networks:
+      - espoc
   order-query:
-    image: 'noahhsu/espoc/order/query-side:${APP_TAG:-0.0.1-SNAPSHOT}'
+    image: 'noahhsu/espoc/order/query-side:${APP_TAG:-latest}'
     ports:
       - '8083:8083'
     depends_on:
@@ -49,8 +34,10 @@ services:
       - all
       - order
       - query
+    networks:
+      - espoc
   payment-command:
-    image: 'noahhsu/espoc/payment/command-side:${APP_TAG:-0.0.1-SNAPSHOT}'
+    image: 'noahhsu/espoc/payment/command-side:${APP_TAG:-latest}'
     ports:
       - '8084:8084'
     depends_on:
@@ -59,8 +46,10 @@ services:
       - all
       - payment
       - command
+    networks:
+      - espoc
   payment-handler:
-    image: 'noahhsu/espoc/payment/event-handler:${APP_TAG:-0.0.1-SNAPSHOT}'
+    image: 'noahhsu/espoc/payment/event-handler:${APP_TAG:-latest}'
     ports:
       - '8085:8085'
     depends_on:
@@ -69,8 +58,10 @@ services:
       - all
       - payment
       - handler
+    networks:
+      - espoc
   payment-query:
-    image: 'noahhsu/espoc/payment/query-side:${APP_TAG:-0.0.1-SNAPSHOT}'
+    image: 'noahhsu/espoc/payment/query-side:${APP_TAG:-latest}'
     ports:
       - '8086:8086'
     depends_on:
@@ -79,8 +70,10 @@ services:
       - all
       - payment
       - query
+    networks:
+      - espoc
   shipment-command:
-    image: 'noahhsu/espoc/shipment/command-side:${APP_TAG:-0.0.1-SNAPSHOT}'
+    image: 'noahhsu/espoc/shipment/command-side:${APP_TAG:-latest}'
     ports:
       - '8087:8087'
     depends_on:
@@ -89,8 +82,10 @@ services:
       - all
       - shipment
       - command
+    networks:
+      - espoc
   shipment-handler:
-    image: 'noahhsu/espoc/shipment/event-handler:${APP_TAG:-0.0.1-SNAPSHOT}'
+    image: 'noahhsu/espoc/shipment/event-handler:${APP_TAG:-latest}'
     ports:
       - '8088:8088'
     depends_on:
@@ -99,8 +94,10 @@ services:
       - all
       - shipment
       - handler
+    networks:
+      - espoc
   shipment-query:
-    image: 'noahhsu/espoc/shipment/query-side:${APP_TAG:-0.0.1-SNAPSHOT}'
+    image: 'noahhsu/espoc/shipment/query-side:${APP_TAG:-latest}'
     ports:
       - '8089:8089'
     depends_on:
@@ -109,3 +106,8 @@ services:
       - all
       - shipment
       - query
+    networks:
+      - espoc
+
+networks:
+  espoc:
