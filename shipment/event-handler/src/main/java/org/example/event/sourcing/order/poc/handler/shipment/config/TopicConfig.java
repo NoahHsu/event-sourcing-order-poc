@@ -8,7 +8,7 @@ import org.springframework.kafka.config.TopicBuilder;
 import static org.example.event.sourcing.order.poc.common.model.event.ShipmentEvent.SHIPMENT_TOPIC;
 import static org.example.event.sourcing.order.poc.common.model.event.ShipmentEvent.SHIPMENT_TOPIC_PARTITION;
 
-@Configuration
+@Configuration(proxyBeanMethods = false)
 public class TopicConfig {
 
     @Bean
