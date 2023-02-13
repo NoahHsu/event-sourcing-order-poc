@@ -6,21 +6,17 @@ import org.example.event.sourcing.order.poc.client.order.config.OrderCommandClie
 import org.example.event.sourcing.order.poc.common.model.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.io.IOException;
 import java.util.Map;
 
 import static org.assertj.core.api.BDDAssertions.then;
 
-@EnableConfigurationProperties
-@ExtendWith({SpringExtension.class, MockitoExtension.class})
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {OrderCommandClientConfig.class, OrderCommandMockServerConfig.class})
 class OrderCommandClientTest {
 
