@@ -1,7 +1,8 @@
 dependencies {
     implementation project(":common")
     implementation 'org.springframework.boot:spring-boot-starter'
-    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    implementation 'io.github.openfeign:feign-core'
+    implementation 'io.github.openfeign:feign-slf4j'
     implementation 'io.github.openfeign:feign-jackson'
     runtimeOnly 'org.springframework.boot:spring-boot-starter-webflux'
 
