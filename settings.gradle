@@ -1,6 +1,7 @@
 rootProject.name = 'event-sourcing-order-poc'
 
 include 'common'
+include 'client'
 
 include 'order'
 include 'order:command-side'
