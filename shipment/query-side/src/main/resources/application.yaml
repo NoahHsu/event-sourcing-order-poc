@@ -18,7 +18,7 @@ spring:
   application:
     name: query-side-shipment
   kafka:
-    bootstrapServers: localhost:9092
+    bootstrapServers: ${KAFKA_HOST:localhost}:${KAFKA_PORT:9092}
     consumer:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer

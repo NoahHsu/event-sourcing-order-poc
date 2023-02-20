@@ -5,10 +5,10 @@ spring:
   application:
     name: command-side-order
   kafka:
-    bootstrapServers: localhost:9092
+    bootstrapServers: ${KAFKA_HOST:localhost}:${KAFKA_PORT:9092}
     producer:
       retries: 3
-      bootstrapServers: localhost:9092
+      bootstrapServers: ${KAFKA_HOST:localhost}:${KAFKA_PORT:9092}
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-Serializer: org.springframework.kafka.support.serializer.JsonSerializer
       transaction-id-prefix: poc-es
