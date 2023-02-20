@@ -1,7 +1,6 @@
 package org.example.event.sourcing.order.poc.command.order.service;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.RandomUtils;
 import org.example.event.sourcing.order.poc.command.order.producer.OrderEventProducer;
 import org.example.event.sourcing.order.poc.common.model.Order;
 import org.example.event.sourcing.order.poc.common.model.event.OrderEvent;
@@ -19,7 +18,6 @@ public class OrderService {
     private final OrderEventProducer orderEventProducer;
 
     public Order createOrder(Order order) {
-        randomFail();
         boolean isSuccess = orderEventProducer.create(new OrderEvent(order.id(), CREATED, Instant.now(), Instant.now()));
         if (isSuccess) {
             return order;
@@ -29,18 +27,11 @@ public class OrderService {
     }
 
     public String completeOrder(String id) {
-        randomFail();
         boolean isSuccess = orderEventProducer.create(new OrderEvent(id, COMPLETED, Instant.now(), Instant.now()));
         if (isSuccess) {
             return "OK";
         } else {
             throw new RuntimeException("complete event fail");
-        }
-    }
-
-    private void randomFail() {
-        if (RandomUtils.nextBoolean()) {
-            throw new RuntimeException("random fail");
         }
     }
 

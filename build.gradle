@@ -26,8 +26,10 @@ subprojects {
     }
 
     dependencyManagement {
+
         imports {
             mavenBom SpringBootPlugin.BOM_COORDINATES
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
         }
     }
 

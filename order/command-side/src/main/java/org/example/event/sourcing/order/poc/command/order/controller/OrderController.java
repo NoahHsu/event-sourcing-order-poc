@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "api/v1/orders", produces = MediaType.APPLICATION_JSON_VALUE, consumes =  MediaType.APPLICATION_JSON_VALUE)
@@ -16,14 +18,14 @@ public class OrderController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
-    public Order createOrder(@RequestBody Order order){
+    public Order createOrder(@RequestBody Order order) {
         return orderService.createOrder(order);
     }
 
-    @PutMapping("/{id}")
+    @PostMapping("/complete")
     @ResponseStatus(HttpStatus.OK)
-    public String completeOrder(@PathVariable String orderId){
-        return orderService.completeOrder(orderId);
+    public Map<String, String> completeOrder(@RequestBody Order order) {
+        return Map.of("result", orderService.completeOrder(order.id()));
     }
 
 }
