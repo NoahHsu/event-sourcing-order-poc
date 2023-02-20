@@ -13,3 +13,5 @@ bootJar {
 jar {
     enabled = true
 }
+
+tasks.findAll { it.name.startsWith("jib") }.forEach { it.enabled = false }

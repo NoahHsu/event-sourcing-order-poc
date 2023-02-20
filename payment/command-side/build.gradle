@@ -1,6 +1,3 @@
-plugins {
-    id 'com.google.cloud.tools.jib'
-}
 jib.to.image = "noahhsu/espoc/payment/${project.name}:${version}"
 
 dependencies {

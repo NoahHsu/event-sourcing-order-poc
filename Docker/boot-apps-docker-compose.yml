@@ -1,0 +1,113 @@
+version: "3"
+services:
+  order-command:
+    image: 'noahhsu/espoc/order/command-side:${APP_TAG:-latest}'
+    ports:
+      - '8081:8081'
+    depends_on:
+      - kafka
+    profiles:
+      - all
+      - order
+      - command
+    networks:
+      - espoc
+  order-handler:
+    image: 'noahhsu/espoc/order/event-handler:${APP_TAG:-latest}'
+    ports:
+      - '8082:8082'
+    depends_on:
+      - kafka
+    profiles:
+      - all
+      - order
+      - handler
+    networks:
+      - espoc
+  order-query:
+    image: 'noahhsu/espoc/order/query-side:${APP_TAG:-latest}'
+    ports:
+      - '8083:8083'
+    depends_on:
+      - kafka
+    profiles:
+      - all
+      - order
+      - query
+    networks:
+      - espoc
+  payment-command:
+    image: 'noahhsu/espoc/payment/command-side:${APP_TAG:-latest}'
+    ports:
+      - '8084:8084'
+    depends_on:
+      - kafka
+    profiles:
+      - all
+      - payment
+      - command
+    networks:
+      - espoc
+  payment-handler:
+    image: 'noahhsu/espoc/payment/event-handler:${APP_TAG:-latest}'
+    ports:
+      - '8085:8085'
+    depends_on:
+      - kafka
+    profiles:
+      - all
+      - payment
+      - handler
+    networks:
+      - espoc
+  payment-query:
+    image: 'noahhsu/espoc/payment/query-side:${APP_TAG:-latest}'
+    ports:
+      - '8086:8086'
+    depends_on:
+      - kafka
+    profiles:
+      - all
+      - payment
+      - query
+    networks:
+      - espoc
+  shipment-command:
+    image: 'noahhsu/espoc/shipment/command-side:${APP_TAG:-latest}'
+    ports:
+      - '8087:8087'
+    depends_on:
+      - kafka
+    profiles:
+      - all
+      - shipment
+      - command
+    networks:
+      - espoc
+  shipment-handler:
+    image: 'noahhsu/espoc/shipment/event-handler:${APP_TAG:-latest}'
+    ports:
+      - '8088:8088'
+    depends_on:
+      - kafka
+    profiles:
+      - all
+      - shipment
+      - handler
+    networks:
+      - espoc
+  shipment-query:
+    image: 'noahhsu/espoc/shipment/query-side:${APP_TAG:-latest}'
+    ports:
+      - '8089:8089'
+    depends_on:
+      - kafka
+    profiles:
+      - all
+      - shipment
+      - query
+    networks:
+      - espoc
+
+networks:
+  espoc:

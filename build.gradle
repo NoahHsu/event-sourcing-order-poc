@@ -1,3 +1,5 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
 plugins {
     id 'org.springframework.boot' version "${springBootVersion}" apply false
     id 'io.spring.dependency-management' version "${springDependencyVersion}" apply false
@@ -15,6 +17,9 @@ subprojects {
     apply plugin: 'io.spring.dependency-management'
     apply plugin: 'org.springframework.boot'
     apply plugin: 'java-library'
+    apply plugin: 'com.google.cloud.tools.jib'
+
+    jib.to.tags = ["latest"]
 
     repositories {
         mavenCentral()
@@ -23,8 +28,8 @@ subprojects {
     dependencyManagement {
 
         imports {
+            mavenBom SpringBootPlugin.BOM_COORDINATES
             mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-            mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
         }
     }
 
@@ -38,6 +43,7 @@ subprojects {
         compileOnly 'org.projectlombok:lombok:1.18.20'
         annotationProcessor 'org.projectlombok:lombok:1.18.20'
     }
+
     test {
         useJUnitPlatform()
     }
