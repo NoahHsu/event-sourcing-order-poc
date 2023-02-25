@@ -21,3 +21,6 @@ bin/
 ### LSP for java ###
 .project
 .settings/
+
+### Monitoring data
+Docker/tempo-data/
