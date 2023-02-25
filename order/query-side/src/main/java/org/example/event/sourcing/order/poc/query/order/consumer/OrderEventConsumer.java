@@ -1,5 +1,6 @@
 package org.example.event.sourcing.order.poc.query.order.consumer;
 
+import io.micrometer.observation.annotation.Observed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.event.sourcing.order.poc.common.model.event.OrderEvent;
@@ -14,6 +15,7 @@ import static org.example.event.sourcing.order.poc.common.model.event.OrderEvent
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Observed
 public class OrderEventConsumer {
 
     private final OrderRecordHandler orderRecordHandler;
