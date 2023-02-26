@@ -3,7 +3,6 @@ package org.example.event.sourcing.order.poc.handler.order.domain.impl;
 import io.micrometer.observation.annotation.Observed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.event.sourcing.order.poc.common.annotation.LogInfo;
 import org.example.event.sourcing.order.poc.common.model.event.OrderEvent;
 import org.example.event.sourcing.order.poc.handler.order.domain.OrderEventHandler;
 import org.springframework.stereotype.Component;
@@ -14,7 +13,6 @@ import java.util.concurrent.CompletableFuture;
 @Slf4j
 @RequiredArgsConstructor
 @Observed
-@LogInfo
 public class OrderEventHandlerImpl implements OrderEventHandler {
 
     @Override

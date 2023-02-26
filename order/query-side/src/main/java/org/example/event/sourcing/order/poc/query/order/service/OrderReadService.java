@@ -3,7 +3,6 @@ package org.example.event.sourcing.order.poc.query.order.service;
 import io.micrometer.observation.annotation.Observed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.event.sourcing.order.poc.common.annotation.LogInfo;
 import org.example.event.sourcing.order.poc.query.order.domain.entity.OrderEventRecord;
 import org.example.event.sourcing.order.poc.query.order.domain.entity.OrderRecord;
 import org.example.event.sourcing.order.poc.query.order.domain.repo.OrderEventRepository;
@@ -16,7 +15,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 @Observed
-@LogInfo
 public class OrderReadService {
 
     private final OrderRepository orderRepository;

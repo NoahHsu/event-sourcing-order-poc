@@ -13,8 +13,8 @@ public class LogAspect extends AbstractLogAspect {
     @Override
     @Around("@annotation(org.example.event.sourcing.order.poc.common.annotation.LogInfo)" +
             "|| @within(org.example.event.sourcing.order.poc.common.annotation.LogInfo)")
-    public Object logInfo(ProceedingJoinPoint joinPoint) throws Throwable {
-        return super.logInfo(joinPoint);
+    public Object logInfoAround(ProceedingJoinPoint joinPoint) throws Throwable {
+        return super.logInfoAround(joinPoint);
     }
 
 }

@@ -756,7 +756,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by(uri)(rate(http_server_requests_seconds_count{application=\"$app_name\"}[1m]))",
+          "expr": "sum by(uri)(rate(http_server_requests_seconds_count{application=\"$app_name\", uri!=\"/actuator/prometheus\"}[1m]))",
           "interval": "",
           "legendFormat": "{{uri}}",
           "range": true,
