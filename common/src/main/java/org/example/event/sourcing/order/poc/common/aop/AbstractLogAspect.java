@@ -39,23 +39,15 @@ public class AbstractLogAspect {
     }
 
     public void logBefore(ProceedingJoinPoint joinPoint) {
-
         LogInfo logInfo = getLogInfo(joinPoint);
-
         Logger log = LoggerFactory.getLogger(logInfo.declaringType);
-
         logBefore(logInfo, log);
-
     }
 
     public void logAfter(ProceedingJoinPoint joinPoint) {
-
         LogInfo logInfo = getLogInfo(joinPoint);
-
         Logger log = LoggerFactory.getLogger(logInfo.declaringType);
-
         logAfter(logInfo, log);
-
     }
     private record LogInfo(
             @NotNull
