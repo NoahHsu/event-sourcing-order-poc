@@ -2,7 +2,9 @@ name: Gradle try build
 
 on:
   pull_request:
-    branches: [ "master" ]
+    paths:
+      - '**.java'
+
 
 permissions:
   contents: read
