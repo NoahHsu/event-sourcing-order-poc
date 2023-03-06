@@ -1,4 +1,4 @@
-jib.to.image = "noahhsu/espoc/shipment/${project.name}:${version}"
+jib.to.image = "noahhsu/espoc-shipment-${project.name}:${version}"
 
 dependencies {
     implementation project(":common")
