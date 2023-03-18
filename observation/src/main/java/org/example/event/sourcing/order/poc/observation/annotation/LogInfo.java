@@ -1,4 +1,4 @@
-package org.example.event.sourcing.order.poc.common.annotation;
+package org.example.event.sourcing.order.poc.observation.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -2,8 +2,8 @@ package org.example.event.sourcing.order.poc.query.order.domain.handler.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.event.sourcing.order.poc.common.annotation.LogInfo;
 import org.example.event.sourcing.order.poc.common.model.event.OrderEvent;
+import org.example.event.sourcing.order.poc.observation.annotation.LogInfo;
 import org.example.event.sourcing.order.poc.query.order.domain.entity.OrderRecord;
 import org.example.event.sourcing.order.poc.query.order.domain.entity.OrderStatus;
 import org.example.event.sourcing.order.poc.query.order.domain.handler.OrderRecordHandler;

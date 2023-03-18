@@ -1,14 +1,11 @@
-package org.example.event.sourcing.order.poc.query.order.config;
+package org.example.event.sourcing.order.poc.observation.aop;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.example.event.sourcing.order.poc.common.aop.AbstractLogAspect;
-import org.springframework.stereotype.Component;
 
 @Aspect
-@Component
-public class LogAspect extends AbstractLogAspect {
+public class DefaultLogAspect extends AbstractLogAspect {
 
     @Override
     @Around("@annotation(org.example.event.sourcing.order.poc.common.annotation.LogInfo)" +

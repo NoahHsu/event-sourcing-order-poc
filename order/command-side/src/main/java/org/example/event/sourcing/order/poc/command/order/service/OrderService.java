@@ -3,9 +3,9 @@ package org.example.event.sourcing.order.poc.command.order.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.event.sourcing.order.poc.command.order.producer.OrderEventProducer;
-import org.example.event.sourcing.order.poc.common.annotation.LogInfo;
 import org.example.event.sourcing.order.poc.common.model.Order;
 import org.example.event.sourcing.order.poc.common.model.event.OrderEvent;
+import org.example.event.sourcing.order.poc.observation.annotation.LogInfo;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
