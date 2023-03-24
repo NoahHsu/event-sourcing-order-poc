@@ -2,10 +2,12 @@ package org.example.event.sourcing.order.poc.client.order;
 
 import feign.Headers;
 import feign.RequestLine;
+import io.micrometer.observation.annotation.Observed;
 import org.example.event.sourcing.order.poc.common.model.Order;
 
 import java.util.Map;
 
+@Observed
 public interface OrderCommandClient {
 
     String BASE_PATH = "/api/v1/orders";

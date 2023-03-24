@@ -1,5 +1,6 @@
 package org.example.event.sourcing.order.poc.handler.order.consumer;
 
+import io.micrometer.observation.annotation.Observed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.event.sourcing.order.poc.common.model.event.OrderEvent;
@@ -14,6 +15,7 @@ import static org.example.event.sourcing.order.poc.common.model.event.OrderEvent
 @Component
 @Slf4j
 @RequiredArgsConstructor
+@Observed
 public class OrderConsumer {
 
     private final OrderEventHandler orderEventHandler;
@@ -28,4 +30,5 @@ public class OrderConsumer {
             log.warn("Fail to handle event {}.", orderEvent);
         }
     }
+
 }

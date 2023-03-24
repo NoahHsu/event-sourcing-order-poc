@@ -1,0 +1,2 @@
+org.example.event.sourcing.order.poc.observation.config.ObserveConfiguration
+org.example.event.sourcing.order.poc.observation.config.LogAspectConfig

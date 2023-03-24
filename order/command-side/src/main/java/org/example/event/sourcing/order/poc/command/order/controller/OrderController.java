@@ -1,5 +1,6 @@
 package org.example.event.sourcing.order.poc.command.order.controller;
 
+import io.micrometer.observation.annotation.Observed;
 import lombok.RequiredArgsConstructor;
 import org.example.event.sourcing.order.poc.command.order.service.OrderService;
 import org.example.event.sourcing.order.poc.common.model.Order;
@@ -12,6 +13,7 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "api/v1/orders", produces = MediaType.APPLICATION_JSON_VALUE, consumes =  MediaType.APPLICATION_JSON_VALUE)
+@Observed
 public class OrderController {
 
     private final OrderService orderService;

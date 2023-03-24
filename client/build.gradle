@@ -3,9 +3,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'io.github.openfeign:feign-core'
     implementation 'io.github.openfeign:feign-slf4j'
+    implementation 'io.github.openfeign:feign-micrometer:12.1'
     implementation 'io.github.openfeign:feign-jackson'
     runtimeOnly 'org.springframework.boot:spring-boot-starter-webflux'
-
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.junit.jupiter:junit-jupiter-api'
@@ -20,3 +20,5 @@ bootJar {
 jar {
     enabled = true
 }
+
+tasks.findAll { it.name.startsWith("jib") }.forEach { it.enabled = false }

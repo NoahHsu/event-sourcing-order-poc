@@ -1,9 +1,11 @@
 package org.example.event.sourcing.order.poc.command.order.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.event.sourcing.order.poc.command.order.producer.OrderEventProducer;
 import org.example.event.sourcing.order.poc.common.model.Order;
 import org.example.event.sourcing.order.poc.common.model.event.OrderEvent;
+import org.example.event.sourcing.order.poc.observation.annotation.LogInfo;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -13,6 +15,8 @@ import static org.example.event.sourcing.order.poc.common.model.event.OrderEvent
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
+@LogInfo
 public class OrderService {
 
     private final OrderEventProducer orderEventProducer;
@@ -22,6 +26,7 @@ public class OrderService {
         if (isSuccess) {
             return order;
         } else {
+            log.warn("createOrder fail", order);
             throw new RuntimeException("create event fail");
         }
     }

@@ -1,5 +1,6 @@
 package org.example.event.sourcing.order.poc.handler.order.domain.impl;
 
+import io.micrometer.observation.annotation.Observed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.event.sourcing.order.poc.common.model.event.OrderEvent;
@@ -11,6 +12,7 @@ import java.util.concurrent.CompletableFuture;
 @Component
 @Slf4j
 @RequiredArgsConstructor
+@Observed
 public class OrderEventHandlerImpl implements OrderEventHandler {
 
     @Override
@@ -27,7 +29,7 @@ public class OrderEventHandlerImpl implements OrderEventHandler {
     }
 
     private void handleOrderEvent(OrderEvent event) {
-        log.info(event.toString());
+        log.info("call some api on {}", event);
     }
 
 }

@@ -22,6 +22,8 @@
 ## How to run application
 #### prepare dependency services by docker-compose
 ```shell
+# observability for application on localhost 
+docker compose -f Docker/observe-docker-compose.yaml up
 # start dependency container services
 make kafka-up
 # pause dependency container services
