@@ -2,6 +2,9 @@ package org.example.event.sourcing.order.poc.command.order.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.event.sourcing.order.poc.client.order.OrderQueryClient;
+import org.example.event.sourcing.order.poc.client.order.model.V1Order;
+import org.example.event.sourcing.order.poc.client.order.model.V1OrderStatus;
 import org.example.event.sourcing.order.poc.command.order.producer.OrderEventProducer;
 import org.example.event.sourcing.order.poc.common.model.Order;
 import org.example.event.sourcing.order.poc.common.model.event.OrderEvent;
@@ -19,10 +22,11 @@ import static org.example.event.sourcing.order.poc.common.model.event.OrderEvent
 @LogInfo
 public class OrderService {
 
+    private final OrderQueryClient orderQueryClient;
     private final OrderEventProducer orderEventProducer;
 
     public Order createOrder(Order order) {
-        boolean isSuccess = orderEventProducer.create(new OrderEvent(order.id(), CREATED, Instant.now(), Instant.now()));
+        boolean isSuccess = orderEventProducer.create(new OrderEvent(order.id(), CREATED, Instant.now()));
         if (isSuccess) {
             return order;
         } else {
@@ -32,11 +36,12 @@ public class OrderService {
     }
 
     public String completeOrder(String id) {
-        boolean isSuccess = orderEventProducer.create(new OrderEvent(id, COMPLETED, Instant.now(), Instant.now()));
-        if (isSuccess) {
+        V1Order result = orderQueryClient.get(id);
+        if (result.status() == V1OrderStatus.CREATED) {
+            orderEventProducer.create(new OrderEvent(id, COMPLETED, Instant.now()));
             return "OK";
         } else {
-            throw new RuntimeException("complete event fail");
+            throw new RuntimeException("order(id = {}) is not in right status.");
         }
     }
 

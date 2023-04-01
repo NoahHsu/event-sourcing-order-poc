@@ -54,7 +54,7 @@ class OrderEventProducerTest {
 
     @BeforeEach
     void setup() {
-        order = new OrderEvent(orderId, CREATED, Instant.now(), Instant.now());
+        order = new OrderEvent(orderId, CREATED, Instant.now());
         sendResult = buildSendResult();
         listAppender.list.clear();
     }
