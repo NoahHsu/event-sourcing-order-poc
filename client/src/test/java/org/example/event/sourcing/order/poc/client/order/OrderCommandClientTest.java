@@ -7,6 +7,7 @@ import org.example.event.sourcing.order.poc.common.model.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
@@ -17,10 +18,11 @@ import java.util.Map;
 import static org.assertj.core.api.BDDAssertions.then;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {OrderCommandClientConfig.class, OrderCommandMockServerConfig.class})
+@ContextConfiguration(classes = {OrderCommandClientConfig.class, OrderMockServerConfig.class})
 class OrderCommandClientTest {
 
     @Autowired
+    @Qualifier("mockOrderCommandServer")
     private WireMockServer mockOrderCommandServer;
 
     @Autowired
