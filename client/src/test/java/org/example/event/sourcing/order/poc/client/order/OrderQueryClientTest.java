@@ -19,7 +19,7 @@ import static org.example.event.sourcing.order.poc.client.order.model.V1OrderSta
 import static org.springframework.hateoas.MediaTypes.HAL_JSON_VALUE;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {OrderQueryClientConfig.class, OrderMockServerConfig.class})
+@ContextConfiguration(classes = {OrderQueryClientConfig.class, OrderMockQueryServerConfig.class})
 class OrderQueryClientTest {
 
     @Autowired

@@ -18,7 +18,7 @@ import java.util.Map;
 import static org.assertj.core.api.BDDAssertions.then;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {OrderCommandClientConfig.class, OrderMockServerConfig.class})
+@ContextConfiguration(classes = {OrderCommandClientConfig.class, OrderMockCommandServerConfig.class})
 class OrderCommandClientTest {
 
     @Autowired
