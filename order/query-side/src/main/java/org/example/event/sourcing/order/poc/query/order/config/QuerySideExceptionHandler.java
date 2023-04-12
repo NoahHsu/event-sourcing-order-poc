@@ -20,7 +20,7 @@ public class QuerySideExceptionHandler {
         e.getConstraintViolations().stream().forEach(fieldError -> {
             Map<String, Object> error = new HashMap<>();
             error.put("path", String.valueOf(fieldError.getPropertyPath()));
-            error.put("messgae", fieldError.getMessage());
+            error.put("message", fieldError.getMessage());
             errors.add(error);
         });
         HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
