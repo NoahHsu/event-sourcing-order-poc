@@ -1,9 +1,8 @@
-name: Gradle try build
+name: PR check
 
 on:
-  push:
-    tags:
-      - 'v*'
+  pull_request:
+    branches: [ "master" ]
 
 permissions:
   contents: read
@@ -21,5 +20,5 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: 'gradle'
-      - name: Build Image with Jib
-        run: ./gradlew jib -Djib.to.tags=${{  github.ref_name }},'latest' -Djib.to.auth.username=${{ secrets.REGISTRY_USER }} -Djib.to.auth.password=${{ secrets.REGISTRY_PASSWORD }}
+      - name: Build with Gradle
+        run: ./gradlew build --no-daemon
