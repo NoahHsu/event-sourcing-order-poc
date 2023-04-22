@@ -12,6 +12,8 @@ services:
       - command
     networks:
       - espoc
+    env_file:
+      - ./config/.env.docker
   order-handler:
     image: 'noahhsu/espoc-order-event-handler:${APP_TAG:-latest}'
     ports:
@@ -24,6 +26,8 @@ services:
       - handler
     networks:
       - espoc
+    env_file:
+      - ./config/.env.docker
   order-query:
     image: 'noahhsu/espoc-order-query-side:${APP_TAG:-latest}'
     ports:
@@ -36,6 +40,8 @@ services:
       - query
     networks:
       - espoc
+    env_file:
+      - ./config/.env.docker
   payment-command:
     image: 'noahhsu/espoc-payment-command-side:${APP_TAG:-latest}'
     ports:
@@ -48,6 +54,8 @@ services:
       - command
     networks:
       - espoc
+    env_file:
+      - ./config/.env.docker
   payment-handler:
     image: 'noahhsu/espoc-payment-event-handler:${APP_TAG:-latest}'
     ports:
@@ -60,6 +68,8 @@ services:
       - handler
     networks:
       - espoc
+    env_file:
+      - ./config/.env.docker
   payment-query:
     image: 'noahhsu/espoc-payment-query-side:${APP_TAG:-latest}'
     ports:
@@ -72,6 +82,8 @@ services:
       - query
     networks:
       - espoc
+    env_file:
+      - ./config/.env.docker
   shipment-command:
     image: 'noahhsu/espoc-shipment-command-side:${APP_TAG:-latest}'
     ports:
@@ -84,6 +96,8 @@ services:
       - command
     networks:
       - espoc
+    env_file:
+      - ./config/.env.docker
   shipment-handler:
     image: 'noahhsu/espoc-shipment-event-handler:${APP_TAG:-latest}'
     ports:
@@ -96,6 +110,8 @@ services:
       - handler
     networks:
       - espoc
+    env_file:
+      - ./config/.env.docker
   shipment-query:
     image: 'noahhsu/espoc-shipment-query-side:${APP_TAG:-latest}'
     ports:
@@ -108,6 +124,8 @@ services:
       - query
     networks:
       - espoc
+    env_file:
+      - ./config/.env.docker
 
 networks:
   espoc:
