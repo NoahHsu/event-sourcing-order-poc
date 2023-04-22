@@ -5,13 +5,13 @@ import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.example.event.sourcing.order.poc.command.payment.producer.PaymentEventProducer;
 import org.example.event.sourcing.order.poc.common.model.Payment;
-import org.example.event.sourcing.order.poc.common.model.event.PaymentEvent;
-import org.example.event.sourcing.order.poc.common.model.event.PaymentEventName;
+import org.example.event.sourcing.order.poc.event.model.PaymentEvent;
+import org.example.event.sourcing.order.poc.event.model.PaymentEventName;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 
-import static org.example.event.sourcing.order.poc.common.model.event.PaymentEventName.*;
+import static org.example.event.sourcing.order.poc.event.model.PaymentEventName.*;
 
 @Service
 @RequiredArgsConstructor

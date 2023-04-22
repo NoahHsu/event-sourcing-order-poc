@@ -4,13 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomUtils;
 import org.example.event.sourcing.order.poc.command.shipment.producer.ShipmentEventProducer;
 import org.example.event.sourcing.order.poc.common.model.Shipment;
-import org.example.event.sourcing.order.poc.common.model.event.ShipmentEvent;
-import org.example.event.sourcing.order.poc.common.model.event.ShipmentEventName;
+import org.example.event.sourcing.order.poc.event.model.ShipmentEvent;
+import org.example.event.sourcing.order.poc.event.model.ShipmentEventName;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 
-import static org.example.event.sourcing.order.poc.common.model.event.ShipmentEventName.*;
+import static org.example.event.sourcing.order.poc.event.model.ShipmentEventName.*;
 
 @Service
 @RequiredArgsConstructor

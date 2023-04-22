@@ -2,7 +2,7 @@ package org.example.event.sourcing.order.poc.handler.shipment.domain.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.event.sourcing.order.poc.common.model.event.ShipmentEvent;
+import org.example.event.sourcing.order.poc.event.model.ShipmentEvent;
 import org.example.event.sourcing.order.poc.handler.shipment.domain.ShipmentEventHandler;
 import org.springframework.stereotype.Component;
 

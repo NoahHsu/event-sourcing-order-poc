@@ -3,6 +3,8 @@ jib.to.image = "noahhsu/espoc-payment-${project.name}"
 dependencies {
     implementation project(":common")
     implementation project(":client")
+    implementation project(":event")
+
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'

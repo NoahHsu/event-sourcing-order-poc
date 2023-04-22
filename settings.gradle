@@ -2,6 +2,8 @@ rootProject.name = 'event-sourcing-order-poc'
 
 include 'common'
 include 'client'
+include 'event'
+include 'observation'
 
 include 'order'
 include 'order:command-side'
@@ -26,5 +28,4 @@ include 'shipment:event-handler'
 findProject(':shipment:event-handler')?.name = 'event-handler'
 include 'shipment:query-side'
 findProject(':shipment:query-side')?.name = 'query-side'
-include 'observation'
 

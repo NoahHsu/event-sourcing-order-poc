@@ -1,4 +1,4 @@
-package org.example.event.sourcing.order.poc.common.model.event;
+package org.example.event.sourcing.order.poc.event.model;
 
 import lombok.Builder;
 
@@ -7,7 +7,7 @@ import java.time.Instant;
 public record ShipmentEvent(String id, String shipmentMethod, ShipmentEventName eventName, Instant createdDate, Instant updatedDate) {
 
     public static final String SHIPMENT_TOPIC = "SHIPMENT";
-    public static final int SHIPMENT_TOPIC_PARTITION = 10;
+    public static final int SHIPMENT_TOPIC_PARTITION = 3;
 
     public static final String SHIPMENT_STATUS_GROUP_ID_PREFIX = "SHIPMENT-STATUS-";
 

@@ -2,14 +2,14 @@ package org.example.event.sourcing.order.poc.query.shipment.consumer;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.event.sourcing.order.poc.common.model.event.ShipmentEvent;
+import org.example.event.sourcing.order.poc.event.model.ShipmentEvent;
 import org.example.event.sourcing.order.poc.query.shipment.domain.handler.ShipmentRecordHandler;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
 
-import static org.example.event.sourcing.order.poc.common.model.event.ShipmentEvent.SHIPMENT_STATUS_GROUP_ID_PREFIX;
-import static org.example.event.sourcing.order.poc.common.model.event.ShipmentEvent.SHIPMENT_TOPIC;
+import static org.example.event.sourcing.order.poc.event.model.ShipmentEvent.SHIPMENT_STATUS_GROUP_ID_PREFIX;
+import static org.example.event.sourcing.order.poc.event.model.ShipmentEvent.SHIPMENT_TOPIC;
 
 @Component
 @Slf4j
