@@ -7,7 +7,6 @@ import org.example.event.sourcing.order.poc.observation.annotation.LogInfo;
 import org.example.event.sourcing.order.poc.query.order.domain.entity.OrderRecord;
 import org.example.event.sourcing.order.poc.query.order.domain.entity.OrderStatus;
 import org.example.event.sourcing.order.poc.query.order.domain.handler.OrderRecordHandler;
-import org.example.event.sourcing.order.poc.query.order.domain.repo.OrderEventRepository;
 import org.example.event.sourcing.order.poc.query.order.domain.repo.OrderRepository;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +22,6 @@ import static org.example.event.sourcing.order.poc.query.order.domain.entity.Ord
 public class OrderRecordHandlerImpl implements OrderRecordHandler {
 
     private final OrderRepository orderRepository;
-
-    private final OrderEventRepository orderEventRepository;
 
     @Override
     public CompletableFuture<Void> onEvent(OrderEvent event) {
@@ -47,7 +44,10 @@ public class OrderRecordHandlerImpl implements OrderRecordHandler {
         log.info("Create order id = {}", event.id());
         OrderRecord entity = OrderRecord.builder()
                 .orderId(event.id())
-                .status(CREATED).build();
+                .status(CREATED)
+                .createdDate(event.createdDate())
+                .updatedDate(event.createdDate())
+                .build();
         OrderRecord result = orderRepository.save(entity);
         log.info("saved order = {}", result);
     }
@@ -56,6 +56,7 @@ public class OrderRecordHandlerImpl implements OrderRecordHandler {
         orderRepository.findById(event.id()).ifPresent(orderRecord -> {
             final OrderStatus status = statusMachineMap(orderRecord, event);
             orderRecord.setStatus(status);
+            orderRecord.setUpdatedDate(event.createdDate());
             orderRepository.save(orderRecord);
         });
     }

@@ -22,23 +22,23 @@ public class OrderEventConsumer {
 
     private final OrderEventRecordHandler orderEventRecordHandler;
 
-    @KafkaListener(topics = ORDER_TOPIC, groupId = ORDER_STATUS_GROUP_ID_PREFIX +"#{ T(java.util.UUID).randomUUID().toString() }")
+    @KafkaListener(topics = ORDER_TOPIC, groupId = ORDER_STATUS_GROUP_ID_PREFIX + "#{ T(java.util.UUID).randomUUID().toString() }")
     public void orderEventListener(OrderEvent orderEvent, Acknowledgment ack) {
         log.info("status handler receive data = {}", orderEvent);
         try {
-            orderRecordHandler.onEvent(orderEvent)
-                    .thenRun(ack::acknowledge);
+            orderRecordHandler.onEvent(orderEvent).join();
+            ack.acknowledge();
         } catch (Exception e) {
             log.warn("Fail to handle event {}.", orderEvent, e);
         }
     }
 
-    @KafkaListener(topics = ORDER_TOPIC, groupId = ORDER_LOG_GROUP_ID_PREFIX +"#{ T(java.util.UUID).randomUUID().toString() }")
+    @KafkaListener(topics = ORDER_TOPIC, groupId = ORDER_LOG_GROUP_ID_PREFIX + "#{ T(java.util.UUID).randomUUID().toString() }")
     public void orderEventRecordListener(OrderEvent orderEvent, Acknowledgment ack) {
         log.info("log handler receive data = {}", orderEvent);
         try {
-            orderEventRecordHandler.onEvent(orderEvent)
-                    .thenRun(ack::acknowledge);
+            orderEventRecordHandler.onEvent(orderEvent).join();
+            ack.acknowledge();
         } catch (Exception e) {
             log.warn("Fail to handle event {}.", orderEvent, e);
         }
