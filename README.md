@@ -20,27 +20,38 @@
   - consume events from Kafka to send command request to Command-side
 
 ## How to run application
-#### prepare dependency services by docker-compose
+#### Prepare dependency services by docker-compose
 ```shell
 # observability for application on localhost 
-docker compose -f Docker/observe-docker-compose.yaml up
-# start dependency container services
-make kafka-up
-# pause dependency container services
-make kafka-pause
-# unpause dependency container services
-make kafka-resume
-  # or
-make kafka-unpause
-# stop dependency container services
-make kafka-down
+docker compose -f Docker/observe-docker-compose.yaml -p event-sourcing-observe up
+# [local run application] start dependency container services
+docker compose -f Docker/kafka-docker-compose.yml -p event-sourcing-kafka up
 ```
-#### run applications 
-// TODO add service docker compose
+#### Run applications 
+- run by docker-compose
+```shell
+# all service
+docker compose -f Docker/boot-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker -p event-sourcing up
+# all order service
+docker compose -f Docker/boot-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker --profile order -p event-sourcing up
+# only order-command-side
+docker compose -f Docker/boot-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker --profile order -p event-sourcing up --scale order-handler=0 --scale order-query=0
+# only payment-command-side
+docker compose -f Docker/boot-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker --profile payment -p event-sourcing up --scale payment-handler=0 --scale payment-query=0
+# only shipment-command-side
+docker compose -f Docker/boot-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker --profile shipment -p event-sourcing up --scale shipment-handler=0 --scale shipment-query=0
+``` 
 
-for now just run each project by either following way
-- run by IDE  
-- ```./../../gradlew bootRun```
+- run by terminal:
+
+```
+./../../gradlew bootRun
+```
+
+
+- run by IDE 
+  
+  set the working directory as `{path-to-project-root}/event-sourcing-order-poc`
 
 ## Endpoint
 
@@ -55,3 +66,4 @@ for now just run each project by either following way
 | Shipment Command | http://localhost:8087/swagger-ui/index.html |
 | Shipment Handler | http://localhost:8088/swagger-ui/index.html |
 | Shipment Query   | http://localhost:8089/swagger-ui/index.html |
+| Grafana          | http://localhost:3000                       |
