@@ -3,14 +3,14 @@ package org.example.event.sourcing.order.poc.query.order.consumer;
 import io.micrometer.observation.annotation.Observed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.event.sourcing.order.poc.common.model.event.OrderEvent;
+import org.example.event.sourcing.order.poc.event.model.OrderEvent;
 import org.example.event.sourcing.order.poc.query.order.domain.handler.OrderEventRecordHandler;
 import org.example.event.sourcing.order.poc.query.order.domain.handler.OrderRecordHandler;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Service;
 
-import static org.example.event.sourcing.order.poc.common.model.event.OrderEvent.*;
+import static org.example.event.sourcing.order.poc.event.model.OrderEvent.*;
 
 @Service
 @RequiredArgsConstructor

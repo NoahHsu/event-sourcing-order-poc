@@ -2,8 +2,8 @@ package org.example.event.sourcing.order.poc.query.payment.domain.handler.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.event.sourcing.order.poc.common.model.event.PaymentEvent;
-import org.example.event.sourcing.order.poc.common.model.event.PaymentEventName;
+import org.example.event.sourcing.order.poc.event.model.PaymentEvent;
+import org.example.event.sourcing.order.poc.event.model.PaymentEventName;
 import org.example.event.sourcing.order.poc.query.payment.domain.entity.PaymentRecord;
 import org.example.event.sourcing.order.poc.query.payment.domain.handler.PaymentRecordHandler;
 import org.example.event.sourcing.order.poc.query.payment.domain.repo.PaymentRepository;

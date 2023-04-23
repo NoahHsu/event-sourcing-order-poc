@@ -1,4 +1,4 @@
-package org.example.event.sourcing.order.poc.common.model.event;
+package org.example.event.sourcing.order.poc.event.model;
 
 import lombok.Builder;
 
@@ -8,7 +8,7 @@ public record PaymentEvent(String id, PaymentEventName eventName, String payment
 
     public static final String PAYMENT_TOPIC = "PAYMENT";
 
-    public static final int PAYMENT_TOPIC_PARTITION = 10;
+    public static final int PAYMENT_TOPIC_PARTITION = 3;
 
     public static final String PAYMENT_EVENT_HANDLER_GROUP_ID = "PAYMENT-HANDLER";
 

@@ -7,14 +7,14 @@ import org.example.event.sourcing.order.poc.client.order.model.V1Order;
 import org.example.event.sourcing.order.poc.client.order.model.V1OrderStatus;
 import org.example.event.sourcing.order.poc.command.order.producer.OrderEventProducer;
 import org.example.event.sourcing.order.poc.common.model.Order;
-import org.example.event.sourcing.order.poc.common.model.event.OrderEvent;
+import org.example.event.sourcing.order.poc.event.model.OrderEvent;
 import org.example.event.sourcing.order.poc.observation.annotation.LogInfo;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 
-import static org.example.event.sourcing.order.poc.common.model.event.OrderEventName.COMPLETED;
-import static org.example.event.sourcing.order.poc.common.model.event.OrderEventName.CREATED;
+import static org.example.event.sourcing.order.poc.event.model.OrderEventName.COMPLETED;
+import static org.example.event.sourcing.order.poc.event.model.OrderEventName.CREATED;
 
 @Service
 @RequiredArgsConstructor

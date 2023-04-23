@@ -2,12 +2,12 @@ package org.example.event.sourcing.order.poc.command.shipment.producer;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.event.sourcing.order.poc.common.model.event.ShipmentEvent;
+import org.example.event.sourcing.order.poc.event.model.ShipmentEvent;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Component;
 
-import static org.example.event.sourcing.order.poc.common.model.event.ShipmentEvent.SHIPMENT_TOPIC;
+import static org.example.event.sourcing.order.poc.event.model.ShipmentEvent.SHIPMENT_TOPIC;
 
 @Component
 @RequiredArgsConstructor

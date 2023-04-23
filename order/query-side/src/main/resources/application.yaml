@@ -40,6 +40,6 @@ spring:
         spring:
           json:
             trusted:
-              packages: org.example.event.sourcing.order.poc.common.model.event
+              packages: org.example.event.sourcing.order.poc.event.model
     listener:
       ack-mode: manual-immediate

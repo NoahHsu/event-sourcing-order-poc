@@ -1,4 +1,4 @@
-package org.example.event.sourcing.order.poc.common.model.event;
+package org.example.event.sourcing.order.poc.event.model;
 
 public enum ShipmentEventName {
     CREATED,

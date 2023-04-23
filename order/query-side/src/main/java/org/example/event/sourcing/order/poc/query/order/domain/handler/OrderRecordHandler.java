@@ -1,6 +1,6 @@
 package org.example.event.sourcing.order.poc.query.order.domain.handler;
 
-import org.example.event.sourcing.order.poc.common.model.event.OrderEvent;
+import org.example.event.sourcing.order.poc.event.model.OrderEvent;
 
 import java.util.concurrent.CompletableFuture;
 

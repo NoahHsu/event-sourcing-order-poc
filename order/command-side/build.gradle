@@ -2,8 +2,10 @@ jib.to.image = "noahhsu/espoc-order-${project.name}"
 
 dependencies {
     implementation project(":common")
+    implementation project(":event")
     implementation project(":client")
     implementation project(":observation")
+
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.kafka:spring-kafka'
