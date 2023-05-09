@@ -1,7 +1,3 @@
-bootRun {
-    enabled = false
-}
-
 bootJar {
     enabled = false
 }

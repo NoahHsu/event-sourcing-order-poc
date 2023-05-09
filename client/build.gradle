@@ -15,10 +15,6 @@ dependencies {
     testImplementation 'com.github.tomakehurst:wiremock:3.0.0-beta-2'
 }
 
-bootRun {
-    enabled = false
-}
-
 bootJar {
     enabled = false
 }

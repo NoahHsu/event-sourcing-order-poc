@@ -49,10 +49,10 @@
 					"raw": "{\n  \"id\": \"{{orderId}}\"\n}"
 				},
 				"url": {
-					"raw": "http://host.docker.internal:8081/api/v1/orders",
+					"raw": "http://localhost:8081/api/v1/orders",
 					"protocol": "http",
 					"host": [
-						"host.docker.internal"
+						"localhost"
 					],
 					"port": "8081",
 					"path": [
@@ -93,10 +93,10 @@
 					"raw": "{\n  \"id\": \"{{notCreateOrderId}}\"\n}"
 				},
 				"url": {
-					"raw": "http://host.docker.internal:8081/api/v1/orders/complete",
+					"raw": "http://localhost:8081/api/v1/orders/complete",
 					"protocol": "http",
 					"host": [
-						"host.docker.internal"
+						"localhost"
 					],
 					"port": "8081",
 					"path": [
@@ -142,10 +142,10 @@
 					"raw": "{\n  \"id\": \"{{orderId}}\"\n}"
 				},
 				"url": {
-					"raw": "http://host.docker.internal:8081/api/v1/orders/complete",
+					"raw": "http://localhost:8081/api/v1/orders/complete",
 					"protocol": "http",
 					"host": [
-						"host.docker.internal"
+						"localhost"
 					],
 					"port": "8081",
 					"path": [
