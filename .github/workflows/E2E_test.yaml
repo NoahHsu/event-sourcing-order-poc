@@ -1,0 +1,49 @@
+name: E2E Test
+
+on:
+  pull_request:
+    branches: [ "master" ]
+
+permissions:
+  contents: read
+
+jobs:
+  e2e-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      - name: Build with Gradle
+        run: ./gradlew build -x test --no-daemon
+
+      - name: Run The Cluster
+        run: docker compose -f Docker/observe-docker-compose.yaml -f Docker/boot-run-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker -p event-sourcing up -d
+
+      - name: Install Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "18.16.0"
+
+      - name: Install newman
+        run: |
+          npm install -g newman
+#          npm install -g newman-reporter-htmlextra
+
+      - name: Run POSTMAN collection
+        run: |
+          newman run postman/OrderCommand.postman_collection.json
+#          newman run postman/OrderCommand.postman_collection.json -r htmlextra --reporter-htmlextra-export testResults/htmlreport.html --reporter-htmlextra-darkTheme  > testResults/runreport1.html
+
+      - name: clean docker compose
+        if: always()
+        run: |
+          docker compose -f Docker/observe-docker-compose.yaml -f Docker/boot-run-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker -p event-sourcing down

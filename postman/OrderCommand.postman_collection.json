@@ -1,0 +1,198 @@
+{
+	"info": {
+		"_postman_id": "f75b655d-8cbf-45cf-ba2f-c2cc1c00dd91",
+		"name": "OrderCommand",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27249891",
+		"_collection_link": "https://interstellar-trinity-80703.postman.co/workspace/Team-Workspace~92a21858-fc8b-47ab-8394-2fe44de1eec9/collection/27249891-f75b655d-8cbf-45cf-ba2f-c2cc1c00dd91?action=share&creator=27249891&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Create Order success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.collectionVariables.set(\"returnId\", pm.response.json().id);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": \"{{orderId}}\"\n}"
+				},
+				"url": {
+					"raw": "http://host.docker.internal:8081/api/v1/orders",
+					"protocol": "http",
+					"host": [
+						"host.docker.internal"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fail to complete not created Order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 500\", function () {",
+							"    pm.response.to.have.status(500);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": \"{{notCreateOrderId}}\"\n}"
+				},
+				"url": {
+					"raw": "http://host.docker.internal:8081/api/v1/orders/complete",
+					"protocol": "http",
+					"host": [
+						"host.docker.internal"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"orders",
+						"complete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Complete created Order success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Your test name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.result).to.eql(\"OK\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": \"{{orderId}}\"\n}"
+				},
+				"url": {
+					"raw": "http://host.docker.internal:8081/api/v1/orders/complete",
+					"protocol": "http",
+					"host": [
+						"host.docker.internal"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"orders",
+						"complete"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "orderId",
+			"value": "2222"
+		},
+		{
+			"key": "returnId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "notCreateOrderId",
+			"value": "3333",
+			"type": "string"
+		}
+	]
+}

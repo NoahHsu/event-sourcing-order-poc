@@ -12,6 +12,10 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 }
 
+bootRun {
+    enabled = false
+}
+
 bootJar {
     enabled = false
 }
