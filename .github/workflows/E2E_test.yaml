@@ -44,6 +44,7 @@ jobs:
           url: http://localhost:8081/actuator/health
           max-attempts: 5
           retry-delay: 10s
+          retry-all: true
 
       - name: Check the order-query
         uses: jtalk/url-health-check-action@v3
@@ -51,6 +52,7 @@ jobs:
           url: http://localhost:8083/actuator/health
           max-attempts: 5
           retry-delay: 10s
+          retry-all: true
 
       - name: Run POSTMAN collection
         run: |
