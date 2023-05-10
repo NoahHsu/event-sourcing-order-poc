@@ -38,6 +38,20 @@ jobs:
           npm install -g newman
 #          npm install -g newman-reporter-htmlextra
 
+      - name: Check the order-command
+        uses: jtalk/url-health-check-action@v3
+        with:
+          url: http://localhost:8081/actuator/health
+          max-attempts: 5
+          retry-delay: 10s
+
+      - name: Check the order-query
+        uses: jtalk/url-health-check-action@v3
+        with:
+          url: http://localhost:8083/actuator/health
+          max-attempts: 5 # Optional, defaults to 1
+          retry-delay: 10s # Optional, only applicable to max-attempts > 1
+
       - name: Run POSTMAN collection
         run: |
           newman run postman/OrderCommand.postman_collection.json

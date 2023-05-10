@@ -6,7 +6,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: prometheus
+        include: prometheus,health
   metrics:
     distribution:
       percentiles-histogram:
