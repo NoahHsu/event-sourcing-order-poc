@@ -29,9 +29,9 @@ jobs:
         run: docker compose -f Docker/observe-docker-compose.yaml -f Docker/boot-run-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker -p event-sourcing up -d
 
       - name: Install Node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: "18.16.0"
+          node-version: 18
 
       - name: Install newman
         run: |
