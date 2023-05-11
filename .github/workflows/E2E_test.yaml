@@ -36,21 +36,24 @@ jobs:
       - name: Install newman
         run: |
           npm install -g newman
+          sleep 20
           docker ps
+          docker logs event-sourcing-order-query-1
       #          npm install -g newman-reporter-htmlextra
 
-      - name: Check the order-command
-        uses: jtalk/url-health-check-action@v3
-        with:
-          url: http://localhost:8081/actuator/health
-          max-attempts: 5
-          retry-delay: 10s
-          retry-all: true
 
       - name: Check the order-query
         uses: jtalk/url-health-check-action@v3
         with:
           url: http://localhost:8083/actuator/health
+          max-attempts: 5
+          retry-delay: 10s
+          retry-all: true
+
+      - name: Check the order-command
+        uses: jtalk/url-health-check-action@v3
+        with:
+          url: http://localhost:8081/actuator/health
           max-attempts: 5
           retry-delay: 10s
           retry-all: true
@@ -63,5 +66,5 @@ jobs:
       - name: clean docker compose
         if: always()
         run: |
-          docker ps
+          docker logs event-sourcing-order-query-1
           docker compose -f Docker/observe-docker-compose.yaml -f Docker/boot-run-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker -p event-sourcing down
