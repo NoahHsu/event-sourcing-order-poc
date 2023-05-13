@@ -28,19 +28,11 @@ jobs:
       - name: Run The Cluster
         run: docker compose -f Docker/boot-run-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker -p event-sourcing up -d
 
-      - name: Install Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-
-      - name: Install newman
+      - name: Check docker compose status
         run: |
-          npm install -g newman
-          sleep 20
+          sleep 60
           docker ps
           docker logs event-sourcing-order-query-1
-      #          npm install -g newman-reporter-htmlextra
-
 
       - name: Check the order-query
         uses: jtalk/url-health-check-action@v3
@@ -58,13 +50,12 @@ jobs:
           retry-delay: 10s
           retry-all: true
 
-      - name: Run POSTMAN collection
-        run: |
-          newman run postman/OrderCommand.postman_collection.json
-#          newman run postman/OrderCommand.postman_collection.json -r htmlextra --reporter-htmlextra-export testResults/htmlreport.html --reporter-htmlextra-darkTheme  > testResults/runreport1.html
+      - name: run Postman Collection
+        uses: matt-ball/newman-action@master
+        with:
+          collection: postman/OrderCommand.postman_collection.json
 
       - name: clean docker compose
         if: always()
         run: |
-          docker logs event-sourcing-order-query-1
-          docker compose -f Docker/observe-docker-compose.yaml -f Docker/boot-run-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker -p event-sourcing down
+          docker compose -f Docker/boot-run-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker -p event-sourcing down
