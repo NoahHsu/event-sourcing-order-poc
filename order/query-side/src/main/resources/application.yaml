@@ -7,13 +7,13 @@ spring:
   profiles:
     include:
       - observe
+      - cluster
   data:
     rest:
       basePath: /api
   h2:
     console:
-      enabled: true
-      path: /h2-console
+      enabled: false
   datasource:
     url: jdbc:h2:mem:testdb
     username: sa

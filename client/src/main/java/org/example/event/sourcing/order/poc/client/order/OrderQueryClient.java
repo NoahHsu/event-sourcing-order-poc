@@ -11,8 +11,8 @@ public class OrderQueryClient {
 
     private final OrderQueryStub orderQueryStub;
 
-    public OrderQueryClient(Feign.Builder builder) {
-        OrderQueryStub feign = builder.target(OrderQueryStub.class, "http://localhost:8083");
+    public OrderQueryClient(Feign.Builder builder, String baseUrl) {
+        OrderQueryStub feign = builder.target(OrderQueryStub.class, baseUrl);
         this.orderQueryStub = feign;
     }
 

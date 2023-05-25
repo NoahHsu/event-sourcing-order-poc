@@ -12,6 +12,7 @@ import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.observation.ObservationRegistry;
 import io.micrometer.observation.annotation.Observed;
 import org.example.event.sourcing.order.poc.client.order.OrderCommandClient;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
 
@@ -19,6 +20,9 @@ import java.util.List;
 
 @AutoConfiguration
 public class OrderCommandClientConfig {
+
+    @Value("${cluster.order.command.base-url:http://localhost:8081}")
+    private String url;
 
     @Bean
     @Observed
@@ -30,7 +34,7 @@ public class OrderCommandClientConfig {
                 .decoder(new JacksonDecoder(List.of(new JavaTimeModule())))
                 .addCapability(new MicrometerObservationCapability(observationRegistry))
                 .addCapability(new MicrometerCapability(meterRegistry))
-                .target(OrderCommandClient.class, "http://localhost:8081");
+                .target(OrderCommandClient.class, url);
     }
 
 }

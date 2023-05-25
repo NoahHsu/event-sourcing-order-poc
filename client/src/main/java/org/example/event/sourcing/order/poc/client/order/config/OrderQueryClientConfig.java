@@ -12,6 +12,7 @@ import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.observation.ObservationRegistry;
 import io.micrometer.observation.annotation.Observed;
 import org.example.event.sourcing.order.poc.client.order.OrderQueryClient;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.hateoas.config.EnableHypermediaSupport;
@@ -21,6 +22,9 @@ import java.util.List;
 @AutoConfiguration
 @EnableHypermediaSupport(type = EnableHypermediaSupport.HypermediaType.HAL)
 public class OrderQueryClientConfig {
+
+    @Value("${cluster.order.query.base-url:http://localhost:8083}")
+    private String url;
 
     @Bean
     @Observed
@@ -32,7 +36,7 @@ public class OrderQueryClientConfig {
                 .decoder(new JacksonDecoder(List.of(new JavaTimeModule())))
                 .addCapability(new MicrometerObservationCapability(observationRegistry))
                 .addCapability(new MicrometerCapability(meterRegistry));
-        return new OrderQueryClient(builder);
+        return new OrderQueryClient(builder, url);
     }
 
 }
