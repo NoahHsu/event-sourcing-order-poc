@@ -28,17 +28,11 @@ jobs:
       - name: Run The Cluster
         run: docker compose -f Docker/boot-run-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker -p event-sourcing up -d
 
-      - name: Check docker compose status
-        run: |
-          sleep 60
-          docker ps
-          docker logs event-sourcing-order-query-1
-
       - name: Check the order-query
         uses: jtalk/url-health-check-action@v3
         with:
           url: http://localhost:8083/actuator/health
-          max-attempts: 5
+          max-attempts: 6
           retry-delay: 10s
           retry-all: true
 
@@ -47,7 +41,7 @@ jobs:
         with:
           url: http://localhost:8081/actuator/health
           max-attempts: 5
-          retry-delay: 10s
+          retry-delay: 5s
           retry-all: true
 
       - name: run Postman Collection

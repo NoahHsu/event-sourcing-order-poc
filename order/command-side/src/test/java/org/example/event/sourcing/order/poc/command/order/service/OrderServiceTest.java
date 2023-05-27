@@ -1,6 +1,7 @@
 package org.example.event.sourcing.order.poc.command.order.service;
 
 import org.example.event.sourcing.order.poc.client.order.OrderQueryClient;
+import org.example.event.sourcing.order.poc.client.order.exception.ResourceNotFoundException;
 import org.example.event.sourcing.order.poc.client.order.model.V1Order;
 import org.example.event.sourcing.order.poc.client.order.model.V1OrderStatus;
 import org.example.event.sourcing.order.poc.command.order.producer.OrderEventProducer;
@@ -9,6 +10,8 @@ import org.example.event.sourcing.order.poc.event.model.OrderEventName;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatcher;
 import org.mockito.BDDMockito;
+import org.springframework.web.ErrorResponseException;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
 
@@ -26,8 +29,9 @@ class OrderServiceTest {
 
     private OrderService orderService = new OrderService(orderQueryClient, orderEventProducer);
 
+
     @Test
-    void shouldComplete() {
+    void givenIdOfCreatedOrder_whenCompleteOrder_thenShouldSuccess() {
         String givenId = "1111";
         given(orderQueryClient.get(givenId))
                 .willReturn(givenV1Order(V1OrderStatus.CREATED));
@@ -53,7 +57,7 @@ class OrderServiceTest {
     }
 
     @Test
-    void shouldFailComplete() {
+    void givenIdOfInLogisticOrder_whenCompleteOrder_then409ErrorShouldBeThrown() {
         String givenId = "1111";
         given(orderQueryClient.get(givenId))
                 .willReturn(givenV1Order(V1OrderStatus.IN_LOGISTICS));
@@ -61,7 +65,22 @@ class OrderServiceTest {
         RuntimeException actualException = catchRuntimeException(
                 () -> orderService.completeOrder(givenId));
         then(actualException)
-                .hasMessage("order(id = {}) is not in right status.", givenId);
+                .isInstanceOf(ResponseStatusException.class)
+                .hasMessageContaining("409");
+        BDDMockito.then(orderEventProducer).shouldHaveNoInteractions();
+    }
+
+    @Test
+    void givenIdOfNotExistOrder_whenCompleteOrder_then422ErrorShouldBeThrown() {
+        String givenId = "1111";
+        given(orderQueryClient.get(givenId))
+                .willThrow(new ResourceNotFoundException("mock"));
+
+        RuntimeException actualException = catchRuntimeException(
+                () -> orderService.completeOrder(givenId));
+        then(actualException)
+                .isInstanceOf(ErrorResponseException.class)
+                .hasMessageContaining("422");
         BDDMockito.then(orderEventProducer).shouldHaveNoInteractions();
     }
 

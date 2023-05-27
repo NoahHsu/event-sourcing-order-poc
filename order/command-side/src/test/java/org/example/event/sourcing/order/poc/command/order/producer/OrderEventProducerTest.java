@@ -73,7 +73,7 @@ class OrderEventProducerTest {
     }
 
     @Test
-    void shouldSend() {
+    void givenSuccessResponse_whenCreateEvent_thenShouldSend() {
         given(kafkaTemplate.send(ORDER_TOPIC, orderId, order))
                 .willReturn(CompletableFuture.completedFuture(sendResult));
 
@@ -84,7 +84,7 @@ class OrderEventProducerTest {
     }
 
     @Test
-    void shouldLogResult() {
+    void givenSuccessResponse_whenCreateEvent_thenShouldLogResult() {
         given(kafkaTemplate.send(ORDER_TOPIC, orderId, order))
                 .willReturn(CompletableFuture.completedFuture(sendResult));
 
@@ -98,7 +98,7 @@ class OrderEventProducerTest {
     }
 
     @Test
-    void shouldLogFailReason() {
+    void givenSuccessResponse_whenCreateEvent_thenShouldLogFailReason() {
         given(kafkaTemplate.send(ORDER_TOPIC, orderId, order))
                 .willReturn(CompletableFuture.failedFuture(new RuntimeException("Deserved it")));
 

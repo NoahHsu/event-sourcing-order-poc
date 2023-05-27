@@ -12,11 +12,14 @@ import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.observation.ObservationRegistry;
 import io.micrometer.observation.annotation.Observed;
 import org.example.event.sourcing.order.poc.client.order.OrderCommandClient;
+import org.example.event.sourcing.order.poc.client.order.decoder.CustomErrorDecoder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
 
 import java.util.List;
+
+import static org.example.event.sourcing.order.poc.client.order.model.ResourceName.ORDER;
 
 @AutoConfiguration
 public class OrderCommandClientConfig {
@@ -28,6 +31,7 @@ public class OrderCommandClientConfig {
     @Observed
     public OrderCommandClient orderCommandClient(ObservationRegistry observationRegistry, MeterRegistry meterRegistry) {
         return Feign.builder()
+                .errorDecoder(new CustomErrorDecoder(ORDER))
                 .logLevel(Logger.Level.FULL)
                 .logger(new Slf4jLogger())
                 .encoder(new JacksonEncoder(List.of(new JavaTimeModule())))
@@ -36,5 +40,6 @@ public class OrderCommandClientConfig {
                 .addCapability(new MicrometerCapability(meterRegistry))
                 .target(OrderCommandClient.class, url);
     }
+
 
 }
