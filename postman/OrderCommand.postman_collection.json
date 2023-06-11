@@ -4,7 +4,7 @@
 		"name": "OrderCommand",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "27249891",
-		"_collection_link": "https://interstellar-trinity-80703.postman.co/workspace/Team-Workspace~92a21858-fc8b-47ab-8394-2fe44de1eec9/collection/27249891-f75b655d-8cbf-45cf-ba2f-c2cc1c00dd91?action=share&creator=27249891&source=collection_link"
+		"_collection_link": "https://interstellar-trinity-80703.postman.co/workspace/E2E-test-for-event-sourcing-ord~92a21858-fc8b-47ab-8394-2fe44de1eec9/collection/27249891-f75b655d-8cbf-45cf-ba2f-c2cc1c00dd91?action=share&creator=27249891&source=collection_link"
 	},
 	"item": [
 		{
@@ -71,8 +71,8 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 500\", function () {",
-							"    pm.response.to.have.status(500);",
+							"pm.test(\"Status code is 422\", function () {",
+							"    pm.response.to.have.status(422);",
 							"});"
 						],
 						"type": "text/javascript"

@@ -12,12 +12,15 @@ import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.observation.ObservationRegistry;
 import io.micrometer.observation.annotation.Observed;
 import org.example.event.sourcing.order.poc.client.order.OrderQueryClient;
+import org.example.event.sourcing.order.poc.client.order.decoder.CustomErrorDecoder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.hateoas.config.EnableHypermediaSupport;
 
 import java.util.List;
+
+import static org.example.event.sourcing.order.poc.client.order.model.ResourceName.ORDER;
 
 @AutoConfiguration
 @EnableHypermediaSupport(type = EnableHypermediaSupport.HypermediaType.HAL)
@@ -30,6 +33,7 @@ public class OrderQueryClientConfig {
     @Observed
     public OrderQueryClient orderQueryClient(ObservationRegistry observationRegistry, MeterRegistry meterRegistry) {
         Feign.Builder builder = Feign.builder()
+                .errorDecoder(new CustomErrorDecoder(ORDER))
                 .logLevel(Logger.Level.FULL)
                 .logger(new Slf4jLogger())
                 .encoder(new JacksonEncoder(List.of(new JavaTimeModule())))

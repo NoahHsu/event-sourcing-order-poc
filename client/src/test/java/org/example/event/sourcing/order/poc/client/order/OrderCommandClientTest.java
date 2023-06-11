@@ -29,7 +29,7 @@ class OrderCommandClientTest {
     private OrderCommandClient orderCommandClient;
 
     @Test
-    void whenCreateOrder_thenOrderShouldBeReturn() {
+    void givenOkResponse_whenCreateOrder_thenOrderShouldBeReturn() {
         final Order givenInput = new Order("22222");
         final String givenResponseBody = """
                 {
@@ -53,7 +53,8 @@ class OrderCommandClientTest {
     }
 
     @Test
-    void whenCompleteOrder_thenOkShouldBeReturn() {
+    void givenOkResponse_whenCompleteOrder_thenOkShouldBeReturn() {
+        String responseKey = "result";
         final Order givenInput = new Order("22222");
         final String givenResponseBody = """
                 {
@@ -68,11 +69,11 @@ class OrderCommandClientTest {
 
         final Map<String, String> actualOutput = orderCommandClient.complete(givenInput);
 
-        final Map<String, String> expectedOutput = Map.of("result", "OK");
-        then(actualOutput.get("result"))
+        final Map<String, String> expectedOutput = Map.of(responseKey, "OK");
+        then(actualOutput.get(responseKey))
                 .as("Check that Order ID is the same as input.")
                 .isNotEmpty()
-                .isEqualTo(expectedOutput.get("result"));
+                .isEqualTo(expectedOutput.get(responseKey));
 
     }
 
