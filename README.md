@@ -23,7 +23,7 @@
 #### Prepare dependency services by docker-compose for run application outside docker
 ```shell
 # should rim build first
-./gradlew -Dskip.tests build
+./gradlew build -x test
 # run order command query and others
 docker compose -f Docker/observe-docker-compose.yaml -f Docker/boot-run-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker -p event-sourcing up -d --scale prometheus=0
 ```

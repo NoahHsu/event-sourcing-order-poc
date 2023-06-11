@@ -8,9 +8,15 @@ import org.example.event.sourcing.order.poc.query.order.domain.entity.OrderRecor
 import org.example.event.sourcing.order.poc.query.order.domain.entity.OrderStatus;
 import org.example.event.sourcing.order.poc.query.order.domain.handler.OrderRecordHandler;
 import org.example.event.sourcing.order.poc.query.order.domain.repo.OrderRepository;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.concurrent.CompletableFuture;
+import java.net.SocketException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.Random;
 
 import static org.example.event.sourcing.order.poc.query.order.domain.entity.OrderStatus.CREATED;
 import static org.example.event.sourcing.order.poc.query.order.domain.entity.OrderStatus.FINISHED;
@@ -19,13 +25,26 @@ import static org.example.event.sourcing.order.poc.query.order.domain.entity.Ord
 @RequiredArgsConstructor
 @Slf4j
 @LogInfo
-public class OrderRecordHandlerImpl implements OrderRecordHandler {
+public class OrderRecordHandlerImpl implements OrderRecordHandler, BeanFactoryPostProcessor {
 
     private final OrderRepository orderRepository;
 
+    private Random random;
+
     @Override
-    public void onEvent(OrderEvent event) {
+    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+        try {
+            random = SecureRandom.getInstanceStrong();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void onEvent(OrderEvent event) throws SocketException {
         switch (event.id().charAt(0)) {
+            case 'n':
+                throw new SocketException();
             case 'd':
                 throw new ClassCastException();
             case 'e':
@@ -40,6 +59,13 @@ public class OrderRecordHandlerImpl implements OrderRecordHandler {
         switch (event.id().charAt(0)) {
             case 'd':
                 throw new ClassCastException();
+            case 'e':
+                if (random.nextBoolean()) {
+                    throw new RuntimeException();
+                } else {
+                    onNormalEvent(event);
+                    return;
+                }
             default:
                 onNormalEvent(event);
         }
@@ -95,4 +121,5 @@ public class OrderRecordHandlerImpl implements OrderRecordHandler {
             default -> throw new RuntimeException("unsupported event name");
         };
     }
+
 }

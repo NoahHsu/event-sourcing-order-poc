@@ -18,6 +18,7 @@ public class TopicConfig {
     public NewTopic orderEvent() {
         return TopicBuilder.name(ORDER_TOPIC)
                 .partitions(ORDER_TOPIC_PARTITION)
+                .config(org.apache.kafka.common.config.TopicConfig.RETENTION_MS_CONFIG, String.valueOf(Long.MAX_VALUE))
                 .compact()
                 .build();
     }
@@ -25,6 +26,7 @@ public class TopicConfig {
     public NewTopic paymentEvent() {
         return TopicBuilder.name(PAYMENT_TOPIC)
                 .partitions(PAYMENT_TOPIC_PARTITION)
+                .config(org.apache.kafka.common.config.TopicConfig.RETENTION_MS_CONFIG, String.valueOf(Long.MAX_VALUE))
                 .compact()
                 .build();
     }
@@ -33,15 +35,7 @@ public class TopicConfig {
     public NewTopic shipmentEvent() {
         return TopicBuilder.name(SHIPMENT_TOPIC)
                 .partitions(SHIPMENT_TOPIC_PARTITION)
-                .compact()
-                .build();
-    }
-
-    @Bean
-    public NewTopic orderRequeueEvent() {
-        return TopicBuilder.name(ORDER_REQUEUE_TOPIC)
-                .partitions(1)
-                .config(org.apache.kafka.common.config.TopicConfig.RETENTION_MS_CONFIG, "10000")
+                .config(org.apache.kafka.common.config.TopicConfig.RETENTION_MS_CONFIG, String.valueOf(Long.MAX_VALUE))
                 .compact()
                 .build();
     }
