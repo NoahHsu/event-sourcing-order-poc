@@ -20,7 +20,7 @@
   - consume events from Kafka to send command request to Command-side
 
 ## How to run application
-#### Prepare dependency services by docker-compose for run application outside docker
+### With local code
 ```shell
 # should rim build first
 ./gradlew build -x test
@@ -28,14 +28,8 @@
 docker compose -f Docker/observe-docker-compose.yaml -f Docker/boot-run-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker -p event-sourcing up -d --scale prometheus=0
 ```
 
-```shell
-# observability components for application 
-docker compose -f Docker/observe-docker-compose.yaml -p event-sourcing-observe up
-# kafka for application
-docker compose -f Docker/kafka-docker-compose.yml -p event-sourcing-kafka up
-```
 #### Run applications 
-- run by docker-compose
+### With docker image on the Docker Hub 
 ```shell
 # all service with all observability components and kafka
 docker compose -f Docker/observe-docker-compose.yaml -f Docker/boot-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker --profile order  -p event-sourcing up
@@ -48,13 +42,6 @@ docker compose -f Docker/boot-apps-docker-compose.yml -f Docker/kafka-docker-com
 # only shipment-command-side
 docker compose -f Docker/boot-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker --profile shipment -p event-sourcing up --scale shipment-handler=0 --scale shipment-query=0
 ``` 
-
-- run by terminal:
-
-```
-./../../gradlew bootRun
-```
-
 
 - run by IDE 
   

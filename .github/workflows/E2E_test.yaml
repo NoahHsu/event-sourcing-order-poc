@@ -33,7 +33,7 @@ jobs:
         with:
           url: http://localhost:8083/actuator/health
           max-attempts: 6
-          retry-delay: 10s
+          retry-delay: 15s
           retry-all: true
 
       - name: Check the order-command
