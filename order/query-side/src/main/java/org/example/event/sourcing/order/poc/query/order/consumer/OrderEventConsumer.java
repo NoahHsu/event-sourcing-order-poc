@@ -9,6 +9,7 @@ import org.example.event.sourcing.order.poc.query.order.domain.handler.OrderReco
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.example.event.sourcing.order.poc.event.model.OrderEvent.*;
 
@@ -23,24 +24,30 @@ public class OrderEventConsumer {
     private final OrderEventRecordHandler orderEventRecordHandler;
 
     @KafkaListener(topics = ORDER_TOPIC, groupId = ORDER_STATUS_GROUP_ID_PREFIX + "#{ T(java.util.UUID).randomUUID().toString() }")
+    @Transactional
     public void orderEventListener(OrderEvent orderEvent, Acknowledgment ack) {
-        log.info("status handler receive data = {}", orderEvent);
+        log.info("main topic handler receive data = {}", orderEvent);
         try {
-            orderRecordHandler.onEvent(orderEvent).join();
+            orderEventRecordHandler.onEvent(orderEvent);
+            orderRecordHandler.onEvent(orderEvent);
             ack.acknowledge();
         } catch (Exception e) {
-            log.warn("Fail to handle event {}.", orderEvent, e);
+            log.warn("Fail to handle event {}.", orderEvent);
+            throw e;
         }
     }
 
-    @KafkaListener(topics = ORDER_TOPIC, groupId = ORDER_LOG_GROUP_ID_PREFIX + "#{ T(java.util.UUID).randomUUID().toString() }")
-    public void orderEventRecordListener(OrderEvent orderEvent, Acknowledgment ack) {
-        log.info("log handler receive data = {}", orderEvent);
+    @KafkaListener(topics = ORDER_REQUEUE_TOPIC, groupId = ORDER_STATUS_GROUP_ID_PREFIX + "#{ T(java.util.UUID).randomUUID().toString() }")
+    @Transactional
+    public void orderReQueueEventListener(OrderEvent orderEvent, Acknowledgment ack) {
+        log.info("requeue topic handler receive data = {}", orderEvent);
         try {
-            orderEventRecordHandler.onEvent(orderEvent).join();
+            orderEventRecordHandler.onEvent(orderEvent);
+            orderRecordHandler.onRequeueEvent(orderEvent);
             ack.acknowledge();
         } catch (Exception e) {
-            log.warn("Fail to handle event {}.", orderEvent, e);
+            log.warn("Fail to handle event {}.", orderEvent);
+            throw e;
         }
     }
 

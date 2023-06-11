@@ -24,40 +24,67 @@ public class OrderRecordHandlerImpl implements OrderRecordHandler {
     private final OrderRepository orderRepository;
 
     @Override
-    public CompletableFuture<Void> onEvent(OrderEvent event) {
-        return CompletableFuture.runAsync(() -> {
-            switch (event.eventName()) {
-                case CREATED:
-                    createOrder(event);
-                    break;
-                case COMPLETED:
-                    completeOrder(event);
-                    break;
-                default:
-                    throw new RuntimeException("unsupported event name");
-            }
-        });
+    public void onEvent(OrderEvent event) {
+        switch (event.id().charAt(0)) {
+            case 'd':
+                throw new ClassCastException();
+            case 'e':
+                throw new RuntimeException();
+            default:
+                onNormalEvent(event);
+        }
+    }
+
+    @Override
+    public void onRequeueEvent(OrderEvent event) {
+        switch (event.id().charAt(0)) {
+            case 'd':
+                throw new ClassCastException();
+            default:
+                onNormalEvent(event);
+        }
+    }
+
+    private void onNormalEvent(OrderEvent event) {
+        switch (event.eventName()) {
+            case CREATED:
+                createOrder(event);
+                break;
+            case COMPLETED:
+                completeOrder(event);
+                break;
+            default:
+                throw new RuntimeException("unsupported event name");
+        }
     }
 
 
     private void createOrder(OrderEvent event) {
-        log.info("Create order id = {}", event.id());
-        OrderRecord entity = OrderRecord.builder()
-                .orderId(event.id())
-                .status(CREATED)
-                .createdDate(event.createdDate())
-                .updatedDate(event.createdDate())
-                .build();
-        OrderRecord result = orderRepository.save(entity);
-        log.info("saved order = {}", result);
+        String orderId = event.id();
+        log.info("Create order id = {}", orderId);
+        boolean isExist = orderRepository.existsById(orderId);
+        if (!isExist) {
+            OrderRecord entity = OrderRecord.builder()
+                    .orderId(orderId)
+                    .status(CREATED)
+                    .createdDate(event.createdDate())
+                    .updatedDate(event.createdDate())
+                    .build();
+            OrderRecord result = orderRepository.save(entity);
+            log.info("saved order = {}", result);
+        } else {
+            log.warn("order id = {} had been created.", orderId);
+        }
     }
 
     private void completeOrder(OrderEvent event) {
         orderRepository.findById(event.id()).ifPresent(orderRecord -> {
-            final OrderStatus status = statusMachineMap(orderRecord, event);
-            orderRecord.setStatus(status);
-            orderRecord.setUpdatedDate(event.createdDate());
-            orderRepository.save(orderRecord);
+            if (orderRecord.getStatus() == CREATED) {
+                final OrderStatus status = statusMachineMap(orderRecord, event);
+                orderRecord.setStatus(status);
+                orderRecord.setUpdatedDate(event.createdDate());
+                orderRepository.save(orderRecord);
+            }
         });
     }
 

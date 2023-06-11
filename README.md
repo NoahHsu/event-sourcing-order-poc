@@ -22,6 +22,13 @@
 ## How to run application
 #### Prepare dependency services by docker-compose for run application outside docker
 ```shell
+# should rim build first
+./gradlew -Dskip.tests build
+# run order command query and others
+docker compose -f Docker/observe-docker-compose.yaml -f Docker/boot-run-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker -p event-sourcing up -d --scale prometheus=0
+```
+
+```shell
 # observability components for application 
 docker compose -f Docker/observe-docker-compose.yaml -p event-sourcing-observe up
 # kafka for application
@@ -31,7 +38,7 @@ docker compose -f Docker/kafka-docker-compose.yml -p event-sourcing-kafka up
 - run by docker-compose
 ```shell
 # all service with all observability components and kafka
-docker compose -f Docker/observe-docker-compose.yaml -f Docker/boot-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker -p event-sourcing up
+docker compose -f Docker/observe-docker-compose.yaml -f Docker/boot-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker --profile order  -p event-sourcing up
 # all order service without
 docker compose -f Docker/boot-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker --profile order -p event-sourcing up
 # only order-command-side

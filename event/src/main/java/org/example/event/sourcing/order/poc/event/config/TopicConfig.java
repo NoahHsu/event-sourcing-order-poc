@@ -5,8 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.TopicBuilder;
 
-import static org.example.event.sourcing.order.poc.event.model.OrderEvent.ORDER_TOPIC;
-import static org.example.event.sourcing.order.poc.event.model.OrderEvent.ORDER_TOPIC_PARTITION;
+import static org.example.event.sourcing.order.poc.event.model.OrderEvent.*;
 import static org.example.event.sourcing.order.poc.event.model.PaymentEvent.PAYMENT_TOPIC;
 import static org.example.event.sourcing.order.poc.event.model.PaymentEvent.PAYMENT_TOPIC_PARTITION;
 import static org.example.event.sourcing.order.poc.event.model.ShipmentEvent.SHIPMENT_TOPIC;
@@ -34,6 +33,15 @@ public class TopicConfig {
     public NewTopic shipmentEvent() {
         return TopicBuilder.name(SHIPMENT_TOPIC)
                 .partitions(SHIPMENT_TOPIC_PARTITION)
+                .compact()
+                .build();
+    }
+
+    @Bean
+    public NewTopic orderRequeueEvent() {
+        return TopicBuilder.name(ORDER_REQUEUE_TOPIC)
+                .partitions(1)
+                .config(org.apache.kafka.common.config.TopicConfig.RETENTION_MS_CONFIG, "10000")
                 .compact()
                 .build();
     }

@@ -21,19 +21,17 @@ public class OrderEventRecordHandlerImpl implements OrderEventRecordHandler {
     private final OrderEventRepository orderEventRepository;
 
     @Override
-    public CompletableFuture<Void> onEvent(OrderEvent event) {
-        return CompletableFuture.runAsync(() -> {
-            switch (event.eventName()) {
-                case CREATED:
-                    createOrder(event);
-                    break;
-                case COMPLETED:
-                    prepareOrder(event);
-                    break;
-                default:
-                    throw new RuntimeException("unsupported event name");
-            }
-        });
+    public void onEvent(OrderEvent event) {
+        switch (event.eventName()) {
+            case CREATED:
+                createOrder(event);
+                break;
+            case COMPLETED:
+                prepareOrder(event);
+                break;
+            default:
+                throw new RuntimeException("unsupported event name");
+        }
     }
 
 
