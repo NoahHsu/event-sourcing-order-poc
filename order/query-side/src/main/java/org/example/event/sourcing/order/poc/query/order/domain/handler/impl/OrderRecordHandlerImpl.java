@@ -8,9 +8,15 @@ import org.example.event.sourcing.order.poc.query.order.domain.entity.OrderRecor
 import org.example.event.sourcing.order.poc.query.order.domain.entity.OrderStatus;
 import org.example.event.sourcing.order.poc.query.order.domain.handler.OrderRecordHandler;
 import org.example.event.sourcing.order.poc.query.order.domain.repo.OrderRepository;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.concurrent.CompletableFuture;
+import java.net.SocketException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.Random;
 
 import static org.example.event.sourcing.order.poc.query.order.domain.entity.OrderStatus.CREATED;
 import static org.example.event.sourcing.order.poc.query.order.domain.entity.OrderStatus.FINISHED;
@@ -19,45 +25,92 @@ import static org.example.event.sourcing.order.poc.query.order.domain.entity.Ord
 @RequiredArgsConstructor
 @Slf4j
 @LogInfo
-public class OrderRecordHandlerImpl implements OrderRecordHandler {
+public class OrderRecordHandlerImpl implements OrderRecordHandler, BeanFactoryPostProcessor {
 
     private final OrderRepository orderRepository;
 
+    private Random random;
+
     @Override
-    public CompletableFuture<Void> onEvent(OrderEvent event) {
-        return CompletableFuture.runAsync(() -> {
-            switch (event.eventName()) {
-                case CREATED:
-                    createOrder(event);
-                    break;
-                case COMPLETED:
-                    completeOrder(event);
-                    break;
-                default:
-                    throw new RuntimeException("unsupported event name");
-            }
-        });
+    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+        try {
+            random = SecureRandom.getInstanceStrong();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void onEvent(OrderEvent event) throws SocketException {
+        switch (event.id().charAt(0)) {
+            case 'n':
+                throw new SocketException();
+            case 'd':
+                throw new ClassCastException();
+            case 'e':
+                throw new RuntimeException();
+            default:
+                onNormalEvent(event);
+        }
+    }
+
+    @Override
+    public void onRequeueEvent(OrderEvent event) {
+        switch (event.id().charAt(0)) {
+            case 'd':
+                throw new ClassCastException();
+            case 'e':
+                if (random.nextBoolean()) {
+                    throw new RuntimeException();
+                } else {
+                    onNormalEvent(event);
+                    return;
+                }
+            default:
+                onNormalEvent(event);
+        }
+    }
+
+    private void onNormalEvent(OrderEvent event) {
+        switch (event.eventName()) {
+            case CREATED:
+                createOrder(event);
+                break;
+            case COMPLETED:
+                completeOrder(event);
+                break;
+            default:
+                throw new RuntimeException("unsupported event name");
+        }
     }
 
 
     private void createOrder(OrderEvent event) {
-        log.info("Create order id = {}", event.id());
-        OrderRecord entity = OrderRecord.builder()
-                .orderId(event.id())
-                .status(CREATED)
-                .createdDate(event.createdDate())
-                .updatedDate(event.createdDate())
-                .build();
-        OrderRecord result = orderRepository.save(entity);
-        log.info("saved order = {}", result);
+        String orderId = event.id();
+        log.info("Create order id = {}", orderId);
+        boolean isExist = orderRepository.existsById(orderId);
+        if (!isExist) {
+            OrderRecord entity = OrderRecord.builder()
+                    .orderId(orderId)
+                    .status(CREATED)
+                    .createdDate(event.createdDate())
+                    .updatedDate(event.createdDate())
+                    .build();
+            OrderRecord result = orderRepository.save(entity);
+            log.info("saved order = {}", result);
+        } else {
+            log.warn("order id = {} had been created.", orderId);
+        }
     }
 
     private void completeOrder(OrderEvent event) {
         orderRepository.findById(event.id()).ifPresent(orderRecord -> {
-            final OrderStatus status = statusMachineMap(orderRecord, event);
-            orderRecord.setStatus(status);
-            orderRecord.setUpdatedDate(event.createdDate());
-            orderRepository.save(orderRecord);
+            if (orderRecord.getStatus() == CREATED) {
+                final OrderStatus status = statusMachineMap(orderRecord, event);
+                orderRecord.setStatus(status);
+                orderRecord.setUpdatedDate(event.createdDate());
+                orderRepository.save(orderRecord);
+            }
         });
     }
 
@@ -68,4 +121,5 @@ public class OrderRecordHandlerImpl implements OrderRecordHandler {
             default -> throw new RuntimeException("unsupported event name");
         };
     }
+
 }

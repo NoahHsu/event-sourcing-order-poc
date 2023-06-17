@@ -2,8 +2,11 @@ package org.example.event.sourcing.order.poc.query.order.domain.handler;
 
 import org.example.event.sourcing.order.poc.event.model.OrderEvent;
 
-import java.util.concurrent.CompletableFuture;
+import java.net.SocketException;
 
 public interface OrderRecordHandler {
-    CompletableFuture<Void> onEvent(OrderEvent event);
+    void onEvent(OrderEvent event) throws SocketException;
+
+    void onRequeueEvent(OrderEvent event);
+
 }

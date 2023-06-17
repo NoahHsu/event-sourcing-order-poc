@@ -7,4 +7,4 @@ services:
       - '9092:9092'
     environment:
       - ALLOW_PLAINTEXT_LISTENER=yes
-      - LOG_RETENTION_HOURS=26280
+      - LOG_RETENTION_HOURS=1
