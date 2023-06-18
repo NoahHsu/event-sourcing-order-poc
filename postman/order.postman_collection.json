@@ -19,6 +19,7 @@
 							"});",
 							"",
 							"pm.collectionVariables.set(\"returnId\", pm.response.json().id);",
+							"setTimeout(function(){}, 3000);",
 							""
 						],
 						"type": "text/javascript"
