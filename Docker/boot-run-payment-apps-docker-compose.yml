@@ -10,7 +10,7 @@ services:
     volumes:
       - "../:/app"
     ports:
-      - "8084:8084"
+      - "9081:9081"
     working_dir: /app
     command: java -jar payment/command-side/build/libs/command-side-0.0.1-SNAPSHOT.jar
   payment-query:
@@ -19,7 +19,7 @@ services:
       - kafka
     image: openjdk:19-slim
     ports:
-      - "8086:8086"
+      - "9083:9083"
     env_file:
       - ./config/.env.docker
     volumes:

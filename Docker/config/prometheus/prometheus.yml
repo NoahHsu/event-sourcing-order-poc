@@ -22,15 +22,15 @@ scrape_configs:
         labels:
           namespace: 'event-sourcing'
           app: 'order-query'
-      - targets: [ 'host.docker.internal:8084' ]
+      - targets: [ 'host.docker.internal:9081' ]
         labels:
           namespace: 'event-sourcing'
           app: 'payment-command'
-      - targets: [ 'host.docker.internal:8085' ]
+      - targets: [ 'host.docker.internal:9082' ]
         labels:
           namespace: 'event-sourcing'
           app: 'payment-handler'
-      - targets: [ 'host.docker.internal:8086' ]
+      - targets: [ 'host.docker.internal:9083' ]
         labels:
           namespace: 'event-sourcing'
           app: 'payment-query'

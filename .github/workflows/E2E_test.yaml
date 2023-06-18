@@ -19,8 +19,8 @@ jobs:
             command: 8081
             query: 8083
           - aggregate: payment
-            command: 8084
-            query: 8086
+            command: 9081
+            query: 9083
     steps:
       - name: Checkout code
         uses: actions/checkout@v3

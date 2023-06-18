@@ -50,12 +50,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8084/api/v1/payments",
+					"raw": "http://localhost:9081/api/v1/payments",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8084",
+					"port": "9081",
 					"path": [
 						"api",
 						"v1",
@@ -98,12 +98,12 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8086/api/v1-payments/{{wrongPaymentId}}",
+					"raw": "http://localhost:9083/api/v1-payments/{{wrongPaymentId}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8086",
+					"port": "9083",
 					"path": [
 						"api",
 						"v1-payments",
@@ -146,12 +146,12 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8086/api/v1-payments/{{paymentId}}",
+					"raw": "http://localhost:9083/api/v1-payments/{{paymentId}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8086",
+					"port": "9083",
 					"path": [
 						"api",
 						"v1-payments",

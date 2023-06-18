@@ -6,7 +6,7 @@ cluster:
       base-url: http://${CLUSTER_HOST:localhost}:8083
   payment:
     command:
-      base-url: http://${CLUSTER_HOST:localhost}:8084
+      base-url: http://${CLUSTER_HOST:localhost}:9081
     query:
-      base-url: http://${CLUSTER_HOST:localhost}:8086
+      base-url: http://${CLUSTER_HOST:localhost}:9083
 
