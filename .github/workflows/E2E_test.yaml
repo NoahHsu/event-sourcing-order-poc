@@ -13,7 +13,7 @@ jobs:
     strategy:
       max-parallel: 1
       matrix:
-        aggregate: [ order ]
+        aggregate: [ order, payment]
         include:
           - aggregate: order
             command: 8081
@@ -32,8 +32,8 @@ jobs:
           distribution: 'temurin'
           cache: 'gradle'
 
-#      - name: Build with Gradle
-#        run: ./gradlew build -x test --no-daemon
+      - name: Build with Gradle
+        run: ./gradlew build -x test --no-daemon
 
       - name: Run The Cluster
         run: docker compose -f Docker/boot-run-${{ matrix.aggregate }}-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker -p event-sourcing up -d
