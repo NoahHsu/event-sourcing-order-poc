@@ -12,7 +12,11 @@ import org.springframework.kafka.annotation.RetryableTopic;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.kafka.support.KafkaHeaders;
+import org.springframework.kafka.support.converter.ConversionException;
+import org.springframework.kafka.support.serializer.DeserializationException;
+import org.springframework.messaging.converter.MessageConversionException;
 import org.springframework.messaging.handler.annotation.Header;
+import org.springframework.messaging.handler.invocation.MethodArgumentResolutionException;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +38,12 @@ public class OrderEventConsumer {
     private final KafkaTemplate<String, OrderEvent> kafkaTemplate;
 
     @RetryableTopic(kafkaTemplate = "kafkaTemplate",
+            exclude = {DeserializationException.class,
+                    MessageConversionException.class,
+                    ConversionException.class,
+                    MethodArgumentResolutionException.class,
+                    NoSuchMethodException.class,
+                    ClassCastException.class},
             attempts = "4",
             backoff = @Backoff(delay = 3000, multiplier = 1.5, maxDelay = 15000)
     )
@@ -58,7 +68,7 @@ public class OrderEventConsumer {
 
     @DltHandler
     public void processMessage(OrderEvent message) {
-        log.error("DltHandler processMessage = {}", message);
+        log.error("{} DltHandler processMessage = {}", ORDER_TOPIC, message);
     }
 
 }

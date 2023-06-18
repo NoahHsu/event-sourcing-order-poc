@@ -19,37 +19,42 @@ public class PaymentRecordHandlerImpl implements PaymentRecordHandler {
     private final PaymentRepository paymentRepository;
 
     @Override
-    public CompletableFuture<Void> onEvent(PaymentEvent event) {
-        return CompletableFuture.runAsync(() -> {
-            switch (event.eventName()) {
-                case CREATED:
-                    createPayment(event);
-                    break;
-                case INVALID:
-                case VALIDATED:
-                case UNAUTHORIZED:
-                case AUTHORIZED:
-                case CANCELLED:
-                case SETTLED:
-                    updatePayment(event);
-                    break;
-                default:
-                    throw new RuntimeException("unsupported event");
-            }
-        });
+    public void onEvent(PaymentEvent event) {
+        switch (event.eventName()) {
+            case CREATED:
+                createPayment(event);
+                break;
+            case INVALID:
+            case VALIDATED:
+            case UNAUTHORIZED:
+            case AUTHORIZED:
+            case CANCELLED:
+            case SETTLED:
+                updatePayment(event);
+                break;
+            default:
+                throw new RuntimeException("unsupported event");
+        }
     }
 
     private void createPayment(PaymentEvent event) {
-        log.info("Create payment id = {}.", event.id());
-        PaymentRecord entity = PaymentRecord.builder()
-                .paymentId(event.id())
-                .paymentMethod(event.paymentMethod())
-                .status(PaymentEventName.CREATED)
-                .createdDate(event.createdDate())
-                .updatedDate(event.updatedDate())
-                .build();
-        paymentRepository.save(entity);
-        log.info("save payment success");
+        String paymentId = event.id();
+        log.info("Create payment id = {}.", paymentId);
+        boolean isExsit = paymentRepository.existsById(paymentId);
+        if (!isExsit) {
+            PaymentRecord entity = PaymentRecord.builder()
+                    .paymentId(event.id())
+                    .paymentMethod(event.paymentMethod())
+                    .status(PaymentEventName.CREATED)
+                    .createdDate(event.createdDate())
+                    .updatedDate(event.updatedDate())
+                    .build();
+            PaymentRecord result = paymentRepository.save(entity);
+            log.info("save payment = {}", result);
+        } else {
+            log.warn("payment id = {} had been created.", paymentId);
+        }
+
     }
 
     private void updatePayment(PaymentEvent event) {

@@ -8,43 +8,7 @@ spring:
     include:
       - observe
       - cluster
-  data:
-    rest:
-      basePath: /api
-  h2:
-    console:
-      enabled: false
-  datasource:
-    url: jdbc:h2:mem:testdb
-    username: sa
-    password: password
-    driverClassName: org.h2.Driver
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    hibernate:
-      ddl-auto: create
-    properties:
-      hibernate:
-        show_sql: true
-        format_sql: true
-  kafka:
-    bootstrapServers: ${KAFKA_HOST:localhost}:${KAFKA_PORT:9092}
-    producer:
-      retries: 3
-      bootstrapServers: ${KAFKA_HOST:localhost}:${KAFKA_PORT:9092}
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-Serializer: org.springframework.kafka.support.serializer.JsonSerializer
-    consumer:
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-      auto-offset-reset: earliest
-      enable-auto-commit: false
-      max-poll-records: 1
-      isolation-level: read_committed
-      properties:
-        spring:
-          json:
-            trusted:
-              packages: org.example.event.sourcing.order.poc.event.model
-    listener:
-      ack-mode: manual-immediate
+      - query-side
+      - kafka
+      - kafka-producer
+      - kafka-consumer

@@ -25,20 +25,9 @@ import static org.example.event.sourcing.order.poc.query.order.domain.entity.Ord
 @RequiredArgsConstructor
 @Slf4j
 @LogInfo
-public class OrderRecordHandlerImpl implements OrderRecordHandler, BeanFactoryPostProcessor {
+public class OrderRecordHandlerImpl implements OrderRecordHandler {
 
     private final OrderRepository orderRepository;
-
-    private Random random;
-
-    @Override
-    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-        try {
-            random = SecureRandom.getInstanceStrong();
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     @Override
     public void onEvent(OrderEvent event) throws SocketException {
@@ -60,6 +49,7 @@ public class OrderRecordHandlerImpl implements OrderRecordHandler, BeanFactoryPo
             case 'd':
                 throw new ClassCastException();
             case 'e':
+                Random random = new SecureRandom();
                 if (random.nextBoolean()) {
                     throw new RuntimeException();
                 } else {

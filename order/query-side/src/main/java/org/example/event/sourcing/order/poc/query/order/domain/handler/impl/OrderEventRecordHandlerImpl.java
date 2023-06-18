@@ -10,8 +10,6 @@ import org.example.event.sourcing.order.poc.query.order.domain.handler.OrderEven
 import org.example.event.sourcing.order.poc.query.order.domain.repo.OrderEventRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.concurrent.CompletableFuture;
-
 @Service
 @RequiredArgsConstructor
 @Slf4j

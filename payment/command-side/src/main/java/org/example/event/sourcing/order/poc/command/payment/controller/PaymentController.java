@@ -1,5 +1,6 @@
 package org.example.event.sourcing.order.poc.command.payment.controller;
 
+import io.micrometer.observation.annotation.Observed;
 import lombok.RequiredArgsConstructor;
 import org.example.event.sourcing.order.poc.command.payment.service.PaymentService;
 import org.example.event.sourcing.order.poc.common.model.Payment;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "api/v1/payments", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+@Observed
 public class PaymentController {
 
     private final PaymentService paymentService;

@@ -24,8 +24,12 @@
 ```shell
 # should rim build first
 ./gradlew build -x test
-# run order command query and others
-docker compose -f Docker/observe-docker-compose.yaml -f Docker/boot-run-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker -p event-sourcing up -d --scale prometheus=0
+# run order command query and dependency
+docker compose -f Docker/observe-docker-compose.yaml -f Docker/boot-run-order-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker -p event-sourcing up -d --scale prometheus=0
+
+# run payment command query and dependency
+docker compose -f Docker/observe-docker-compose.yaml -f Docker/boot-run-payment-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker -p event-sourcing up -d --scale prometheus=0
+
 ```
 
 #### Run applications 

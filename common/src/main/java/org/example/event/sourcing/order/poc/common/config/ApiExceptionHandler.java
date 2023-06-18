@@ -1,4 +1,4 @@
-package org.example.event.sourcing.order.poc.query.order.config;
+package org.example.event.sourcing.order.poc.common.config;
 
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @ControllerAdvice
-public class QuerySideExceptionHandler {
+public class ApiExceptionHandler {
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<?> handlerException(ConstraintViolationException e) {

@@ -26,7 +26,9 @@ public class OrderEventProducer {
         log.info("Attempting to log {} to topic {}.", order, ORDER_TOPIC);
         final String key = order.id();
         try {
-            SendResult<String, OrderEvent> result = kafkaTemplate.send(ORDER_TOPIC, key, order).get(10, TimeUnit.SECONDS);
+            SendResult<String, OrderEvent> result = kafkaTemplate
+                    .send(ORDER_TOPIC, key, order)
+                    .get(10, TimeUnit.SECONDS);
             onSuccess(result);
             return true;
         } catch (ExecutionException | InterruptedException | TimeoutException e) {

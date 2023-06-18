@@ -4,3 +4,9 @@ cluster:
       base-url: http://${CLUSTER_HOST:localhost}:8081
     query:
       base-url: http://${CLUSTER_HOST:localhost}:8083
+  payment:
+    command:
+      base-url: http://${CLUSTER_HOST:localhost}:8084
+    query:
+      base-url: http://${CLUSTER_HOST:localhost}:8086
+
