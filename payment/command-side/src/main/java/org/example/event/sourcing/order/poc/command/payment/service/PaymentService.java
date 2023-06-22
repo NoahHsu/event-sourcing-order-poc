@@ -1,12 +1,12 @@
 package org.example.event.sourcing.order.poc.command.payment.service;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.example.event.sourcing.order.poc.command.payment.producer.PaymentEventProducer;
 import org.example.event.sourcing.order.poc.common.model.Payment;
 import org.example.event.sourcing.order.poc.event.model.PaymentEvent;
 import org.example.event.sourcing.order.poc.event.model.PaymentEventName;
+import org.example.event.sourcing.order.poc.observation.annotation.LogInfo;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -15,24 +15,18 @@ import static org.example.event.sourcing.order.poc.event.model.PaymentEventName.
 
 @Service
 @RequiredArgsConstructor
+@LogInfo
 public class PaymentService {
 
     private final PaymentEventProducer paymentEventProducer;
 
     public Payment createPayment(Payment payment) {
-        randomFail();
         boolean isSuccess = paymentEventProducer.create(
                 getPaymentEvent(payment, CREATED));
         if (isSuccess) {
             return payment;
         } else {
             throw new RuntimeException("create payment event fail");
-        }
-    }
-
-    private void randomFail() {
-        if (RandomUtils.nextBoolean()) {
-            throw new RuntimeException("random fail");
         }
     }
 
@@ -47,7 +41,6 @@ public class PaymentService {
     }
 
     public Payment validatePayment(Payment payment) {
-        randomFail();
         PaymentEventName event = isValid(payment) ? VALIDATED : INVALID;
         boolean isSuccess = paymentEventProducer.create(
                 getPaymentEvent(payment, event));
@@ -65,7 +58,6 @@ public class PaymentService {
     }
 
     public Payment confirmPayment(Payment payment) {
-        randomFail();
         boolean isSuccess = paymentEventProducer.create(
                 getPaymentEvent(payment, AUTHORIZED));
         if (isSuccess) {
@@ -76,7 +68,6 @@ public class PaymentService {
     }
 
     public Payment cancelPayment(Payment payment) {
-        randomFail();
         boolean isSuccess = paymentEventProducer.create(
                 getPaymentEvent(payment, CANCELLED));
         if (isSuccess) {
@@ -87,7 +78,6 @@ public class PaymentService {
     }
 
     public Payment settlePayment(Payment payment) {
-        randomFail();
         boolean isSuccess = paymentEventProducer.create(
                 getPaymentEvent(payment, SETTLED));
         if (isSuccess) {

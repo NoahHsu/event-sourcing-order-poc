@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+  payment-command:
+    image: openjdk:19-slim
+    extra_hosts: [ 'host.docker.internal:host-gateway' ]
+    depends_on:
+      - kafka
+    env_file:
+      - ./config/.env.docker
+    volumes:
+      - "../:/app"
+    ports:
+      - "9081:9081"
+    working_dir: /app
+    command: java -jar payment/command-side/build/libs/command-side-0.0.1-SNAPSHOT.jar
+  payment-query:
+    extra_hosts: [ 'host.docker.internal:host-gateway' ]
+    depends_on:
+      - kafka
+    image: openjdk:19-slim
+    ports:
+      - "9083:9083"
+    env_file:
+      - ./config/.env.docker
+    volumes:
+      - "../:/app"
+    working_dir: /app
+    command: java -jar payment/query-side/build/libs/query-side-0.0.1-SNAPSHOT.jar

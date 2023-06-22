@@ -45,7 +45,7 @@ services:
   payment-command:
     image: 'noahhsu/espoc-payment-command-side:${APP_TAG:-latest}'
     ports:
-      - '8084:8084'
+      - '9081:9081'
     depends_on:
       - kafka
     profiles:
@@ -59,7 +59,7 @@ services:
   payment-handler:
     image: 'noahhsu/espoc-payment-event-handler:${APP_TAG:-latest}'
     ports:
-      - '8085:8085'
+      - '9082:9082'
     depends_on:
       - kafka
     profiles:
@@ -73,7 +73,7 @@ services:
   payment-query:
     image: 'noahhsu/espoc-payment-query-side:${APP_TAG:-latest}'
     ports:
-      - '8086:8086'
+      - '9083:9083'
     depends_on:
       - kafka
     profiles:

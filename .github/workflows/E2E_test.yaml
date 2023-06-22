@@ -10,7 +10,17 @@ permissions:
 jobs:
   e2e-test:
     runs-on: ubuntu-latest
-
+    strategy:
+      max-parallel: 1
+      matrix:
+        aggregate: [ order, payment]
+        include:
+          - aggregate: order
+            command: 8081
+            query: 8083
+          - aggregate: payment
+            command: 9081
+            query: 9083
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -26,20 +36,20 @@ jobs:
         run: ./gradlew build -x test --no-daemon
 
       - name: Run The Cluster
-        run: docker compose -f Docker/boot-run-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker -p event-sourcing up -d
+        run: docker compose -f Docker/boot-run-${{ matrix.aggregate }}-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker -p event-sourcing up -d
 
-      - name: Check the order-query
+      - name: Check the command-side
         uses: jtalk/url-health-check-action@v3
         with:
-          url: http://localhost:8083/actuator/health
+          url: http://localhost:${{ matrix.command }}/actuator/health
           max-attempts: 6
-          retry-delay: 15s
+          retry-delay: 20s
           retry-all: true
 
-      - name: Check the order-command
+      - name: Check the query-side
         uses: jtalk/url-health-check-action@v3
         with:
-          url: http://localhost:8081/actuator/health
+          url: http://localhost:${{ matrix.query }}/actuator/health
           max-attempts: 5
           retry-delay: 5s
           retry-all: true
@@ -47,9 +57,9 @@ jobs:
       - name: run Postman Collection
         uses: matt-ball/newman-action@master
         with:
-          collection: postman/OrderCommand.postman_collection.json
+          collection: postman/${{ matrix.aggregate }}.postman_collection.json
 
       - name: clean docker compose
         if: always()
         run: |
-          docker compose -f Docker/boot-run-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker -p event-sourcing down
+          docker compose -f Docker/boot-run-${{ matrix.aggregate }}-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker -p event-sourcing down

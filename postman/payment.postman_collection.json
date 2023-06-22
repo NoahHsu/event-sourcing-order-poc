@@ -1,14 +1,14 @@
 {
 	"info": {
-		"_postman_id": "f75b655d-8cbf-45cf-ba2f-c2cc1c00dd91",
-		"name": "OrderCommand",
+		"_postman_id": "f94613de-6210-42a8-b99b-696affd4b812",
+		"name": "payment",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "27249891",
-		"_collection_link": "https://interstellar-trinity-80703.postman.co/workspace/E2E-test-for-event-sourcing-ord~92a21858-fc8b-47ab-8394-2fe44de1eec9/collection/27249891-f75b655d-8cbf-45cf-ba2f-c2cc1c00dd91?action=share&creator=27249891&source=collection_link"
+		"_collection_link": "https://interstellar-trinity-80703.postman.co/workspace/E2E-test-for-event-sourcing-ord~92a21858-fc8b-47ab-8394-2fe44de1eec9/collection/27249891-f94613de-6210-42a8-b99b-696affd4b812?action=share&creator=27249891&source=collection_link"
 	},
 	"item": [
 		{
-			"name": "Create Order success",
+			"name": "Create Payment success",
 			"event": [
 				{
 					"listen": "test",
@@ -19,6 +19,7 @@
 							"});",
 							"",
 							"pm.collectionVariables.set(\"returnId\", pm.response.json().id);",
+							"setTimeout(function(){}, 3000);",
 							""
 						],
 						"type": "text/javascript"
@@ -27,90 +28,93 @@
 			],
 			"protocolProfileBehavior": {
 				"disabledSystemHeaders": {
-					"connection": true
+					"accept": true
 				}
 			},
 			"request": {
 				"method": "POST",
 				"header": [
 					{
-						"key": "accept",
-						"value": "application/json",
-						"type": "text"
-					},
-					{
-						"key": "Content-Type",
+						"key": "Accept",
 						"value": "application/json",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"id\": \"{{orderId}}\"\n}"
+					"raw": "{\n  \"id\": \"{{paymentId}}\",\n  \"paymentMethod\": \"ATM\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
-					"raw": "http://localhost:8081/api/v1/orders",
+					"raw": "http://localhost:9081/api/v1/payments",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8081",
+					"port": "9081",
 					"path": [
 						"api",
 						"v1",
-						"orders"
+						"payments"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Fail to complete not created Order",
+			"name": "Query Payment Not Found",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 422\", function () {",
-							"    pm.response.to.have.status(422);",
-							"});"
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							""
 						],
 						"type": "text/javascript"
 					}
 				}
 			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true,
+					"content-type": true
+				}
+			},
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [
 					{
-						"key": "Content-Type",
-						"value": "application/json",
+						"key": "Accept",
+						"value": "application/hal+json",
 						"type": "text"
 					}
 				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"id\": \"{{notCreateOrderId}}\"\n}"
-				},
 				"url": {
-					"raw": "http://localhost:8081/api/v1/orders/complete",
+					"raw": "http://localhost:9083/api/v1-payments/{{wrongPaymentId}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8081",
+					"port": "9083",
 					"path": [
 						"api",
-						"v1",
-						"orders",
-						"complete"
+						"v1-payments",
+						"{{wrongPaymentId}}"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Complete created Order success",
+			"name": "Query Payment success",
 			"event": [
 				{
 					"listen": "test",
@@ -119,40 +123,39 @@
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
 							"});",
-							"pm.test(\"Your test name\", function () {",
-							"    var jsonData = pm.response.json();",
-							"    pm.expect(jsonData.result).to.eql(\"OK\");",
-							"});"
+							"",
+							""
 						],
 						"type": "text/javascript"
 					}
 				}
 			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true,
+					"content-type": true
+				}
+			},
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [
 					{
-						"key": "Content-Type",
-						"value": "application/json",
+						"key": "Accept",
+						"value": "application/hal+json",
 						"type": "text"
 					}
 				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"id\": \"{{orderId}}\"\n}"
-				},
 				"url": {
-					"raw": "http://localhost:8081/api/v1/orders/complete",
+					"raw": "http://localhost:9083/api/v1-payments/{{paymentId}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8081",
+					"port": "9083",
 					"path": [
 						"api",
-						"v1",
-						"orders",
-						"complete"
+						"v1-payments",
+						"{{paymentId}}"
 					]
 				}
 			},
@@ -181,18 +184,18 @@
 	],
 	"variable": [
 		{
-			"key": "orderId",
-			"value": "2222"
+			"key": "paymentId",
+			"value": "1111",
+			"type": "string"
+		},
+		{
+			"key": "wrongPaymentId",
+			"value": "2222",
+			"type": "string"
 		},
 		{
 			"key": "returnId",
-			"value": "",
-			"type": "string"
-		},
-		{
-			"key": "notCreateOrderId",
-			"value": "3333",
-			"type": "string"
+			"value": ""
 		}
 	]
 }

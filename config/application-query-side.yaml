@@ -1,0 +1,16 @@
+spring:
+  data:
+    rest:
+      basePath: /api
+  h2:
+    console:
+      enabled: false
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create

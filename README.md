@@ -24,8 +24,12 @@
 ```shell
 # should rim build first
 ./gradlew build -x test
-# run order command query and others
-docker compose -f Docker/observe-docker-compose.yaml -f Docker/boot-run-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker -p event-sourcing up -d --scale prometheus=0
+# run order command query and dependency
+docker compose -f Docker/observe-docker-compose.yaml -f Docker/boot-run-order-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker -p event-sourcing up -d --scale prometheus=0
+
+# run payment command query and dependency
+docker compose -f Docker/observe-docker-compose.yaml -f Docker/boot-run-payment-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker -p event-sourcing up -d --scale prometheus=0
+
 ```
 
 #### Run applications 
@@ -69,9 +73,9 @@ act -j e2e-test
 | Order Command    | http://localhost:8081/swagger-ui/index.html |
 | Order Handler    | http://localhost:8082/swagger-ui/index.html |
 | Order Query      | http://localhost:8083/swagger-ui/index.html |
-| Payment Command  | http://localhost:8084/swagger-ui/index.html |
-| Payment Handler  | http://localhost:8085/swagger-ui/index.html |
-| Payment Query    | http://localhost:8086/swagger-ui/index.html |
+| Payment Command  | http://localhost:9081/swagger-ui/index.html |
+| Payment Handler  | http://localhost:9082/swagger-ui/index.html |
+| Payment Query    | http://localhost:9083/swagger-ui/index.html |
 | Shipment Command | http://localhost:8087/swagger-ui/index.html |
 | Shipment Handler | http://localhost:8088/swagger-ui/index.html |
 | Shipment Query   | http://localhost:8089/swagger-ui/index.html |
