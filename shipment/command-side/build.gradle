@@ -3,9 +3,12 @@ jib.to.image = "noahhsu/espoc-shipment-${project.name}"
 dependencies {
     implementation project(":common")
     implementation project(":event")
+    implementation project(":client")
+    implementation project(":observation")
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.kafka:spring-kafka'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

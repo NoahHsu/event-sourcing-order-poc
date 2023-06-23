@@ -34,15 +34,15 @@ scrape_configs:
         labels:
           namespace: 'event-sourcing'
           app: 'payment-query'
-      - targets: [ 'host.docker.internal:8087' ]
+      - targets: [ 'host.docker.internal:10081' ]
         labels:
           namespace: 'event-sourcing'
           app: 'shipment-command'
-      - targets: [ 'host.docker.internal:8088' ]
+      - targets: [ 'host.docker.internal:10082' ]
         labels:
           namespace: 'event-sourcing'
           app: 'shipment-handler'
-      - targets: [ 'host.docker.internal:8089' ]
+      - targets: [ 'host.docker.internal:10083' ]
         labels:
           namespace: 'event-sourcing'
           app: 'shipment-query'

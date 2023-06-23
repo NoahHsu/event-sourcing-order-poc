@@ -50,12 +50,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:9081/api/v1/payments",
+					"raw": "http://localhost:{{commandPort}}/api/v1/payments",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "9081",
+					"port": "{{commandPort}}",
 					"path": [
 						"api",
 						"v1",
@@ -98,12 +98,12 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:9083/api/v1-payments/{{wrongPaymentId}}",
+					"raw": "http://localhost:{{queryPort}}/api/v1-payments/{{wrongPaymentId}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "9083",
+					"port": "{{queryPort}}",
 					"path": [
 						"api",
 						"v1-payments",
@@ -146,12 +146,12 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:9083/api/v1-payments/{{paymentId}}",
+					"raw": "http://localhost:{{queryPort}}/api/v1-payments/{{paymentId}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "9083",
+					"port": "{{queryPort}}",
 					"path": [
 						"api",
 						"v1-payments",
@@ -196,6 +196,15 @@
 		{
 			"key": "returnId",
 			"value": ""
+		},
+		{
+			"key": "commandPort",
+			"value": "9081"
+		},
+		{
+			"key": "queryPort",
+			"value": "9083",
+			"type": "string"
 		}
 	]
 }

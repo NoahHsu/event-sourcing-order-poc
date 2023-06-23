@@ -1,35 +1,14 @@
 server:
-  port: 8089
+  port: 10083
 
 spring:
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-  datasource:
-    url: jdbc:h2:mem:testdb
-    username: sa
-    password: password
-    driverClassName: org.h2.Driver
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    hibernate:
-      ddl-auto: create
   application:
     name: query-side-shipment
-  kafka:
-    bootstrapServers: ${KAFKA_HOST:localhost}:${KAFKA_PORT:9092}
-    consumer:
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-      auto-offset-reset: earliest
-      enable-auto-commit: false
-      max-poll-records: 1
-      isolation-level: read_committed
-      properties:
-        spring:
-          json:
-            trusted:
-              packages: org.example.event.sourcing.order.poc.event.model
-    listener:
-      ack-mode: manual-immediate
+  profiles:
+    include:
+      - observe
+      - cluster
+      - query-side
+      - kafka
+      - kafka-producer
+      - kafka-consumer

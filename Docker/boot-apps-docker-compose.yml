@@ -87,7 +87,7 @@ services:
   shipment-command:
     image: 'noahhsu/espoc-shipment-command-side:${APP_TAG:-latest}'
     ports:
-      - '8087:8087'
+      - '10081:10081'
     depends_on:
       - kafka
     profiles:
@@ -101,7 +101,7 @@ services:
   shipment-handler:
     image: 'noahhsu/espoc-shipment-event-handler:${APP_TAG:-latest}'
     ports:
-      - '8088:8088'
+      - '10082:10082'
     depends_on:
       - kafka
     profiles:
@@ -115,7 +115,7 @@ services:
   shipment-query:
     image: 'noahhsu/espoc-shipment-query-side:${APP_TAG:-latest}'
     ports:
-      - '8089:8089'
+      - '10083:10083'
     depends_on:
       - kafka
     profiles:
