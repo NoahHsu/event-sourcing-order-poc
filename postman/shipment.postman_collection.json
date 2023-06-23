@@ -1,14 +1,14 @@
 {
 	"info": {
-		"_postman_id": "f75b655d-8cbf-45cf-ba2f-c2cc1c00dd91",
-		"name": "order",
+		"_postman_id": "a20cc947-6c02-469b-ad15-48af26fa1f00",
+		"name": "shipment",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "27249891",
-		"_collection_link": "https://interstellar-trinity-80703.postman.co/workspace/E2E-test-for-event-sourcing-ord~92a21858-fc8b-47ab-8394-2fe44de1eec9/collection/27249891-f75b655d-8cbf-45cf-ba2f-c2cc1c00dd91?action=share&creator=27249891&source=collection_link"
+		"_collection_link": "https://interstellar-trinity-80703.postman.co/workspace/E2E-test-for-event-sourcing-ord~92a21858-fc8b-47ab-8394-2fe44de1eec9/collection/27249891-a20cc947-6c02-469b-ad15-48af26fa1f00?action=share&creator=27249891&source=collection_link"
 	},
 	"item": [
 		{
-			"name": "Create Order success",
+			"name": "Create Shipment success",
 			"event": [
 				{
 					"listen": "test",
@@ -28,73 +28,29 @@
 			],
 			"protocolProfileBehavior": {
 				"disabledSystemHeaders": {
-					"connection": true
+					"accept": true
 				}
 			},
 			"request": {
 				"method": "POST",
 				"header": [
 					{
-						"key": "accept",
-						"value": "application/json",
-						"type": "text"
-					},
-					{
-						"key": "Content-Type",
+						"key": "Accept",
 						"value": "application/json",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"id\": \"{{orderId}}\"\n}"
+					"raw": "{\n  \"id\": \"{{shipmentId}}\",\n  \"shipmentMethod\": \"HOME_DELIVERY\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
-					"raw": "http://localhost:8081/api/v1/orders",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"api",
-						"v1",
-						"orders"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Fail to complete not created Order",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 422\", function () {",
-							"    pm.response.to.have.status(422);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"id\": \"{{notCreateOrderId}}\"\n}"
-				},
-				"url": {
-					"raw": "http://localhost:{{commandPort}}/api/v1/orders/complete",
+					"raw": "http://localhost:{{commandPort}}/api/v1/shipments",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -103,15 +59,62 @@
 					"path": [
 						"api",
 						"v1",
-						"orders",
-						"complete"
+						"shipments"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Complete created Order success",
+			"name": "Query Shipment Not Found",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true,
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:{{queryPort}}/api/v1-shipments/{{wrongPaymentId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{queryPort}}",
+					"path": [
+						"api",
+						"v1-shipments",
+						"{{wrongPaymentId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query Payment success",
 			"event": [
 				{
 					"listen": "test",
@@ -120,40 +123,39 @@
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
 							"});",
-							"pm.test(\"Your test name\", function () {",
-							"    var jsonData = pm.response.json();",
-							"    pm.expect(jsonData.result).to.eql(\"OK\");",
-							"});"
+							"",
+							""
 						],
 						"type": "text/javascript"
 					}
 				}
 			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true,
+					"content-type": true
+				}
+			},
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [
 					{
-						"key": "Content-Type",
-						"value": "application/json",
+						"key": "Accept",
+						"value": "application/hal+json",
 						"type": "text"
 					}
 				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"id\": \"{{orderId}}\"\n}"
-				},
 				"url": {
-					"raw": "http://localhost:{{commandPort}}/api/v1/orders/complete",
+					"raw": "http://localhost:{{queryPort}}/api/v1-shipments/{{shipmentId}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "{{commandPort}}",
+					"port": "{{queryPort}}",
 					"path": [
 						"api",
-						"v1",
-						"orders",
-						"complete"
+						"v1-shipments",
+						"{{shipmentId}}"
 					]
 				}
 			},
@@ -182,22 +184,28 @@
 	],
 	"variable": [
 		{
-			"key": "orderId",
-			"value": "2222"
-		},
-		{
-			"key": "returnId",
-			"value": "",
+			"key": "shipmentId",
+			"value": "1111",
 			"type": "string"
 		},
 		{
-			"key": "notCreateOrderId",
-			"value": "3333",
+			"key": "wrongShipmentId",
+			"value": "2222",
 			"type": "string"
 		},
 		{
 			"key": "commandPort",
-			"value": "8081"
+			"value": "10081",
+			"type": "string"
+		},
+		{
+			"key": "queryPort",
+			"value": "10083",
+			"type": "string"
+		},
+		{
+			"key": "returnId",
+			"value": ""
 		}
 	]
 }

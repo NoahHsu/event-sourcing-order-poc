@@ -9,4 +9,9 @@ cluster:
       base-url: http://${CLUSTER_HOST:localhost}:9081
     query:
       base-url: http://${CLUSTER_HOST:localhost}:9083
+  shipment:
+    command:
+      base-url: http://${CLUSTER_HOST:localhost}:10081
+    query:
+      base-url: http://${CLUSTER_HOST:localhost}:10083
 

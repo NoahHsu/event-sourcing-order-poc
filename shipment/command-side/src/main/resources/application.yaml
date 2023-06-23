@@ -1,14 +1,12 @@
 server:
-  port: 8087
+  port: 10081
 
 spring:
   application:
     name: command-side-shipment
-  kafka:
-    bootstrapServers: ${KAFKA_HOST:localhost}:${KAFKA_PORT:9092}
-    producer:
-      retries: 3
-      bootstrapServers: ${KAFKA_HOST:localhost}:${KAFKA_PORT:9092}
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-Serializer: org.springframework.kafka.support.serializer.JsonSerializer
-      transaction-id-prefix: poc-es
+  profiles:
+    include:
+      - observe
+      - cluster
+      - kafka
+      - kafka-producer

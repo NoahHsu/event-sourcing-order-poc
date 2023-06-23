@@ -13,7 +13,7 @@ jobs:
     strategy:
       max-parallel: 1
       matrix:
-        aggregate: [ order, payment]
+        aggregate: [ order, payment, shipment]
         include:
           - aggregate: order
             command: 8081
@@ -21,6 +21,9 @@ jobs:
           - aggregate: payment
             command: 9081
             query: 9083
+          - aggregate: shipment
+            command: 10081
+            query: 10083
     steps:
       - name: Checkout code
         uses: actions/checkout@v3

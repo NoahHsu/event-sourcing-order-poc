@@ -1,5 +1,6 @@
 package org.example.event.sourcing.order.poc.command.shipment.controller;
 
+import io.micrometer.observation.annotation.Observed;
 import lombok.RequiredArgsConstructor;
 import org.example.event.sourcing.order.poc.command.shipment.service.ShipmentService;
 import org.example.event.sourcing.order.poc.common.model.Shipment;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "api/v1/shipments", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+@Observed
 public class ShipmentController {
 
     private final ShipmentService shipmentService;
