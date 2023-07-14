@@ -1,0 +1,16 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: payment-query
+  description: query side of payment aggregate
+  links:
+    - url: https://github.com/NoahHsu/event-sourcing-order-poc/tree/master/payment/query-side
+      title: GitHub Repo
+      icon: github
+spec:
+  type: service
+  lifecycle: experimental
+  system: es-poc
+  owner: guest
+  providesApis:
+    - payment-query

@@ -1,0 +1,22 @@
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: payment-query
+  description: The payment-query API
+  tags:
+    - payment
+    - query
+    - rest
+  links:
+    - url: https://github.com/NoahHsu/event-sourcing-order-poc/tree/master/payment/query-side
+      title: GitHub Repo
+      icon: github
+    - url: http://localhost:9083/swagger-ui/index.html
+      title: Swagger UI
+      icon: code
+spec:
+  type: openapi
+  lifecycle: experimental
+  owner: guests
+  definition:
+    $text: http://localhost:9083/v3/api-docs

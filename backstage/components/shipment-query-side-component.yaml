@@ -1,0 +1,16 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: shipment-query
+  description: query side of order aggregate
+  links:
+    - url: https://github.com/NoahHsu/event-sourcing-order-poc/tree/master/shipment/query-side
+      title: GitHub Repo
+      icon: github
+spec:
+  type: service
+  lifecycle: experimental
+  system: es-poc
+  owner: guest
+  providesApis:
+    - shipment-query

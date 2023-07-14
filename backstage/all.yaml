@@ -1,0 +1,17 @@
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: event-sourcing-poc-all
+  description: A collection of all Backstage entities
+spec:
+  targets:
+    - ./all-apis.yaml
+    - ./all-components.yaml
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: es-poc
+spec:
+  owner: guests

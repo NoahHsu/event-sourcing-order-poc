@@ -1,0 +1,22 @@
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: order-command
+  description: The order-command API
+  tags:
+    - order
+    - command
+    - rest
+  links:
+    - url: https://github.com/NoahHsu/event-sourcing-order-poc/tree/master/order/command-side
+      title: GitHub Repo
+      icon: github
+    - url: http://localhost:8081/swagger-ui/index.html
+      title: Swagger UI
+      icon: code
+spec:
+  type: openapi
+  lifecycle: experimental
+  owner: guests
+  definition:
+    $text: http://localhost:8081/v3/api-docs
