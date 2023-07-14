@@ -24,13 +24,17 @@
 ```shell
 # should rim build first
 ./gradlew build -x test
-# run order command query and dependency
+
+# run all command, query side, and dependencies 
+docker compose -f Docker/observe-docker-compose.yaml -f Docker/boot-run-order-apps-docker-compose.yml -f Docker/boot-run-payment-apps-docker-compose.yml -f Docker/boot-run-shipment-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker -p event-sourcing up
+
+# run order command query and dependencies
 docker compose -f Docker/observe-docker-compose.yaml -f Docker/boot-run-order-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker -p event-sourcing up -d --scale prometheus=0
 
-# run payment command query and dependency
+# run payment command query and dependencies
 docker compose -f Docker/observe-docker-compose.yaml -f Docker/boot-run-payment-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker -p event-sourcing up -d --scale prometheus=0
 
-# run shipment command query and dependency
+# run shipment command query and dependencies
 docker compose -f Docker/observe-docker-compose.yaml -f Docker/boot-run-shipment-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker -p event-sourcing up -d --scale prometheus=0
 
 ```
@@ -39,8 +43,8 @@ docker compose -f Docker/observe-docker-compose.yaml -f Docker/boot-run-shipment
 ### With docker image on the Docker Hub 
 ```shell
 # all service with all observability components and kafka
-docker compose -f Docker/observe-docker-compose.yaml -f Docker/boot-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker --profile order  -p event-sourcing up
-# all order service without
+docker compose -f Docker/observe-docker-compose.yaml -f Docker/boot-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker --profile all -p event-sourcing up
+# all order service without observability
 docker compose -f Docker/boot-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker --profile order -p event-sourcing up
 # only order-command-side
 docker compose -f Docker/boot-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker --profile order -p event-sourcing up --scale order-handler=0 --scale order-query=0
@@ -71,16 +75,16 @@ act -j e2e-test
 
 ## Endpoint
 
-| server           | swagger url                                 |
-|------------------|---------------------------------------------|
-| Order Command    | http://localhost:8081/swagger-ui/index.html |
-| Order Handler    | http://localhost:8082/swagger-ui/index.html |
-| Order Query      | http://localhost:8083/swagger-ui/index.html |
-| Payment Command  | http://localhost:9081/swagger-ui/index.html |
-| Payment Handler  | http://localhost:9082/swagger-ui/index.html |
-| Payment Query    | http://localhost:9083/swagger-ui/index.html |
+| server           | swagger url                                  |
+|------------------|----------------------------------------------|
+| Order Command    | http://localhost:8081/swagger-ui/index.html  |
+| Order Handler    | http://localhost:8082/swagger-ui/index.html  |
+| Order Query      | http://localhost:8083/swagger-ui/index.html  |
+| Payment Command  | http://localhost:9081/swagger-ui/index.html  |
+| Payment Handler  | http://localhost:9082/swagger-ui/index.html  |
+| Payment Query    | http://localhost:9083/swagger-ui/index.html  |
 | Shipment Command | http://localhost:10081/swagger-ui/index.html |
 | Shipment Handler | http://localhost:10082/swagger-ui/index.html |
 | Shipment Query   | http://localhost:10083/swagger-ui/index.html |
-| Grafana          | http://localhost:3000                       |
-| Prometheus       | http://localhost:9090                       |
+| Grafana          | http://localhost:3200                        |
+| Prometheus       | http://localhost:9090                        |

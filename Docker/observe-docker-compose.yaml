@@ -45,6 +45,6 @@ services:
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
       - GF_AUTH_DISABLE_LOGIN_FORM=true
     ports:
-      - "3000:3000"
+      - "3200:3000"
 # Prometheus: http://localhost:9090/
-# Grafana: http://localhost:3000/
+# Grafana: http://localhost:3200/
