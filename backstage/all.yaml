@@ -12,6 +12,8 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
-  name: es-poc
+  name: event-sourcing-poc
+  annotations:
+    backstage.io/techdocs-ref: dir:.
 spec:
   owner: guests

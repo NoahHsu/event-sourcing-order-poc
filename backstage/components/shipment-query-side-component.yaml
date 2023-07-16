@@ -10,7 +10,7 @@ metadata:
 spec:
   type: service
   lifecycle: experimental
-  system: es-poc
+  system: event-sourcing-poc
   owner: guest
   providesApis:
     - shipment-query

@@ -1,0 +1,16 @@
+site_name: event-sourcing-poc
+
+nav:
+  - Overview: index.md
+  - Quick Start: run.md
+  - Business Logic:
+      - Event-Stream: event-stream.md
+      - Order: order.md
+      - Payment: payment.md
+      - Shipment: shipment.md
+  - System Architecture : system-architecture.md
+  - Code Structure: code-structure.md
+
+plugins:
+  - techdocs-core
+  - kroki
