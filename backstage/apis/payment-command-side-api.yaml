@@ -9,11 +9,8 @@ metadata:
     - rest
   links:
     - url: https://github.com/NoahHsu/event-sourcing-order-poc/tree/master/payment/command-side
-      title: GitHub Repo
+      title: Server Root
       icon: github
-    - url: http://localhost:9081/swagger-ui/index.html
-      title: Swagger UI
-      icon: code
 spec:
   type: openapi
   lifecycle: experimental

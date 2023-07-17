@@ -3,9 +3,11 @@ kind: Component
 metadata:
   name: payment-command
   description: command side of payment aggregate
+  annotations:
+    backstage.io/source-location: url:https://github.com/NoahHsu/event-sourcing-order-poc
   links:
     - url: https://github.com/NoahHsu/event-sourcing-order-poc/tree/master/payment/command-side
-      title: GitHub Repo
+      title: Server Root
       icon: github
 spec:
   type: service

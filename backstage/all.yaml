@@ -15,5 +15,6 @@ metadata:
   name: event-sourcing-poc
   annotations:
     backstage.io/techdocs-ref: dir:.
+    github.com/project-slug: NoahHsu/event-sourcing-order-poc
 spec:
   owner: guests

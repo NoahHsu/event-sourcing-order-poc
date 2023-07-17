@@ -3,9 +3,11 @@ kind: Component
 metadata:
   name: shipment-command
   description: command side of order aggregate
+  annotations:
+    backstage.io/source-location: url:https://github.com/NoahHsu/event-sourcing-order-poc
   links:
     - url: https://github.com/NoahHsu/event-sourcing-order-poc/tree/master/shipment/command-side
-      title: GitHub Repo
+      title: Server Root
       icon: github
 spec:
   type: service
