@@ -1,0 +1,18 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: shipment-command
+  description: command side of order aggregate
+  annotations:
+    backstage.io/source-location: url:https://github.com/NoahHsu/event-sourcing-order-poc
+  links:
+    - url: https://github.com/NoahHsu/event-sourcing-order-poc/tree/master/shipment/command-side
+      title: Server Root
+      icon: github
+spec:
+  type: service
+  lifecycle: experimental
+  system: event-sourcing-poc
+  owner: guest
+  providesApis:
+    - shipment-command

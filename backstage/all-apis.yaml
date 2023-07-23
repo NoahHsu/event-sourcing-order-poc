@@ -1,0 +1,13 @@
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: event-sourcing-poc-apis
+  description: A collection of all Backstage event-sourcing-poc APIs
+spec:
+  targets:
+    - ./apis/order-command-side-api.yaml
+    - ./apis/order-query-side-api.yaml
+    - ./apis/payment-command-side-api.yaml
+    - ./apis/payment-query-side-api.yaml
+    - ./apis/shipment-command-side-api.yaml
+    - ./apis/shipment-query-side-api.yaml

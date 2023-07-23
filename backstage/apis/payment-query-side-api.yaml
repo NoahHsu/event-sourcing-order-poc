@@ -1,0 +1,19 @@
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: payment-query
+  description: The payment-query API
+  tags:
+    - payment
+    - query
+    - rest
+  links:
+    - url: https://github.com/NoahHsu/event-sourcing-order-poc/tree/master/payment/query-side
+      title: Server Root
+      icon: github
+spec:
+  type: openapi
+  lifecycle: experimental
+  owner: guests
+  definition:
+    $text: http://localhost:9083/v3/api-docs

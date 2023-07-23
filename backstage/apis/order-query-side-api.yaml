@@ -1,0 +1,19 @@
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: order-query
+  description: The order-query API
+  tags:
+    - order
+    - query
+    - rest
+  links:
+    - url: https://github.com/NoahHsu/event-sourcing-order-poc/tree/master/order/query-side
+      title: Server Root
+      icon: github
+spec:
+  type: openapi
+  lifecycle: experimental
+  owner: guests
+  definition:
+    $text: http://localhost:8083/v3/api-docs
