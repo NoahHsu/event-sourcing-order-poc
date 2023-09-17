@@ -90,7 +90,7 @@ public class OpenFeatureCanaryDemoApp implements CommandLineRunner {
         System.out.println(String.format("v1 : %d (%,.2f%%); v2: %d (%,.2f%%)",
                 v1, (float) v1 / times * 100,
                 v2, (float) v2 / times * 100));
-        System.out.println("====                 End                =====");
+        System.out.println("====    End Of This Iteration    ====");
 
     }
 }
