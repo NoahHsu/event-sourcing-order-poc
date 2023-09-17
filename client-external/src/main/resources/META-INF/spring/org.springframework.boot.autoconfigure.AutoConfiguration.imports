@@ -1,0 +1,2 @@
+org.example.event.sourcing.order.poc.external.client.toggle.flagr.config.FlagrClientConfig
+org.example.event.sourcing.order.poc.external.client.toggle.FeatureToggleApiProvider

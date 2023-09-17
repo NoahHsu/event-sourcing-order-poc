@@ -1,0 +1,29 @@
+dependencies {
+    implementation project(":common")
+
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'io.github.openfeign:feign-core'
+    implementation 'io.github.openfeign:feign-slf4j'
+    implementation 'io.github.openfeign:feign-micrometer:12.1'
+    implementation 'io.github.openfeign:feign-jackson'
+    implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+
+    implementation 'dev.openfeature:sdk:1.5.0'
+
+    runtimeOnly 'org.springframework.boot:spring-boot-starter-webflux'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    testImplementation 'com.github.tomakehurst:wiremock:3.0.0-beta-2'
+}
+
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}
+
+tasks.findAll { it.name.startsWith("jib") }.forEach { it.enabled = false }

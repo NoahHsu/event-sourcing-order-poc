@@ -2,6 +2,8 @@ rootProject.name = 'event-sourcing-order-poc'
 
 include 'common'
 include 'client'
+include 'client-external'
+include 'demo'
 include 'event'
 include 'observation'
 

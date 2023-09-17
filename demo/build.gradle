@@ -1,0 +1,8 @@
+dependencies {
+
+    implementation "org.springframework.boot:spring-boot-starter"
+    implementation project(":client-external")
+    implementation 'dev.openfeature:sdk:1.5.0'
+
+
+}
