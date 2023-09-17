@@ -51,7 +51,7 @@ public class OpenFeatureCanaryDemoApp implements CommandLineRunner {
         int v1 = 0, v2 = 0;
 
         int maxColumn = 50;
-        int maxRow = Math.ceilDivExact(times, maxColumn);
+        int maxRow = times/ maxColumn;
 
         while (j < maxRow) {
             UUID userId = UUID.randomUUID();
