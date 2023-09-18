@@ -25,6 +25,11 @@ public class OpenFeatureCanaryDemoApp implements CommandLineRunner {
     @Autowired
     private FeatureToggleApiProvider featureToggleApiProvider;
 
+    public static final String RESET = "\033[0m";
+    public static final String GREEN = "\033[0:32m";
+    public static final String BLUE = "\033[0;34m";
+    public static final String PURPLE = "\033[0;35m";
+
     public static void main(String[] args) {
         log.info("STARTING THE APPLICATION");
         SpringApplication.run(OpenFeatureCanaryDemoApp.class, args);
@@ -34,11 +39,12 @@ public class OpenFeatureCanaryDemoApp implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         Client client = featureToggleApiProvider.getFlagrApiClient();
-
+        int iterationCount = 0;
         String isNext;
 
         do {
-            iteration(client, 500);
+            iterationCount++;
+            iteration(client, 500, iterationCount);
             System.out.println("enter Y to start next iteration (press other to exit)");
             isNext = new Scanner(System.in).next();
         } while ("Y".equalsIgnoreCase(isNext));
@@ -46,12 +52,12 @@ public class OpenFeatureCanaryDemoApp implements CommandLineRunner {
         SpringApplication.exit(context);
     }
 
-    private static void iteration(Client client, int times) throws InterruptedException {
+    private static void iteration(Client client, int times, int iterationCount) throws InterruptedException {
         int i = 0, j = 0;
         int v1 = 0, v2 = 0;
 
         int maxColumn = 50;
-        int maxRow = times/ maxColumn;
+        int maxRow = times / maxColumn;
 
         while (j < maxRow) {
             UUID userId = UUID.randomUUID();
@@ -63,11 +69,11 @@ public class OpenFeatureCanaryDemoApp implements CommandLineRunner {
 
             switch (version) {
                 case "v1":
-                    message = "+";
+                    message = BLUE + "o" + RESET;
                     v1++;
                     break;
                 case "v2":
-                    message = "-";
+                    message = GREEN + "x" + RESET;
                     v2++;
                     break;
                 default:
@@ -83,14 +89,13 @@ public class OpenFeatureCanaryDemoApp implements CommandLineRunner {
                 System.out.println("");
             }
 
-            Thread.sleep(20);
+            Thread.sleep(10);
         }
 
-        System.out.println("==== This Iteration (total = " + times + ")====");
-        System.out.println(String.format("v1 : %d (%,.2f%%); v2: %d (%,.2f%%)",
-                v1, (float) v1 / times * 100,
-                v2, (float) v2 / times * 100));
-        System.out.println("====    End Of This Iteration    ====");
+        System.out.println(String.format("====\t Iteration %d ( total = %d )\t====", iterationCount, times));
+        System.out.println(String.format("|\t\t\t\t" + BLUE + "v1: %d(%,.2f%%)" + RESET + "\t\t\t\t|", v1, (float) v1 / times * 100));
+        System.out.println(String.format("|\t\t\t\t" + GREEN + "v2: %d(%,.2f%%)" + RESET + "\t\t\t\t|", v2, (float) v2 / times * 100));
+        System.out.println("====\t\tEnd Of This Iteration\t\t====");
 
     }
 }
