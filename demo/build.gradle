@@ -4,5 +4,12 @@ dependencies {
     implementation project(":client-external")
     implementation 'dev.openfeature:sdk:1.5.0'
 
+}
 
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = false
 }
