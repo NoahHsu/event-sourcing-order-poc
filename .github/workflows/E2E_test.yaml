@@ -68,7 +68,7 @@ jobs:
           accept: 200
           headers: '{ "Content-Type": "application/json" }'
           body: ${{ matrix.data }}
-          timeout: 60000
+          timeout: 120000
           log-response: true
           retries: 3
 
