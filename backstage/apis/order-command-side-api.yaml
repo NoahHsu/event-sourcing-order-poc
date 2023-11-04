@@ -12,9 +12,8 @@ metadata:
       title: Server Root
       icon: github
 spec:
-  type: openapi
+  type: cors-openapi
   lifecycle: experimental
   owner: guests
-  definition: |
-    {"openapi":"3.0.1","info":{"title":"OpenAPI definition","version":"v0"},"servers":[{"url":"http://localhost:7007/api/proxy","description":"Generated server url"}],"paths":{"/api/v1/orders":{"post":{"tags":["order-controller"],"operationId":"createOrder","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/Order"}}},"required":true},"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Order"}}}}}}},"/api/v1/orders/complete":{"post":{"tags":["order-controller"],"operationId":"completeOrder","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/Order"}}},"required":true},"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"object","additionalProperties":{"type":"string"}}}}}}}}},"components":{"schemas":{"Order":{"type":"object","properties":{"id":{"type":"string"}}}}}}
-#    $text: http://localhost:8081/v3/api-docs
+  definition:
+    $text: http://localhost:8081/v3/api-docs
