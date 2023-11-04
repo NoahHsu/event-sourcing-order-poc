@@ -60,18 +60,6 @@ jobs:
           retry-delay: 5s
           retry-all: true
 
-      - name: Warm Up spring boot - kafka
-        uses: indiesdev/curl@v1.1
-        with:
-          url: http://localhost:${{ matrix.command }}/api/v1/${{ matrix.aggregate}}s
-          method: "POST"
-          accept: 200
-          headers: '{ "Content-Type": "application/json" }'
-          body: ${{ matrix.data }}
-          timeout: 120000
-          log-response: true
-          retries: 3
-
       - name: run Postman Collection
         uses: matt-ball/newman-action@master
         with:
