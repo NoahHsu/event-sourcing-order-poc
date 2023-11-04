@@ -18,12 +18,15 @@ jobs:
           - aggregate: order
             command: 8081
             query: 8083
+            data: '{"id": "2222"}'
           - aggregate: payment
             command: 9081
             query: 9083
+            data: '{"id": "2222","paymentMethod": "ATM"}'
           - aggregate: shipment
             command: 10081
             query: 10083
+            data: '{"id": "2222","shipmentMethod": "HOME_DELIVERY"}'
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -56,6 +59,18 @@ jobs:
           max-attempts: 5
           retry-delay: 5s
           retry-all: true
+
+      - name: Warm Up spring boot - kafka
+        uses: indiesdev/curl@v1.1
+        with:
+          url: http://localhost:${{ matrix.command }}/api/v1/${{ matrix.aggregate}}s
+          method: "POST"
+          accept: 200
+          headers: '{ "Content-Type": "application/json" }'
+          body: ${{ matrix.data }}
+          timeout: 10000
+          log-response: true
+          retries: 3
 
       - name: run Postman Collection
         uses: matt-ball/newman-action@master
