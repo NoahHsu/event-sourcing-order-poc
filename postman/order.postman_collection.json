@@ -4,7 +4,7 @@
 		"name": "order",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "27249891",
-		"_collection_link": "https://interstellar-trinity-80703.postman.co/workspace/E2E-test-for-event-sourcing-ord~92a21858-fc8b-47ab-8394-2fe44de1eec9/collection/27249891-f75b655d-8cbf-45cf-ba2f-c2cc1c00dd91?action=share&creator=27249891&source=collection_link"
+		"_collection_link": "https://interstellar-trinity-80703.postman.co/workspace/E2E-test-for-event-sourcing-ord~92a21858-fc8b-47ab-8394-2fe44de1eec9/collection/27249891-f75b655d-8cbf-45cf-ba2f-c2cc1c00dd91?action=share&source=collection_link&creator=27249891"
 	},
 	"item": [
 		{
@@ -14,12 +14,12 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
+							"pm.test(\"Create Order success, Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
 							"});",
 							"",
 							"pm.collectionVariables.set(\"returnId\", pm.response.json().id);",
-							"setTimeout(function(){}, 3000);",
+							"setTimeout(function(){}, 10000);",
 							""
 						],
 						"type": "text/javascript"
@@ -50,12 +50,12 @@
 					"raw": "{\n  \"id\": \"{{orderId}}\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8081/api/v1/orders",
+					"raw": "http://localhost:{{commandPort}}/api/v1/orders",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8081",
+					"port": "{{commandPort}}",
 					"path": [
 						"api",
 						"v1",
@@ -72,7 +72,7 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 422\", function () {",
+							"pm.test(\"Compelete Order fail, Status code is 422\", function () {",
 							"    pm.response.to.have.status(422);",
 							"});"
 						],
@@ -117,10 +117,10 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
+							"pm.test(\"Compelete Order success, Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
 							"});",
-							"pm.test(\"Your test name\", function () {",
+							"pm.test(\"Should Compelete Order\", function () {",
 							"    var jsonData = pm.response.json();",
 							"    pm.expect(jsonData.result).to.eql(\"OK\");",
 							"});"
@@ -183,7 +183,7 @@
 	"variable": [
 		{
 			"key": "orderId",
-			"value": "2222"
+			"value": "2233"
 		},
 		{
 			"key": "returnId",
