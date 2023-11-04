@@ -12,7 +12,7 @@ metadata:
       title: Server Root
       icon: github
 spec:
-  type: openapi
+  type: cors-openapi
   lifecycle: experimental
   owner: guests
   definition:

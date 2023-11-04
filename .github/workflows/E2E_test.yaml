@@ -18,12 +18,15 @@ jobs:
           - aggregate: order
             command: 8081
             query: 8083
+            data: '{"id": "2222"}'
           - aggregate: payment
             command: 9081
             query: 9083
+            data: '{"id": "2222","paymentMethod": "ATM"}'
           - aggregate: shipment
             command: 10081
             query: 10083
+            data: '{"id": "2222","shipmentMethod": "HOME_DELIVERY"}'
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
