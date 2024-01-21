@@ -32,9 +32,9 @@ public class IdempotenceFilterTest {
     public static final String REQUEST_HEADER_SID = "sid";
     private static final String GIVEN_CHARSET = "UTF-8";
 
-    String GIVEN_URI = "/given/uri/path";
-    String GIVEN_RID = "givenRid";
-    String GIVEN_SID = "givenSid";
+    private static final String GIVEN_URI = "/given/uri/path";
+    private static final String GIVEN_RID = "givenRid";
+    private static final String GIVEN_SID = "givenSid";
     private RedisTemplate<String, IdempotenceFilter.IdempotencyValue> redisTemplate = mock(RedisTemplate.class);
 
     private IdempotenceFilter sut = new IdempotenceFilter(redisTemplate, 60);
