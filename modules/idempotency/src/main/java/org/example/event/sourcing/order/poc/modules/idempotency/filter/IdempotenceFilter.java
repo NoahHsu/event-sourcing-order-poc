@@ -87,6 +87,22 @@ public class IdempotenceFilter extends OncePerRequestFilter {
         return !HttpMethod.POST.matches(method);
     }
 
+    private void updateResultInCache(HttpServletRequest request, ContentCachingResponseWrapper responseCopier,
+                                     BoundValueOperations<String, IdempotencyValue> keyOperation)
+            throws UnsupportedEncodingException {
+        if (needCache(responseCopier)) {
+            log.info("process result need to be cached");
+            String responseBody = new String(responseCopier.getContentAsByteArray(), request.getCharacterEncoding());
+            IdempotencyValue result = IdempotencyValue.done(Collections.emptyMap(), responseCopier.getStatus(), responseBody);
+
+            log.info("save {} to redis", result);
+            keyOperation.set(result, defaultTtl, TimeUnit.MINUTES);
+        } else {
+            log.info("process result don't need to be cached");
+            redisTemplate.delete(keyOperation.getKey());
+        }
+    }
+
     private void handleWhenCacheExist(HttpServletRequest request, HttpServletResponse response,
                                       BoundValueOperations<String, IdempotencyValue> keyOperation)
             throws IOException {
@@ -117,26 +133,10 @@ public class IdempotenceFilter extends OncePerRequestFilter {
 
     }
 
-    private void updateResultInCache(HttpServletRequest request, ContentCachingResponseWrapper responseCopier,
-                                     BoundValueOperations<String, IdempotencyValue> keyOperation)
-            throws UnsupportedEncodingException {
-        if (needCache(responseCopier)) {
-            log.info("process result need to be cached");
-            String responseBody = new String(responseCopier.getContentAsByteArray(), request.getCharacterEncoding());
-            IdempotencyValue result = IdempotencyValue.done(Collections.emptyMap(), responseCopier.getStatus(), responseBody);
-
-            log.info("save {} to redis", result);
-            keyOperation.set(result, defaultTtl, TimeUnit.MINUTES);
-        } else {
-            log.info("process result don't need to be cached");
-            redisTemplate.delete(keyOperation.getKey());
-        }
-    }
-
     private boolean needCache(ContentCachingResponseWrapper responseCopier) {
         int statusCode = responseCopier.getStatus();
         return statusCode >= 200
-                && statusCode <= 300;
+                && statusCode < 300;
     }
 
     public record IdempotencyValue(Map<String, Object> header, int status, String cacheValue, boolean isDone) {
