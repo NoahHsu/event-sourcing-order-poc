@@ -29,12 +29,12 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class IdempotenceFilterTest {
 
     public static final String REQUEST_HEADER_RID = "rid";
-    public static final String REQUEST_HEADER_SID = "sid";
+    public static final String REQUEST_HEADER_CID = "cid";
     private static final String GIVEN_CHARSET = "UTF-8";
 
     private static final String GIVEN_URI = "/given/uri/path";
     private static final String GIVEN_RID = "givenRid";
-    private static final String GIVEN_SID = "givenSid";
+    private static final String GIVEN_CID = "givenCid";
     private RedisTemplate<String, IdempotenceFilter.IdempotencyValue> redisTemplate = mock(RedisTemplate.class);
 
     private IdempotenceFilter sut = new IdempotenceFilter(redisTemplate, 60);
@@ -53,10 +53,10 @@ public class IdempotenceFilterTest {
         String givenMethod = "POST";
         int givenStatus = 200;
         String givenResponseBody = "{'response-key': 'response-value'}";
-        String expectedCacheKey = "POST_/given/uri/path_givenSid_givenRid";
+        String expectedCacheKey = "POST_/given/uri/path_givenCid_givenRid";
         Integer expectedStatus = 200;
 
-        setupRequest(givenMethod, GIVEN_URI, GIVEN_RID, GIVEN_SID);
+        setupRequest(givenMethod, GIVEN_URI, GIVEN_RID, GIVEN_CID);
         setupResponse(givenStatus, givenResponseBody);
 
         BoundValueOperations<String, IdempotenceFilter.IdempotencyValue> mockBoundValueOps =
@@ -83,14 +83,14 @@ public class IdempotenceFilterTest {
         mockResponse.getWriter().write(responseBody);
     }
 
-    private void setupRequest(String givenMethod, String givenUri, String givenRid, String givenSid) {
+    private void setupRequest(String givenMethod, String givenUri, String givenRid, String givenCid) {
         this.mockRequest = new MockHttpServletRequest(givenMethod, givenUri);
         this.mockRequest.setContentType(APPLICATION_JSON_VALUE);
         this.mockRequest.setCharacterEncoding(GIVEN_CHARSET);
         if (givenRid != null)
             this.mockRequest.addHeader(REQUEST_HEADER_RID, givenRid);
-        if (givenSid != null)
-            this.mockRequest.addHeader(REQUEST_HEADER_SID, givenSid);
+        if (givenCid != null)
+            this.mockRequest.addHeader(REQUEST_HEADER_CID, givenCid);
     }
 
     @Test
@@ -98,9 +98,9 @@ public class IdempotenceFilterTest {
         String givenMethod = "POST";
         int givenStatus = 404;
         String givenResponseBody = "{'response-key': 'response-value'}";
-        String expectedCacheKey = "POST_/given/uri/path_givenSid_givenRid";
+        String expectedCacheKey = "POST_/given/uri/path_givenCid_givenRid";
 
-        setupRequest(givenMethod, GIVEN_URI, GIVEN_RID, GIVEN_SID);
+        setupRequest(givenMethod, GIVEN_URI, GIVEN_RID, GIVEN_CID);
         setupResponse(givenStatus, givenResponseBody);
 
         BoundValueOperations<String, IdempotenceFilter.IdempotencyValue> mockBoundValueOps =
@@ -122,9 +122,9 @@ public class IdempotenceFilterTest {
     @Test
     void givenPost_ValidHeader_CacheExistIsProcessing_whenDoFilterInternal_thenShouldReturn425Error() throws ServletException, IOException {
         String givenMethod = "POST";
-        setupRequest(givenMethod, GIVEN_URI, GIVEN_RID, GIVEN_SID);
+        setupRequest(givenMethod, GIVEN_URI, GIVEN_RID, GIVEN_CID);
         HttpServletResponse mockResponse = mock(HttpServletResponse.class);
-        String expectedCacheKey = "POST_/given/uri/path_givenSid_givenRid";
+        String expectedCacheKey = "POST_/given/uri/path_givenCid_givenRid";
         Integer expectedStatus = 425;
 
         BoundValueOperations<String, IdempotenceFilter.IdempotencyValue> mockBoundValueOps =
@@ -151,10 +151,10 @@ public class IdempotenceFilterTest {
     void givenPost_ValidHeader_CacheExistIsDone_whenDoFilterInternal_thenShouldReturnCachedResponse() throws ServletException, IOException {
         String givenMethod = "POST";
         String givenCacheValue = "{'response-key': 'response-value'}";
-        String expectedCacheKey = "POST_/given/uri/path_givenSid_givenRid";
+        String expectedCacheKey = "POST_/given/uri/path_givenCid_givenRid";
         Integer expectedStatus = 200;
 
-        setupRequest(givenMethod, GIVEN_URI, GIVEN_RID, GIVEN_SID);
+        setupRequest(givenMethod, GIVEN_URI, GIVEN_RID, GIVEN_CID);
         HttpServletResponse mockResponse = mock(HttpServletResponse.class);
         BoundValueOperations<String, IdempotenceFilter.IdempotencyValue> mockBoundValueOps =
                 mock(BoundValueOperations.class);
@@ -184,7 +184,7 @@ public class IdempotenceFilterTest {
         int givenStatus = 200;
         String givenResponseBody = "{'response-key': 'response-value'}";
 
-        setupRequest(givenMethod, GIVEN_URI, GIVEN_RID, GIVEN_SID);
+        setupRequest(givenMethod, GIVEN_URI, GIVEN_RID, GIVEN_CID);
         setupResponse(givenStatus, givenResponseBody);
 
         sut.doFilterInternal(mockRequest, mockResponse, mockFilterChain);
@@ -193,22 +193,22 @@ public class IdempotenceFilterTest {
         then(redisTemplate).shouldHaveNoInteractions();
     }
 
-    private static Stream<Arguments> ridSidArguments() {
+    private static Stream<Arguments> ridCidArguments() {
         return Stream.of(
-                // Arguments.of(rid, sid)
+                // Arguments.of(rid, cid)
                 Arguments.of(null, null), // both null
                 Arguments.of(" ", " "), // both blank
-                Arguments.of(" ", "sid"), // rid is blank
-                Arguments.of("rid", "") // sid is blank
+                Arguments.of(" ", "cid"), // rid is blank
+                Arguments.of("rid", "") // cid is blank
 
         );
     }
 
     @ParameterizedTest
-    @MethodSource("ridSidArguments")
-    void givenPost_WithoutRidOrSid_whenDoFilterInternal_thenShouldDoFilterDirectly(String givenRid, String givenSid) throws ServletException, IOException {
+    @MethodSource("ridCidArguments")
+    void givenPost_WithoutRidOrSid_whenDoFilterInternal_thenShouldDoFilterDirectly(String givenRid, String givenCid) throws ServletException, IOException {
         String givenMethod = "POST";
-        setupRequest(givenMethod, GIVEN_URI, givenRid, givenSid);
+        setupRequest(givenMethod, GIVEN_URI, givenRid, givenCid);
         setupResponse(200, "{'response-key': 'response-value'}");
 
         sut.doFilterInternal(mockRequest, mockResponse, mockFilterChain);

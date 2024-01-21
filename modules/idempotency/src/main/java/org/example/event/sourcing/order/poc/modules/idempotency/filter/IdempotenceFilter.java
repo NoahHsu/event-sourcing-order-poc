@@ -32,7 +32,7 @@ public class IdempotenceFilter extends OncePerRequestFilter {
 
     private static final String REQUEST_ID_KEY = "rid";
 
-    private static final String SERVICE_ID_KEY = "sid";
+    private static final String CLIENT_ID_KEY = "cid";
 
     public static final String DELIMITER = "_";
 
@@ -55,19 +55,19 @@ public class IdempotenceFilter extends OncePerRequestFilter {
 
         String method = request.getMethod();
         String requestId = request.getHeader(REQUEST_ID_KEY);
-        String serviceId = request.getHeader(SERVICE_ID_KEY);
+        String clientId = request.getHeader(CLIENT_ID_KEY);
         String cacheKey = join(DELIMITER,
-                method, request.getRequestURI(), serviceId, requestId);
+                method, request.getRequestURI(), clientId, requestId);
 
         if (isNotTargetMethod(method)) {
             log.info("Request method {} didn't match the target idempotency https method.", method);
             filterChain.doFilter(request, response);
         } else if (StringUtils.isBlank(requestId)
-                || StringUtils.isBlank(serviceId)) {
-            log.warn("Request should bring a RequestId and ServiceId in header, but no. get cacheKey as {}.", cacheKey);
+                || StringUtils.isBlank(clientId)) {
+            log.warn("Request should bring a RequestId and ClientId in header, but no. get cacheKey as {}.", cacheKey);
             filterChain.doFilter(request, response);
         } else {
-            log.info("requestId and serviceId not empty, rid = {}, sid = {}", requestId, serviceId);
+            log.info("requestId and clientId not empty, rid = {}, cid = {}", requestId, clientId);
             BoundValueOperations<String, IdempotencyValue> keyOperation = redisTemplate.boundValueOps(cacheKey);
             boolean isAbsent = keyOperation.setIfAbsent(IdempotencyValue.init(), ttl, TimeUnit.MINUTES);
             if (isAbsent) {
@@ -82,9 +82,7 @@ public class IdempotenceFilter extends OncePerRequestFilter {
                 log.info("cache {} already exist ", cacheKey);
                 handleWhenCacheExist(request, response, keyOperation);
             }
-
         }
-
     }
 
     private boolean isNotTargetMethod(String method) {
@@ -96,7 +94,7 @@ public class IdempotenceFilter extends OncePerRequestFilter {
             throws UnsupportedEncodingException {
         if (needCache(responseCopier)) {
             log.info("process result need to be cached");
-            String responseBody = new String(responseCopier.getContentAsByteArray(), request.getCharacterEncoding());
+            String responseBody = new String(responseCopier.getContentAsByteArray(), responseCopier.getCharacterEncoding());
             IdempotencyValue result = IdempotencyValue.done(Collections.emptyMap(), responseCopier.getStatus(), responseBody);
 
             log.info("save {} to redis", result);
