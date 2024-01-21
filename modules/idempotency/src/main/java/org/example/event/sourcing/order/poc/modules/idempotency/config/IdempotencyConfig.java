@@ -16,7 +16,10 @@ import java.util.List;
 public class IdempotencyConfig {
 
     @Value("${espoc.idempotency.paths}")
-    private List<String> idempotencyApiPaths; // /api/v1/orders
+    private List<String> idempotencyApiPaths;
+
+    @Value("${espoc.idempotency.ttlInMinutes:60}")
+    private Long ttlInMinutes;
 
     @Bean
     RedisTemplate<String, IdempotenceFilter.IdempotencyValue> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
@@ -41,7 +44,8 @@ public class IdempotencyConfig {
             RedisTemplate<String, IdempotenceFilter.IdempotencyValue> redisTemplate) {
 
         FilterRegistrationBean<IdempotenceFilter> registrationBean = new FilterRegistrationBean();
-        IdempotenceFilter idempotenceFilter = new IdempotenceFilter(redisTemplate);
+
+        IdempotenceFilter idempotenceFilter = new IdempotenceFilter(redisTemplate, ttlInMinutes);
 
         registrationBean.setFilter(idempotenceFilter);
         registrationBean.addUrlPatterns(idempotencyApiPaths.toArray(String[]::new));

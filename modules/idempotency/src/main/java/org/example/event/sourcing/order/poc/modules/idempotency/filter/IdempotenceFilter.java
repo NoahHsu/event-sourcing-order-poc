@@ -31,10 +31,14 @@ import static org.springframework.http.HttpStatus.TOO_EARLY;
 public class IdempotenceFilter extends OncePerRequestFilter {
 
     private static final String REQUEST_ID_KEY = "rid";
+
     private static final String SERVICE_ID_KEY = "sid";
+
     public static final String DELIMITER = "_";
+
     private final RedisTemplate<String, IdempotencyValue> redisTemplate;
-    private long defaultTtl = 2880;
+
+    private final long ttl;
 
     private final ObjectMapper OBJECT_MAPPER = initObjectMapper();
 
@@ -65,7 +69,7 @@ public class IdempotenceFilter extends OncePerRequestFilter {
         } else {
             log.info("requestId and serviceId not empty, rid = {}, sid = {}", requestId, serviceId);
             BoundValueOperations<String, IdempotencyValue> keyOperation = redisTemplate.boundValueOps(cacheKey);
-            boolean isAbsent = keyOperation.setIfAbsent(IdempotencyValue.init(), defaultTtl, TimeUnit.MINUTES);
+            boolean isAbsent = keyOperation.setIfAbsent(IdempotencyValue.init(), ttl, TimeUnit.MINUTES);
             if (isAbsent) {
                 log.info("cache {} not exist ", cacheKey);
                 ContentCachingResponseWrapper responseCopier = new ContentCachingResponseWrapper(response);
@@ -96,7 +100,7 @@ public class IdempotenceFilter extends OncePerRequestFilter {
             IdempotencyValue result = IdempotencyValue.done(Collections.emptyMap(), responseCopier.getStatus(), responseBody);
 
             log.info("save {} to redis", result);
-            keyOperation.set(result, defaultTtl, TimeUnit.MINUTES);
+            keyOperation.set(result, ttl, TimeUnit.MINUTES);
         } else {
             log.info("process result don't need to be cached");
             redisTemplate.delete(keyOperation.getKey());
