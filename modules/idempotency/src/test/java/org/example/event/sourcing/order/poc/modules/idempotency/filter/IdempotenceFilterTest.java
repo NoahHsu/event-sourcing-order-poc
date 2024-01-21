@@ -37,7 +37,7 @@ public class IdempotenceFilterTest {
     String GIVEN_SID = "givenSid";
     private RedisTemplate<String, IdempotenceFilter.IdempotencyValue> redisTemplate = mock(RedisTemplate.class);
 
-    private IdempotenceFilter sut = new IdempotenceFilter(redisTemplate);
+    private IdempotenceFilter sut = new IdempotenceFilter(redisTemplate, 60);
 
     private MockHttpServletRequest mockRequest;
     private MockHttpServletResponse mockResponse;
