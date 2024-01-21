@@ -25,11 +25,14 @@
 # should run build first
 ./gradlew build -x test
 
+# run only dependency component (kafka, redis)  
+docker compose -f Docker/kafka-docker-compose.yml -f Docker/redis-docker-compose.yml --env-file Docker/config/.env.docker -p event-sourcing up
+
 # run all command, query side, and dependencies 
-docker compose -f Docker/observe-docker-compose.yaml -f Docker/boot-run-order-apps-docker-compose.yml -f Docker/boot-run-payment-apps-docker-compose.yml -f Docker/boot-run-shipment-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker -p event-sourcing up
+docker compose -f Docker/observe-docker-compose.yaml -f Docker/boot-run-order-apps-docker-compose.yml -f Docker/boot-run-payment-apps-docker-compose.yml -f Docker/boot-run-shipment-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml -f Docker/redis-docker-compose.yml --env-file Docker/config/.env.docker -p event-sourcing up
 
 # run order command query and dependencies
-docker compose -f Docker/observe-docker-compose.yaml -f Docker/boot-run-order-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker -p event-sourcing up -d --scale prometheus=0
+docker compose -f Docker/observe-docker-compose.yaml -f Docker/boot-run-order-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml -f Docker/redis-docker-compose.yml --env-file Docker/config/.env.docker -p event-sourcing up -d --scale prometheus=0
 
 # run payment command query and dependencies
 docker compose -f Docker/observe-docker-compose.yaml -f Docker/boot-run-payment-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker -p event-sourcing up -d --scale prometheus=0
@@ -43,11 +46,11 @@ docker compose -f Docker/observe-docker-compose.yaml -f Docker/boot-run-shipment
 ### With docker image on the Docker Hub 
 ```shell
 # all service with all observability components and kafka
-docker compose -f Docker/observe-docker-compose.yaml -f Docker/boot-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker --profile all -p event-sourcing up
+docker compose -f Docker/observe-docker-compose.yaml -f Docker/boot-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml -f Docker/redis-docker-compose.yml --env-file Docker/config/.env.docker --profile all -p event-sourcing up
 # all order service without observability
-docker compose -f Docker/boot-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker --profile order -p event-sourcing up
+docker compose -f Docker/boot-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml -f Docker/redis-docker-compose.yml --env-file Docker/config/.env.docker --profile order -p event-sourcing up
 # only order-command-side
-docker compose -f Docker/boot-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker --profile order -p event-sourcing up --scale order-handler=0 --scale order-query=0
+docker compose -f Docker/boot-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml -f Docker/redis-docker-compose.yml --env-file Docker/config/.env.docker --profile order -p event-sourcing up --scale order-handler=0 --scale order-query=0
 # only payment-command-side
 docker compose -f Docker/boot-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker --profile payment -p event-sourcing up --scale payment-handler=0 --scale payment-query=0
 # only shipment-command-side

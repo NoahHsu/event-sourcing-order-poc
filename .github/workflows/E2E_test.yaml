@@ -42,7 +42,7 @@ jobs:
         run: ./gradlew build -x test --no-daemon
 
       - name: Run The Cluster
-        run: docker compose -f Docker/boot-run-${{ matrix.aggregate }}-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker -p event-sourcing up -d
+        run: docker compose -f Docker/boot-run-${{ matrix.aggregate }}-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml -f Docker/redis-docker-compose.yml --env-file Docker/config/.env.docker -p event-sourcing up -d
 
       - name: Check the command-side
         uses: jtalk/url-health-check-action@v3
