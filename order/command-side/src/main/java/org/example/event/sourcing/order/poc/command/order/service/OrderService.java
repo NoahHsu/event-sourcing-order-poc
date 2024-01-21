@@ -29,21 +29,12 @@ import static org.example.event.sourcing.order.poc.event.model.OrderEventName.CR
 @RequiredArgsConstructor
 @Slf4j
 @LogInfo
-public class OrderService implements InitializingBean {
+public class OrderService {
 
     private final OrderQueryClient orderQueryClient;
     private final OrderEventProducer orderEventProducer;
 
-    private Random rand;  // SecureRandom is preferred to Random
-
-    @Override
-    public void afterPropertiesSet() {
-        try {
-            rand = SecureRandom.getInstanceStrong();
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    private Random rand = new Random();  // SecureRandom is preferred to Random
 
     public Order createOrder(Order order) {
         Optional<V1Order> queryResult = queryOrder(order.id());
