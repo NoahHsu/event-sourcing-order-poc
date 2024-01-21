@@ -5,6 +5,7 @@ dependencies {
     implementation project(":event")
     implementation project(":client")
     implementation project(":observation")
+    implementation project(":modules:idempotency")
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter'

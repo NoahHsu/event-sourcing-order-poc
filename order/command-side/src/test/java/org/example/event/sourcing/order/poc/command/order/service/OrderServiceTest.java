@@ -5,6 +5,7 @@ import org.example.event.sourcing.order.poc.client.order.exception.ResourceNotFo
 import org.example.event.sourcing.order.poc.client.order.model.V1Order;
 import org.example.event.sourcing.order.poc.client.order.model.V1OrderStatus;
 import org.example.event.sourcing.order.poc.command.order.producer.OrderEventProducer;
+import org.example.event.sourcing.order.poc.common.model.Order;
 import org.example.event.sourcing.order.poc.event.model.OrderEvent;
 import org.example.event.sourcing.order.poc.event.model.OrderEventName;
 import org.junit.jupiter.api.Test;
@@ -15,9 +16,12 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.BDDAssertions.catchRuntimeException;
 import static org.assertj.core.api.BDDAssertions.then;
-import static org.mockito.ArgumentMatchers.argThat;
+import static org.example.event.sourcing.order.poc.event.model.OrderEventName.CREATED;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.mock;
 
@@ -29,6 +33,35 @@ class OrderServiceTest {
 
     private OrderService orderService = new OrderService(orderQueryClient, orderEventProducer);
 
+
+    @Test
+    void givenIdOfCreatedOrder_whenCreateOrder_thenShouldReturnCreatedOrderAndNotProduceEvent() {
+        String givenId = "1111";
+        given(orderQueryClient.get(givenId))
+                .willReturn(givenV1Order(V1OrderStatus.CREATED));
+
+        Order actualReturn = orderService.createOrder(new Order(givenId));
+
+        BDDMockito.then(orderEventProducer).shouldHaveNoInteractions();
+        then(actualReturn).extracting(Order::id).isEqualTo(givenId);
+    }
+
+    @Test
+    void givenIdOfNotCreatedOrder_whenCreateOrder_thenShouldReturnCreatedOrderAndProduceEvent() {
+        String givenId = "1111";
+        given(orderQueryClient.get(givenId))
+                .willThrow(ResourceNotFoundException.class);
+        given(orderEventProducer.create(any())).willReturn(Boolean.TRUE);
+
+        Order actualReturn = orderService.createOrder(new Order(givenId));
+
+        BDDMockito.then(orderEventProducer).should()
+                .create(assertArg(oe -> {
+                    assertEquals(givenId, oe.id());
+                    assertEquals(CREATED, oe.eventName());
+                }));
+        then(actualReturn).extracting(Order::id).isEqualTo(givenId);
+    }
 
     @Test
     void givenIdOfCreatedOrder_whenCompleteOrder_thenShouldSuccess() {
@@ -57,7 +90,7 @@ class OrderServiceTest {
     }
 
     @Test
-    void givenIdOfInLogisticOrder_whenCompleteOrder_then409ErrorShouldBeThrown() {
+    void givenIdOfInLogisticOrder_whenCompleteOrder_then422ErrorShouldBeThrown() {
         String givenId = "1111";
         given(orderQueryClient.get(givenId))
                 .willReturn(givenV1Order(V1OrderStatus.IN_LOGISTICS));
@@ -66,21 +99,21 @@ class OrderServiceTest {
                 () -> orderService.completeOrder(givenId));
         then(actualException)
                 .isInstanceOf(ResponseStatusException.class)
-                .hasMessageContaining("409");
+                .hasMessageContaining("422");
         BDDMockito.then(orderEventProducer).shouldHaveNoInteractions();
     }
 
     @Test
-    void givenIdOfNotExistOrder_whenCompleteOrder_then422ErrorShouldBeThrown() {
+    void givenIdOfNotExistOrder_whenCompleteOrder_then404ErrorShouldBeThrown() {
         String givenId = "1111";
         given(orderQueryClient.get(givenId))
-                .willThrow(new ResourceNotFoundException("mock"));
+                .willThrow(ResourceNotFoundException.class);
 
         RuntimeException actualException = catchRuntimeException(
                 () -> orderService.completeOrder(givenId));
         then(actualException)
                 .isInstanceOf(ErrorResponseException.class)
-                .hasMessageContaining("422");
+                .hasMessageContaining("404");
         BDDMockito.then(orderEventProducer).shouldHaveNoInteractions();
     }
 

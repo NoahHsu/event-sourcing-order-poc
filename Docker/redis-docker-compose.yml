@@ -1,0 +1,7 @@
+version: "3"
+services:
+  redis:
+    image: 'redis:${REDIS_TAG:-latest}'
+    extra_hosts: [ 'host.docker.internal:host-gateway' ]
+    ports:
+      - '6379:6379'

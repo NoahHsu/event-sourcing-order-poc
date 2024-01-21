@@ -1,0 +1,5 @@
+espoc:
+  idempotency:
+    paths: >
+      /api/v1/orders,
+      /api/v1/orders/complete

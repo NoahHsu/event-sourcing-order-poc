@@ -10,4 +10,6 @@ spring:
       - cluster
       - kafka
       - kafka-producer
+      - redis
+      - idempotency
 
