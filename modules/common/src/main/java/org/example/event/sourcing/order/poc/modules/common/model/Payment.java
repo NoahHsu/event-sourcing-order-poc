@@ -1,4 +1,4 @@
-package org.example.event.sourcing.order.poc.common.model;
+package org.example.event.sourcing.order.poc.modules.common.model;
 
 import lombok.Builder;
 

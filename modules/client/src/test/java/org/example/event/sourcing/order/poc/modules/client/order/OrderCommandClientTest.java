@@ -3,7 +3,7 @@ package org.example.event.sourcing.order.poc.modules.client.order;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import org.example.event.sourcing.order.poc.modules.client.order.config.OrderCommandClientConfig;
-import org.example.event.sourcing.order.poc.common.model.Order;
+import org.example.event.sourcing.order.poc.modules.common.model.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

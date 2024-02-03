@@ -3,7 +3,7 @@ package org.example.event.sourcing.order.poc.command.payment.controller;
 import io.micrometer.observation.annotation.Observed;
 import lombok.RequiredArgsConstructor;
 import org.example.event.sourcing.order.poc.command.payment.service.PaymentService;
-import org.example.event.sourcing.order.poc.common.model.Payment;
+import org.example.event.sourcing.order.poc.modules.common.model.Payment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

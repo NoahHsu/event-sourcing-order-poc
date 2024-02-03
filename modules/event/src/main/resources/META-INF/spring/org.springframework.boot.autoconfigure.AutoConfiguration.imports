@@ -1,1 +1,1 @@
-config.org.example.event.sourcing.order.poc.modules.event.TopicConfig
+org.example.event.sourcing.order.poc.modules.event.config.TopicConfig

@@ -3,7 +3,7 @@ package org.example.event.sourcing.order.poc.modules.client.order;
 import feign.Headers;
 import feign.RequestLine;
 import io.micrometer.observation.annotation.Observed;
-import org.example.event.sourcing.order.poc.common.model.Order;
+import org.example.event.sourcing.order.poc.modules.common.model.Order;
 
 import java.util.Map;
 

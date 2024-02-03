@@ -1,5 +1,5 @@
 dependencies {
-    implementation project(":common")
+    implementation project(":modules:common")
 
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'io.github.openfeign:feign-core'

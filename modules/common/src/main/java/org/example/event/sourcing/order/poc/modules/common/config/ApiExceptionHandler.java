@@ -1,4 +1,4 @@
-package org.example.event.sourcing.order.poc.common.config;
+package org.example.event.sourcing.order.poc.modules.common.config;
 
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;

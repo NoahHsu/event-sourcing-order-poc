@@ -1,7 +1,7 @@
 jib.to.image = "noahhsu/espoc-order-${project.name}"
 
 dependencies {
-    implementation project(":common")
+    implementation project(":modules:common")
     implementation project(":modules:client")
     implementation project(":modules:event")
     implementation project(":modules:observation")
