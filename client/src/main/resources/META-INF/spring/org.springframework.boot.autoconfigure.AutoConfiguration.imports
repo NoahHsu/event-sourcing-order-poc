@@ -1,2 +1,0 @@
-org.example.event.sourcing.order.poc.client.order.config.OrderQueryClientConfig
-org.example.event.sourcing.order.poc.client.order.config.OrderCommandClientConfig

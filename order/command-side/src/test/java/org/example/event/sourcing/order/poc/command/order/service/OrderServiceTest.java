@@ -1,9 +1,9 @@
 package org.example.event.sourcing.order.poc.command.order.service;
 
-import org.example.event.sourcing.order.poc.client.order.OrderQueryClient;
-import org.example.event.sourcing.order.poc.client.order.exception.ResourceNotFoundException;
-import org.example.event.sourcing.order.poc.client.order.model.V1Order;
-import org.example.event.sourcing.order.poc.client.order.model.V1OrderStatus;
+import org.example.event.sourcing.order.poc.modules.client.order.OrderQueryClient;
+import org.example.event.sourcing.order.poc.modules.client.order.exception.ResourceNotFoundException;
+import org.example.event.sourcing.order.poc.modules.client.order.model.V1Order;
+import org.example.event.sourcing.order.poc.modules.client.order.model.V1OrderStatus;
 import org.example.event.sourcing.order.poc.command.order.producer.OrderEventProducer;
 import org.example.event.sourcing.order.poc.common.model.Order;
 import org.example.event.sourcing.order.poc.event.model.OrderEvent;
