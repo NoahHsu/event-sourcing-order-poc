@@ -6,7 +6,7 @@ import org.example.event.sourcing.order.poc.command.payment.producer.PaymentEven
 import org.example.event.sourcing.order.poc.common.model.Payment;
 import org.example.event.sourcing.order.poc.event.model.PaymentEvent;
 import org.example.event.sourcing.order.poc.event.model.PaymentEventName;
-import org.example.event.sourcing.order.poc.observation.annotation.LogInfo;
+import org.example.event.sourcing.order.poc.modules.observation.annotation.LogInfo;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;

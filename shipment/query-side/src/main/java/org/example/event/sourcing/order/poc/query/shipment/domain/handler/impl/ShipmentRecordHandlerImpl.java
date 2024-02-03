@@ -3,7 +3,7 @@ package org.example.event.sourcing.order.poc.query.shipment.domain.handler.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.event.sourcing.order.poc.event.model.ShipmentEvent;
-import org.example.event.sourcing.order.poc.observation.annotation.LogInfo;
+import org.example.event.sourcing.order.poc.modules.observation.annotation.LogInfo;
 import org.example.event.sourcing.order.poc.query.shipment.domain.entity.ShipmentRecord;
 import org.example.event.sourcing.order.poc.query.shipment.domain.handler.ShipmentRecordHandler;
 import org.example.event.sourcing.order.poc.query.shipment.domain.repo.ShipmentRepository;

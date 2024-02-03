@@ -3,18 +3,14 @@ package org.example.event.sourcing.order.poc.query.order.domain.handler.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.event.sourcing.order.poc.event.model.OrderEvent;
-import org.example.event.sourcing.order.poc.observation.annotation.LogInfo;
+import org.example.event.sourcing.order.poc.modules.observation.annotation.LogInfo;
 import org.example.event.sourcing.order.poc.query.order.domain.entity.OrderRecord;
 import org.example.event.sourcing.order.poc.query.order.domain.entity.OrderStatus;
 import org.example.event.sourcing.order.poc.query.order.domain.handler.OrderRecordHandler;
 import org.example.event.sourcing.order.poc.query.order.domain.repo.OrderRepository;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.stereotype.Service;
 
 import java.net.SocketException;
-import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Random;
 

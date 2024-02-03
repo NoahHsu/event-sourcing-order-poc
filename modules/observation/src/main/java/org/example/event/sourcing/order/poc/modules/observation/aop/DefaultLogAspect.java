@@ -1,4 +1,4 @@
-package org.example.event.sourcing.order.poc.observation.aop;
+package org.example.event.sourcing.order.poc.modules.observation.aop;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

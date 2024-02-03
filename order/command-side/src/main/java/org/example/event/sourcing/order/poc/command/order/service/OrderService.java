@@ -9,7 +9,7 @@ import org.example.event.sourcing.order.poc.modules.client.order.model.V1OrderSt
 import org.example.event.sourcing.order.poc.command.order.producer.OrderEventProducer;
 import org.example.event.sourcing.order.poc.common.model.Order;
 import org.example.event.sourcing.order.poc.event.model.OrderEvent;
-import org.example.event.sourcing.order.poc.observation.annotation.LogInfo;
+import org.example.event.sourcing.order.poc.modules.observation.annotation.LogInfo;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.ErrorResponseException;

@@ -1,4 +1,4 @@
-package org.example.event.sourcing.order.poc.observation.aop;
+package org.example.event.sourcing.order.poc.modules.observation.aop;
 
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;

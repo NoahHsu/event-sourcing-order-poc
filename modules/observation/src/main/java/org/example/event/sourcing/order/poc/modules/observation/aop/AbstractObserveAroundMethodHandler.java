@@ -1,4 +1,4 @@
-package org.example.event.sourcing.order.poc.observation.aop;
+package org.example.event.sourcing.order.poc.modules.observation.aop;
 
 import io.micrometer.observation.Observation;
 import io.micrometer.observation.ObservationHandler;
