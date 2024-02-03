@@ -1,13 +1,13 @@
 package org.example.event.sourcing.order.poc.command.order.service;
 
+import org.example.event.sourcing.order.poc.command.order.producer.OrderEventProducer;
+import org.example.event.sourcing.order.poc.common.model.Order;
 import org.example.event.sourcing.order.poc.modules.client.order.OrderQueryClient;
 import org.example.event.sourcing.order.poc.modules.client.order.exception.ResourceNotFoundException;
 import org.example.event.sourcing.order.poc.modules.client.order.model.V1Order;
 import org.example.event.sourcing.order.poc.modules.client.order.model.V1OrderStatus;
-import org.example.event.sourcing.order.poc.command.order.producer.OrderEventProducer;
-import org.example.event.sourcing.order.poc.common.model.Order;
-import org.example.event.sourcing.order.poc.event.model.OrderEvent;
-import org.example.event.sourcing.order.poc.event.model.OrderEventName;
+import org.example.event.sourcing.order.poc.modules.event.model.OrderEvent;
+import org.example.event.sourcing.order.poc.modules.event.model.OrderEventName;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatcher;
 import org.mockito.BDDMockito;
@@ -16,10 +16,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.BDDAssertions.catchRuntimeException;
 import static org.assertj.core.api.BDDAssertions.then;
-import static org.example.event.sourcing.order.poc.event.model.OrderEventName.CREATED;
+import static org.example.event.sourcing.order.poc.modules.event.model.OrderEventName.CREATED;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;

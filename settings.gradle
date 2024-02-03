@@ -1,7 +1,6 @@
 rootProject.name = 'event-sourcing-order-poc'
 
 include 'common'
-include 'event'
 include 'modules'
 include 'modules:idempotency'
 findProject(':modules:idempotency')?.name = 'idempotency'
@@ -9,6 +8,8 @@ include 'modules:client'
 findProject(':modules:client')?.name = 'client'
 include 'modules:observation'
 findProject(':modules:observation')?.name = 'observation'
+include 'modules:event'
+findProject(':modules:event')?.name = 'event'
 
 include 'order'
 include 'order:command-side'

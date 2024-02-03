@@ -2,14 +2,12 @@ package org.example.event.sourcing.order.poc.query.payment.domain.handler.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.event.sourcing.order.poc.event.model.PaymentEvent;
-import org.example.event.sourcing.order.poc.event.model.PaymentEventName;
+import org.example.event.sourcing.order.poc.modules.event.model.PaymentEvent;
+import org.example.event.sourcing.order.poc.modules.event.model.PaymentEventName;
 import org.example.event.sourcing.order.poc.query.payment.domain.entity.PaymentRecord;
 import org.example.event.sourcing.order.poc.query.payment.domain.handler.PaymentRecordHandler;
 import org.example.event.sourcing.order.poc.query.payment.domain.repo.PaymentRepository;
 import org.springframework.stereotype.Component;
-
-import java.util.concurrent.CompletableFuture;
 
 @Component
 @Slf4j

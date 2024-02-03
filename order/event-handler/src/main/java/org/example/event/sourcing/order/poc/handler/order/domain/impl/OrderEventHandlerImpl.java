@@ -3,7 +3,7 @@ package org.example.event.sourcing.order.poc.handler.order.domain.impl;
 import io.micrometer.observation.annotation.Observed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.event.sourcing.order.poc.event.model.OrderEvent;
+import org.example.event.sourcing.order.poc.modules.event.model.OrderEvent;
 import org.example.event.sourcing.order.poc.handler.order.domain.OrderEventHandler;
 import org.springframework.stereotype.Component;
 

@@ -1,4 +1,4 @@
-package org.example.event.sourcing.order.poc.event.model;
+package org.example.event.sourcing.order.poc.modules.event.model;
 
 import java.time.Instant;
 

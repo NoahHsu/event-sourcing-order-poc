@@ -1,6 +1,6 @@
 package org.example.event.sourcing.order.poc.query.payment.domain.handler;
 
-import org.example.event.sourcing.order.poc.event.model.PaymentEvent;
+import org.example.event.sourcing.order.poc.modules.event.model.PaymentEvent;
 
 public interface PaymentRecordHandler {
 

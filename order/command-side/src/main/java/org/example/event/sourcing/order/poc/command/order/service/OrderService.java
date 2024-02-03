@@ -8,7 +8,7 @@ import org.example.event.sourcing.order.poc.modules.client.order.model.V1Order;
 import org.example.event.sourcing.order.poc.modules.client.order.model.V1OrderStatus;
 import org.example.event.sourcing.order.poc.command.order.producer.OrderEventProducer;
 import org.example.event.sourcing.order.poc.common.model.Order;
-import org.example.event.sourcing.order.poc.event.model.OrderEvent;
+import org.example.event.sourcing.order.poc.modules.event.model.OrderEvent;
 import org.example.event.sourcing.order.poc.modules.observation.annotation.LogInfo;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -19,8 +19,8 @@ import java.time.Instant;
 import java.util.Optional;
 import java.util.Random;
 
-import static org.example.event.sourcing.order.poc.event.model.OrderEventName.COMPLETED;
-import static org.example.event.sourcing.order.poc.event.model.OrderEventName.CREATED;
+import static org.example.event.sourcing.order.poc.modules.event.model.OrderEventName.COMPLETED;
+import static org.example.event.sourcing.order.poc.modules.event.model.OrderEventName.CREATED;
 
 @Service
 @RequiredArgsConstructor

@@ -3,7 +3,7 @@ package org.example.event.sourcing.order.poc.query.order.consumer;
 import io.micrometer.observation.annotation.Observed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.event.sourcing.order.poc.event.model.OrderEvent;
+import org.example.event.sourcing.order.poc.modules.event.model.OrderEvent;
 import org.example.event.sourcing.order.poc.query.order.domain.handler.OrderEventRecordHandler;
 import org.example.event.sourcing.order.poc.query.order.domain.handler.OrderRecordHandler;
 import org.springframework.kafka.annotation.DltHandler;
@@ -23,7 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.net.SocketException;
 
-import static org.example.event.sourcing.order.poc.event.model.OrderEvent.*;
+import static org.example.event.sourcing.order.poc.modules.event.model.OrderEvent.ORDER_STATUS_GROUP_ID_PREFIX;
+import static org.example.event.sourcing.order.poc.modules.event.model.OrderEvent.ORDER_TOPIC;
 
 @Service
 @RequiredArgsConstructor

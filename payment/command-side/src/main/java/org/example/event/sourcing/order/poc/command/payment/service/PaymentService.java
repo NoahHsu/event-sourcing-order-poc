@@ -4,14 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.example.event.sourcing.order.poc.command.payment.producer.PaymentEventProducer;
 import org.example.event.sourcing.order.poc.common.model.Payment;
-import org.example.event.sourcing.order.poc.event.model.PaymentEvent;
-import org.example.event.sourcing.order.poc.event.model.PaymentEventName;
+import org.example.event.sourcing.order.poc.modules.event.model.PaymentEvent;
+import org.example.event.sourcing.order.poc.modules.event.model.PaymentEventName;
 import org.example.event.sourcing.order.poc.modules.observation.annotation.LogInfo;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 
-import static org.example.event.sourcing.order.poc.event.model.PaymentEventName.*;
+import static org.example.event.sourcing.order.poc.modules.event.model.PaymentEventName.*;
 
 @Service
 @RequiredArgsConstructor
