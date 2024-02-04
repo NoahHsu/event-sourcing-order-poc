@@ -1,9 +1,9 @@
 jib.to.image = "noahhsu/espoc-order-${project.name}"
 
 dependencies {
-    implementation project(":common")
-    implementation project(":event")
-    implementation project(":observation")
+    implementation project(":modules:common")
+    implementation project(":modules:event")
+    implementation project(":modules:observation")
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter'

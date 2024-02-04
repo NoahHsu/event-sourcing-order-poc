@@ -3,7 +3,7 @@ package org.example.event.sourcing.order.poc.command.shipment.producer;
 import io.micrometer.observation.annotation.Observed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.event.sourcing.order.poc.event.model.ShipmentEvent;
+import org.example.event.sourcing.order.poc.modules.event.model.ShipmentEvent;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Component;
@@ -12,7 +12,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import static org.example.event.sourcing.order.poc.event.model.ShipmentEvent.SHIPMENT_TOPIC;
+import static org.example.event.sourcing.order.poc.modules.event.model.ShipmentEvent.SHIPMENT_TOPIC;
 
 @Component
 @RequiredArgsConstructor

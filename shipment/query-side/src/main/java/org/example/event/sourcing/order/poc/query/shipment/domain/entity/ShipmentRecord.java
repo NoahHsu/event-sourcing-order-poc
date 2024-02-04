@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.event.sourcing.order.poc.event.model.ShipmentEventName;
+import org.example.event.sourcing.order.poc.modules.event.model.ShipmentEventName;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;

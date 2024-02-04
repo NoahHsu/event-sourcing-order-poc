@@ -3,7 +3,7 @@ package org.example.event.sourcing.order.poc.query.shipment.consumer;
 import io.micrometer.observation.annotation.Observed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.event.sourcing.order.poc.event.model.ShipmentEvent;
+import org.example.event.sourcing.order.poc.modules.event.model.ShipmentEvent;
 import org.example.event.sourcing.order.poc.query.shipment.domain.handler.ShipmentRecordHandler;
 import org.springframework.kafka.annotation.DltHandler;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -16,9 +16,9 @@ import org.springframework.messaging.handler.invocation.MethodArgumentResolution
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.stereotype.Component;
 
-import static org.example.event.sourcing.order.poc.event.model.OrderEvent.ORDER_TOPIC;
-import static org.example.event.sourcing.order.poc.event.model.ShipmentEvent.SHIPMENT_STATUS_GROUP_ID_PREFIX;
-import static org.example.event.sourcing.order.poc.event.model.ShipmentEvent.SHIPMENT_TOPIC;
+import static org.example.event.sourcing.order.poc.modules.event.model.OrderEvent.ORDER_TOPIC;
+import static org.example.event.sourcing.order.poc.modules.event.model.ShipmentEvent.SHIPMENT_STATUS_GROUP_ID_PREFIX;
+import static org.example.event.sourcing.order.poc.modules.event.model.ShipmentEvent.SHIPMENT_TOPIC;
 
 @Component
 @Slf4j

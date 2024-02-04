@@ -2,15 +2,15 @@ package org.example.event.sourcing.order.poc.command.shipment.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.event.sourcing.order.poc.command.shipment.producer.ShipmentEventProducer;
-import org.example.event.sourcing.order.poc.common.model.Shipment;
-import org.example.event.sourcing.order.poc.event.model.ShipmentEvent;
-import org.example.event.sourcing.order.poc.event.model.ShipmentEventName;
-import org.example.event.sourcing.order.poc.observation.annotation.LogInfo;
+import org.example.event.sourcing.order.poc.modules.common.model.Shipment;
+import org.example.event.sourcing.order.poc.modules.event.model.ShipmentEvent;
+import org.example.event.sourcing.order.poc.modules.event.model.ShipmentEventName;
+import org.example.event.sourcing.order.poc.modules.observation.annotation.LogInfo;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 
-import static org.example.event.sourcing.order.poc.event.model.ShipmentEventName.*;
+import static org.example.event.sourcing.order.poc.modules.event.model.ShipmentEventName.*;
 
 @Service
 @RequiredArgsConstructor
