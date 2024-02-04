@@ -19,7 +19,17 @@
 - Event-Handler
   - consume events from Kafka to send command request to Command-side
 
-## How to run application
+## How to run application (local code in IDE)
+# run only dependency component (kafka, redis)
+```shell
+# run all dependency components (kafka, redis, grafana, loki, prometheus, tempo)
+docker compose -f Docker/observe-docker-compose.yaml -f Docker/kafka-docker-compose.yml -f Docker/redis-docker-compose.yml -p event-sourcing up
+
+# set the working directory as `{path-to-project-root}/event-sourcing-order-poc`
+# run the Application you want
+```
+
+## How to run application (local code in docker)
 ### With local code
 ```shell
 # should run build first
@@ -56,10 +66,6 @@ docker compose -f Docker/boot-apps-docker-compose.yml -f Docker/kafka-docker-com
 # only shipment-command-side
 docker compose -f Docker/boot-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker --profile shipment -p event-sourcing up --scale shipment-handler=0 --scale shipment-query=0
 ``` 
-
-- run by IDE 
-  
-  set the working directory as `{path-to-project-root}/event-sourcing-order-poc`
 
 ## Run E2E test in local
 
