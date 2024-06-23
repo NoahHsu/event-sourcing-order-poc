@@ -1,12 +1,12 @@
 jib {
     from {
         image = "openjdk:17-slim"
-        platforms {
-            platform {
-                architecture = "arm64"
-                os = "linux" //also tried darwin here.
-            }
-        }
+//        platforms {
+//            platform {
+//                architecture = "arm64"
+//                os = "linux"
+//            }
+//        }
     }
 
     to.image = "noahhsu/${project.name}"
@@ -16,6 +16,6 @@ jib {
         creationTime = 'USE_CURRENT_TIMESTAMP'
     }
 
-    dockerClient.executable = '/opt/podman/bin/podman'
+//    dockerClient.executable = '/opt/podman/bin/podman'
 
 }
