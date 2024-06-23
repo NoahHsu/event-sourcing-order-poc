@@ -1,0 +1,21 @@
+jib {
+    from {
+        image = "openjdk:17-slim"
+//        platforms {
+//            platform {
+//                architecture = "arm64"
+//                os = "linux"
+//            }
+//        }
+    }
+
+    to.image = "noahhsu/${project.name}"
+    to.tags = ["latest"]
+
+    container {
+        creationTime = 'USE_CURRENT_TIMESTAMP'
+    }
+
+//    dockerClient.executable = '/opt/podman/bin/podman'
+
+}
