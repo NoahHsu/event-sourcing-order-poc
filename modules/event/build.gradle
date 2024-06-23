@@ -7,13 +7,3 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 }
-
-bootJar {
-    enabled = false
-}
-
-jar {
-    enabled = true
-}
-
-tasks.findAll { it.name.startsWith("jib") }.forEach { it.enabled = false }

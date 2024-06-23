@@ -25,6 +25,9 @@
 # run all dependency components (kafka, redis, grafana, loki, prometheus, tempo)
 docker compose -f Docker/observe-docker-compose.yaml -f Docker/kafka-docker-compose.yml -f Docker/redis-docker-compose.yml -p event-sourcing up
 
+# run kafka and redis only
+docker compose -f Docker/kafka-docker-compose.yml -f Docker/redis-docker-compose.yml -p event-sourcing up
+
 # set the working directory as `{path-to-project-root}/event-sourcing-order-poc`
 # run the Application you want
 ```

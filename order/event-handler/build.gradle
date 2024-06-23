@@ -1,4 +1,9 @@
-jib.to.image = "noahhsu/espoc-order-${project.name}"
+plugins {
+    id 'org.springframework.boot'
+    id 'com.google.cloud.tools.jib'
+}
+
+apply from: "$rootDir/gradle/jib.gradle"
 
 dependencies {
     implementation project(":modules:common")

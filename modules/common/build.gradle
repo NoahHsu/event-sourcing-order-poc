@@ -1,18 +1,8 @@
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter'
-    implementation "org.springframework.boot:spring-boot-starter-aop"
+    implementation 'org.springframework:spring-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.junit.jupiter:junit-jupiter-api'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 }
-
-bootJar {
-    enabled = false
-}
-
-jar {
-    enabled = true
-}
-
-tasks.findAll { it.name.startsWith("jib") }.forEach { it.enabled = false }

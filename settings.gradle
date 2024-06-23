@@ -1,3 +1,24 @@
+import org.gradle.api.initialization.resolve.RepositoriesMode
+
+pluginManagement {
+    plugins {
+        id 'org.springframework.boot' version "${springBootVersion}"
+        id 'io.spring.dependency-management' version "${springDependencyVersion}"
+        id 'com.google.cloud.tools.jib' version "${jibVersion}"
+    }
+}
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven {
+            url '.m2/local/'
+        }
+    }
+}
+
 rootProject.name = 'event-sourcing-order-poc'
 
 include 'modules'
@@ -14,25 +35,25 @@ findProject(':modules:event')?.name = 'event'
 
 include 'order'
 include 'order:command-side'
-findProject(':order:command-side')?.name = 'command-side'
+findProject(':order:command-side')?.name = 'order-command-side'
 include 'order:event-handler'
-findProject(':order:event-handler')?.name = 'event-handler'
+findProject(':order:event-handler')?.name = 'order-event-handler'
 include 'order:query-side'
-findProject(':order:query-side')?.name = 'query-side'
+findProject(':order:query-side')?.name = 'order-query-side'
 
 include 'payment'
 include 'payment:command-side'
-findProject(':payment:command-side')?.name = 'command-side'
+findProject(':payment:command-side')?.name = 'payment-command-side'
 include 'payment:event-handler'
-findProject(':payment:event-handler')?.name = 'event-handler'
+findProject(':payment:event-handler')?.name = 'payment-event-handler'
 include 'payment:query-side'
-findProject(':payment:query-side')?.name = 'query-side'
+findProject(':payment:query-side')?.name = 'payment-query-side'
 
 include 'shipment'
 include 'shipment:command-side'
-findProject(':shipment:command-side')?.name = 'command-side'
+findProject(':shipment:command-side')?.name = 'shipment-command-side'
 include 'shipment:event-handler'
-findProject(':shipment:event-handler')?.name = 'event-handler'
+findProject(':shipment:event-handler')?.name = 'shipment-event-handler'
 include 'shipment:query-side'
-findProject(':shipment:query-side')?.name = 'query-side'
+findProject(':shipment:query-side')?.name = 'shipment-query-side'
 
