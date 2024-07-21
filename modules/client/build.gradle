@@ -11,6 +11,7 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.junit.jupiter:junit-jupiter-api'
-    testImplementation 'org.wiremock:wiremock'
+    testImplementation 'org.testcontainers:junit-jupiter'
+    testImplementation "org.wiremock.integrations.testcontainers:wiremock-testcontainers-module"
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 }

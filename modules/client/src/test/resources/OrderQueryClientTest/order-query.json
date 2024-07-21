@@ -1,0 +1,38 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "method": "GET",
+        "urlPattern": "/api/v1-orders/1111"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "status": "CREATED",
+          "createdDate": "2023-04-01T12:44:41.658253Z",
+          "updatedDate": "2023-04-01T12:44:41.658253Z",
+          "_links": {
+            "self": {
+              "href": "http://localhost:8083/api/v1-orders/1111"
+            },
+            "orderRecord": {
+              "href": "http://localhost:8083/api/v1-orders/1111"
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "urlPattern": "/api/v1-orders/2222"
+      },
+      "response": {
+        "status": 404
+      }
+    }
+  ]
+}
