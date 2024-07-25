@@ -1,6 +1,6 @@
 jib {
     from {
-        image = "openjdk:17-slim"
+        image = "openjdk:21-slim"
 //        platforms {
 //            platform {
 //                architecture = "arm64"

@@ -11,8 +11,9 @@ plugins {
 allprojects {
 
     java {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(21)
+        }
     }
 
     apply plugin: 'java'
@@ -28,7 +29,7 @@ allprojects {
             dependency "org.springdoc:springdoc-openapi-starter-webmvc-ui:${springdocVersion}"
             dependency "io.github.openfeign:feign-micrometer:${feignMicrometerVersion}"
             dependency "org.projectlombok:lombok:${lombokVersion}"
-            dependency "org.wiremock:wiremock:${wiremockVersion}"
+            dependency "org.wiremock.integrations.testcontainers:wiremock-testcontainers-module:${wiremockTestContainerVersion}"
             dependency "com.github.loki4j:loki-logback-appender:${logbackAppenderVersion}"
         }
     }
