@@ -19,44 +19,11 @@
 - Event-Handler
   - consume events from Kafka to send command request to Command-side
 
-## How to run application (local code in IDE)
-# run only dependency component (kafka, redis)
-```shell
-# run all dependency components (kafka, redis, grafana, loki, prometheus, tempo)
-docker compose -f Docker/observe-docker-compose.yaml -f Docker/kafka-docker-compose.yml -f Docker/redis-docker-compose.yml -p event-sourcing up
+## How to run application
 
-# run kafka and redis only
-docker compose -f Docker/kafka-docker-compose.yml -f Docker/redis-docker-compose.yml -p event-sourcing up
+The dependency container will run in the docker by `spring-boot-docker-support`
+so you can run 
 
-# set the working directory as `{path-to-project-root}/event-sourcing-order-poc`
-# run the Application you want
-```
-
-## How to run application (local code in docker)
-### With local code
-```shell
-# should run build first
-./gradlew build -x test
-
-# run only dependency component (kafka, redis)  
-docker compose -f Docker/kafka-docker-compose.yml -f Docker/redis-docker-compose.yml -p event-sourcing up
-
-```
-
-#### Run applications 
-### With docker image on the Docker Hub 
-```shell
-# all service with all observability components and kafka
-docker compose -f Docker/observe-docker-compose.yaml -f Docker/boot-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml -f Docker/redis-docker-compose.yml --profile all -p event-sourcing up
-# all order service without observability
-docker compose -f Docker/boot-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml -f Docker/redis-docker-compose.yml --env-file Docker/config/.env.docker --profile order -p event-sourcing up --scale order-handler=0
-# only order-command-side
-docker compose -f Docker/boot-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml -f Docker/redis-docker-compose.yml --env-file Docker/config/.env.docker --profile order -p event-sourcing up --scale order-handler=0 --scale order-query=0
-# only payment-command-side
-docker compose -f Docker/boot-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker --profile payment -p event-sourcing up --scale payment-handler=0 --scale payment-query=0
-# only shipment-command-side
-docker compose -f Docker/boot-apps-docker-compose.yml -f Docker/kafka-docker-compose.yml --env-file Docker/config/.env.docker --profile shipment -p event-sourcing up --scale shipment-handler=0 --scale shipment-query=0
-``` 
 
 ## Run E2E test in local
 

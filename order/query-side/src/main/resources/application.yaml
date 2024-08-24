@@ -5,10 +5,4 @@ spring:
   application:
     name: order-query-side
   profiles:
-    include:
-      - observe
-      - cluster
-      - query-side
-      - kafka
-      - kafka-producer
-      - kafka-consumer
+    include: "observe, cluster, mock, query-side, kafka, kafka-producer, kafka-consumer, docker-support"

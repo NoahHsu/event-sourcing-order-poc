@@ -1,9 +1,9 @@
 cluster:
   order:
     command:
-      base-url: http://${CLUSTER_HOST:localhost}:8081
+      base-url: http://${CLUSTER_HOST:localhost}:8000/oc/
     query:
-      base-url: http://${CLUSTER_HOST:localhost}:8083
+      base-url: http://${CLUSTER_HOST:localhost}:8000/oq/
   payment:
     command:
       base-url: http://${CLUSTER_HOST:localhost}:9081
@@ -14,4 +14,3 @@ cluster:
       base-url: http://${CLUSTER_HOST:localhost}:10081
     query:
       base-url: http://${CLUSTER_HOST:localhost}:10083
-

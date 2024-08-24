@@ -21,7 +21,7 @@ public class OrderQueryClient {
     }
 
     private interface OrderQueryStub {
-        String BASE_PATH = "/api/v1-orders";
+        String BASE_PATH = "api/v1-orders";
 
         @RequestLine("GET " + BASE_PATH + "/{id}")
         @Headers("Content-Type: application/json")
