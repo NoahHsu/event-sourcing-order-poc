@@ -1,6 +1,7 @@
 {
   "mappings": [
     {
+      "priority": 1,
       "request": {
         "method": "GET",
         "url": "/oq/api/v1-orders/22222"
@@ -26,6 +27,7 @@
       }
     },
     {
+      "priority": 1,
       "request": {
         "method": "GET",
         "url": "/oq/api/v1-orders/404"

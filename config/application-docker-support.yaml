@@ -2,6 +2,6 @@ spring:
   docker:
     compose:
       enabled: true
-      file: Docker/docker-compose.yml
       profiles:
         active: ${spring.profiles.include}
+      lifecycle-management: start-only

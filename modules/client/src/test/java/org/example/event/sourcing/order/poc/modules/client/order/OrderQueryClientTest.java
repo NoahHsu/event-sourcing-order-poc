@@ -6,6 +6,7 @@ import org.example.event.sourcing.order.poc.modules.client.order.model.V1Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 
 import java.time.Instant;
 
@@ -14,6 +15,7 @@ import static org.assertj.core.api.BDDAssertions.then;
 import static org.example.event.sourcing.order.poc.modules.client.order.model.V1OrderStatus.CREATED;
 
 @SpringBootTest(classes = {OrderQueryClientConfig.class, ObserveMockConfig.class})
+@TestPropertySource(properties = "spring.config.additional-location=file:../../config/")
 class OrderQueryClientTest {
 
     @Autowired

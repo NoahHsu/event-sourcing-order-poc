@@ -2,7 +2,7 @@ spring:
   docker:
     compose:
       enabled: true
-      file: ../../Docker/docker-compose.yml
+      file: ../../compose.yml
       skip:
         in-tests: false
       profiles:

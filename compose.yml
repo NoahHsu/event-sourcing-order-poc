@@ -7,7 +7,8 @@ services:
     ports:
       - '8000:8080'
     volumes:
-      - ../Docker/config/mock-server:/home/wiremock/mappings
+      - ./Docker/config/mock-server:/home/wiremock/mappings
+    entrypoint: ["/docker-entrypoint.sh", "--global-response-templating", "--disable-gzip", "--verbose"]
   kafka:
     image: 'bitnami/kafka:3.7'
     profiles: ["kafka", "all"]
@@ -33,7 +34,7 @@ services:
     profiles: ["observe", "all"]
     command: [ "-config.file=/etc/tempo.yaml" ]
     volumes:
-      - ./config/tempo/tempo-local.yaml:/etc/tempo.yaml:ro
+      - ./Docker/config/tempo/tempo-local.yaml:/etc/tempo.yaml:ro
       - ./tempo-data:/tmp/tempo
     ports:
       - "14268"  # jaeger ingest
@@ -58,7 +59,7 @@ services:
       - --enable-feature=exemplar-storage
       - --config.file=/etc/prometheus/prometheus.yml
     volumes:
-      - ./config/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./Docker/config/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
     ports:
       - "9090:9090"
 
@@ -66,8 +67,8 @@ services:
     image: grafana/grafana
     profiles: ["observe", "all"]
     volumes:
-      - ./config/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro
-      - ./config/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./Docker/config/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro
+      - ./Docker/config/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro
     environment:
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
