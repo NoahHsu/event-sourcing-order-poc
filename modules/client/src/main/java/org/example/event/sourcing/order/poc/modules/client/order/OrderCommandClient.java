@@ -10,7 +10,7 @@ import java.util.Map;
 @Observed
 public interface OrderCommandClient {
 
-    String BASE_PATH = "/api/v1/orders";
+    String BASE_PATH = "api/v1/orders";
 
     @RequestLine("POST " + BASE_PATH)
     @Headers("Content-Type: application/json")

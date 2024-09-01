@@ -22,5 +22,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 
+    testAndDevelopmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+
     runtimeOnly 'com.h2database:h2'
 }

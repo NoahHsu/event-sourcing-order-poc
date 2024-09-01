@@ -1,0 +1,2 @@
+spring:
+  profiles.include: "mock, cluster, docker-support-test"

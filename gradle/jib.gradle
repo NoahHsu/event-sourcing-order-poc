@@ -18,4 +18,22 @@ jib {
 
 //    dockerClient.executable = '/opt/podman/bin/podman'
 
+    pluginExtensions {
+        pluginExtension {
+            implementation = 'com.google.cloud.tools.jib.gradle.extension.springboot.JibSpringBootExtension'
+        }
+    }
+
+    pluginExtensions {
+        pluginExtension {
+            implementation = 'com.google.cloud.tools.jib.gradle.extension.layerfilter.JibLayerFilterExtension'
+            configuration {
+                filters {
+                    filter {
+                        glob = '**/spring-boot-docker-compose-*.jar'
+                    }
+                }
+            }
+        }
+    }
 }

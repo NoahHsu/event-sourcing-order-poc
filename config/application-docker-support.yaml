@@ -1,0 +1,7 @@
+spring:
+  docker:
+    compose:
+      enabled: true
+      profiles:
+        active: ${spring.profiles.include}
+      lifecycle-management: start-only

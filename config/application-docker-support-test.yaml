@@ -1,0 +1,9 @@
+spring:
+  docker:
+    compose:
+      enabled: true
+      file: ../../compose.yml
+      skip:
+        in-tests: false
+      profiles:
+        active: ${spring.profiles.include}

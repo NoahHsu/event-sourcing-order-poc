@@ -3,6 +3,7 @@ package org.example.event.sourcing.order.poc.modules.client.order.config;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import feign.Feign;
 import feign.Logger;
+import feign.Request;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import feign.micrometer.MicrometerCapability;
@@ -25,7 +26,7 @@ import java.util.List;
 @EnableHypermediaSupport(type = EnableHypermediaSupport.HypermediaType.HAL)
 public class OrderQueryClientConfig {
 
-    @Value("${cluster.order.query.base-url:http://localhost:8083}")
+    @Value("${cluster.order.query.base-url}")
     private String url;
 
     @Bean
@@ -37,6 +38,7 @@ public class OrderQueryClientConfig {
                 .logger(new Slf4jLogger())
                 .encoder(new JacksonEncoder(List.of(new JavaTimeModule())))
                 .decoder(new JacksonDecoder(List.of(new JavaTimeModule())))
+                .options(new Request.Options(3000, 5000))
                 .addCapability(new MicrometerObservationCapability(observationRegistry))
                 .addCapability(new MicrometerCapability(meterRegistry));
         return new OrderQueryClient(builder, url);

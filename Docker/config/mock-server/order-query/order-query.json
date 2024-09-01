@@ -1,9 +1,10 @@
 {
   "mappings": [
     {
+      "priority": 1,
       "request": {
         "method": "GET",
-        "urlPattern": "/api/v1-orders/1111"
+        "url": "/oq/api/v1-orders/22222"
       },
       "response": {
         "status": 200,
@@ -16,22 +17,33 @@
           "updatedDate": "2023-04-01T12:44:41.658253Z",
           "_links": {
             "self": {
-              "href": "http://localhost:8083/api/v1-orders/1111"
+              "href": "http://localhost:8083/api/v1-orders/22222"
             },
             "orderRecord": {
-              "href": "http://localhost:8083/api/v1-orders/1111"
+              "href": "http://localhost:8083/api/v1-orders/22222"
             }
           }
         }
       }
     },
     {
+      "priority": 1,
       "request": {
-        "method": "POST",
-        "urlPattern": "/api/v1-orders/2222"
+        "method": "GET",
+        "url": "/oq/api/v1-orders/404"
       },
       "response": {
         "status": 404
+      }
+    },
+    {
+      "priority": 999999,
+      "request": {
+        "urlPathPattern": "/oq/.*"
+      },
+      "response": {
+        "proxyBaseUrl": "http://host.docker.internal:8083",
+        "proxyUrlPrefixToRemove": "/oq"
       }
     }
   ]

@@ -1,0 +1,62 @@
+{
+  "mappings": [
+    {
+      "priority": 1,
+      "request": {
+        "method": "POST",
+        "url": "/oc/api/v1/orders",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": {
+              "expression": "$.id",
+              "matches": "22222"
+            }
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "id": "22222"
+        }
+      }
+    },
+    {
+      "priority": 1,
+      "request": {
+        "method": "POST",
+        "url": "/oc/api/v1/orders/complete",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": {
+              "expression": "$.id",
+              "matches": "22222"
+            }
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "result": "OK"
+        }
+      }
+    },
+    {
+      "priority": 999999,
+      "request": {
+        "urlPathPattern": "/oc/.*"
+      },
+      "response": {
+        "proxyBaseUrl": "http://host.docker.internal:8081",
+        "proxyUrlPrefixToRemove": "/oc"
+      }
+    }
+  ]
+}
