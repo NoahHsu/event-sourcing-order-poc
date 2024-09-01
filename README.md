@@ -22,7 +22,7 @@
 ## How to run application
 
 The dependency container will run in the docker by `spring-boot-docker-support`
-so you can run 
+so you can run the App by IDE directly.
 
 
 ## Run E2E test in local
