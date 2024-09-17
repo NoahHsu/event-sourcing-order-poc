@@ -5,4 +5,7 @@ spring:
   application:
     name: order-command-side
   profiles:
-    include: "observe, cluster, mock, kafka, kafka-producer, redis, idempotency, docker-support"
+    include: "observe, cluster, mock, kafka, kafka-producer, redis, idempotency"
+    active:
+      - development
+      - docker-support

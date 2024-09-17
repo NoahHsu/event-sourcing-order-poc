@@ -1,0 +1,38 @@
+<configuration>
+    <springProperty scope="context" name="LOGGING_FILE_NAME" source="logging.file.name"
+                    defaultValue="./.data/app/logs/${spring.application.name}.log"/>
+    <appender name="JSON_FILE_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <provider class="net.logstash.logback.composite.loggingevent.ArgumentsJsonProvider"/>
+            <includeContext>false</includeContext>
+            <fieldNames>
+                <timestamp>@timestamp</timestamp>
+                <version>@version</version>
+                <level>level</level>
+                <thread>thread</thread>
+                <logger>logger</logger>
+                <message>message</message>
+                <stackTrace>stackTrace</stackTrace>
+                <levelValue>levelValue</levelValue>
+            </fieldNames>
+            <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
+                <maxDepthPerthrowable>100</maxDepthPerthrowable>
+                <maxLength>10240</maxLength>
+                <shortenedClassNameLength>20</shortenedClassNameLength>
+                <rootCauseFirst>true</rootCauseFirst>
+                <inlineHash>false</inlineHash>
+            </throwableConverter>
+        </encoder>
+        <file>${LOGGING_FILE_NAME}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOGGING_FILE_NAME}.%d{yyyy-mm-dd}.%i.gz</fileNamePattern>
+            <cleanHistoryOnStart>false</cleanHistoryOnStart>
+            <maxFileSize>10MB</maxFileSize>
+            <totalSizeCap>0</totalSizeCap>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+    </appender>
+    <root level="INFO">
+        <appender-ref ref="JSON_FILE_APPENDER"/>
+    </root>
+</configuration>

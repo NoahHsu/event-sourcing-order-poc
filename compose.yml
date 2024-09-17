@@ -3,15 +3,15 @@ version: "3"
 services:
   wiremock:
     image: "wiremock/wiremock:3.6.0"
-    profiles: ["mock", "all"]
+    profiles: [ "mock", "all" ]
     ports:
       - '8000:8080'
     volumes:
       - ./Docker/config/mock-server:/home/wiremock/mappings
-    entrypoint: ["/docker-entrypoint.sh", "--global-response-templating", "--disable-gzip", "--verbose"]
+    entrypoint: [ "/docker-entrypoint.sh", "--global-response-templating", "--disable-gzip", "--verbose" ]
   kafka:
     image: 'bitnami/kafka:3.7'
-    profiles: ["kafka", "all"]
+    profiles: [ "kafka", "all" ]
     ports:
       - '9092:9092'
     environment:
@@ -25,13 +25,13 @@ services:
 
   redis:
     image: 'redis:7.2'
-    profiles: ["redis", "all"]
+    profiles: [ "redis", "all" ]
     ports:
       - '6379:6379'
 
   tempo:
-    image: grafana/tempo
-    profiles: ["observe", "all"]
+    image: grafana/tempo:2.3.1
+    profiles: [ "observe", "all" ]
     command: [ "-config.file=/etc/tempo.yaml" ]
     volumes:
       - ./Docker/config/tempo/tempo-local.yaml:/etc/tempo.yaml:ro
@@ -41,8 +41,8 @@ services:
       - "9411:9411" # zipkin
 
   loki:
-    image: grafana/loki
-    profiles: ["observe", "all"]
+    image: grafana/loki:2.8.7
+    profiles: [ "observe", "all" ]
     command: [ "-config.file=/etc/loki/local-config.yaml" ]
     ports:
       - "3100:3100"                                   # loki needs to be exposed so it receives logs
@@ -52,9 +52,18 @@ services:
       - JAEGER_SAMPLER_TYPE=const
       - JAEGER_SAMPLER_PARAM=1
 
+  promtail:
+    image: grafana/promtail:2.8.7
+    profiles: [ "observe", "all" ]
+    command: -config.file=/etc/promtail/promtail-config.yaml
+    volumes:
+      - ./Docker/config/promtail/promtail-config.yaml:/etc/promtail/promtail-config.yaml
+      - ./.data/app/logs:/app/logs
+
+
   prometheus:
-    image: prom/prometheus
-    profiles: ["observe", "all"]
+    image: prom/prometheus:v2.48.1
+    profiles: [ "observe", "all" ]
     command:
       - --enable-feature=exemplar-storage
       - --config.file=/etc/prometheus/prometheus.yml
@@ -64,8 +73,8 @@ services:
       - "9090:9090"
 
   grafana:
-    image: grafana/grafana
-    profiles: ["observe", "all"]
+    image: grafana/grafana:9.5.14
+    profiles: [ "observe", "all" ]
     volumes:
       - ./Docker/config/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro
       - ./Docker/config/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro

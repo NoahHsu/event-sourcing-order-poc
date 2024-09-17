@@ -36,8 +36,7 @@ allprojects {
             dependency "org.springdoc:springdoc-openapi-starter-webmvc-ui:${springdocVersion}"
             dependency "io.github.openfeign:feign-micrometer:${feignMicrometerVersion}"
             dependency "org.projectlombok:lombok:${lombokVersion}"
-            dependency "org.wiremock.integrations.testcontainers:wiremock-testcontainers-module:${wiremockTestContainerVersion}"
-            dependency "com.github.loki4j:loki-logback-appender:${logbackAppenderVersion}"
+            dependency "net.logstash.logback:logstash-logback-encoder:${logbackJsonVersion}"
         }
     }
 
