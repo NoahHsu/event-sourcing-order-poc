@@ -15,5 +15,4 @@ management:
             requests: true
 
 logging:
-  pattern:
-    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+  config: classpath:espoc-logback.xml
