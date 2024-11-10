@@ -24,3 +24,4 @@ bin/
 
 ### Monitoring data
 tempo-data/
+.data
