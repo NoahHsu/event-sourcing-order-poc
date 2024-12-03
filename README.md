@@ -22,8 +22,12 @@
 ## How to run application
 
 The dependency container will run in the docker by `spring-boot-docker-support`
-so you can run the App by IDE directly.
+so you can run the App by IDE or `gradlew` directly.
 
+take run order-command-side for example:
+```shell
+./gradlew :order:order-command-side:bootRun
+```
 
 ## Run E2E test in local
 

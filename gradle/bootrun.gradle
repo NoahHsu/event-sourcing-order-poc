@@ -1,0 +1,4 @@
+bootRun {
+    args = ["--spring.config.additional-location= file:${rootDir}/config/",
+            "--spring.docker.compose.file=${rootDir}/compose.yml"]
+}
