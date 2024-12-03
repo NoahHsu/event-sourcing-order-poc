@@ -4,6 +4,7 @@ plugins {
 }
 
 apply from: "$rootDir/gradle/jib.gradle"
+apply from: "$rootDir/gradle/bootrun.gradle"
 
 dependencies {
     implementation project(":modules:common")
